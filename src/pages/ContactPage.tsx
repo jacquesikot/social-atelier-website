@@ -11,24 +11,24 @@ const ContactPage = () => {
     subject: '',
     message: '',
   });
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Contact Us | The Social Atelier';
   }, []);
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
-  
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success('Message sent! We will get back to you soon.');
-    
+
     // In a real app, you'd send this to your backend
     console.log('Contact form data:', formData);
-    
+
     // Reset form
     setFormData({
       name: '',
@@ -38,13 +38,13 @@ const ContactPage = () => {
       message: '',
     });
   };
-  
+
   return (
     <div className="pt-24">
       {/* Header */}
       <div className="relative py-16 bg-primary-50">
         <div className="container-custom">
-          <motion.div 
+          <motion.div
             className="max-w-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -52,12 +52,13 @@ const ContactPage = () => {
           >
             <h1 className="heading-lg mb-4">Contact Us</h1>
             <p className="text-neutral-700">
-              Have questions or need assistance? We're here to help. Reach out to our team using the form below or contact us directly.
+              Have questions or need assistance? We're here to help. Reach out to our team using the form below or
+              contact us directly.
             </p>
           </motion.div>
         </div>
       </div>
-      
+
       {/* Contact Section */}
       <section className="section">
         <div className="container-custom">
@@ -70,7 +71,7 @@ const ContactPage = () => {
               transition={{ duration: 0.5 }}
             >
               <h2 className="heading-sm mb-6">Get in Touch</h2>
-              
+
               <div className="space-y-6">
                 <div className="flex items-start">
                   <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mr-4">
@@ -83,7 +84,7 @@ const ContactPage = () => {
                     </a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mr-4">
                     <Phone size={18} />
@@ -95,7 +96,7 @@ const ContactPage = () => {
                     </a>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mr-4">
                     <MapPin size={18} />
@@ -103,14 +104,16 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-medium mb-1">Visit Us</h3>
                     <address className="not-italic text-neutral-600">
-                      123 Elegant Avenue<br />
-                      Sophistication District<br />
+                      123 Elegant Avenue
+                      <br />
+                      Sophistication District
+                      <br />
                       Stylish City, SC 12345
                     </address>
                   </div>
                 </div>
               </div>
-              
+
               <div className="mt-8 pt-8 border-t border-neutral-200">
                 <h3 className="font-medium mb-4">Business Hours</h3>
                 <ul className="space-y-2 text-neutral-600">
@@ -124,49 +127,79 @@ const ContactPage = () => {
                   </li>
                 </ul>
               </div>
-              
+
               <div className="mt-8 pt-8 border-t border-neutral-200">
                 <h3 className="font-medium mb-4">Follow Us</h3>
                 <div className="flex space-x-4">
-                  <a 
-                    href="https://instagram.com" 
-                    target="_blank" 
+                  <a
+                    href="https://instagram.com"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 hover:bg-primary-200 transition-colors"
                     aria-label="Instagram"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
                     </svg>
                   </a>
-                  <a 
-                    href="https://facebook.com" 
-                    target="_blank" 
+                  <a
+                    href="https://facebook.com"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 hover:bg-primary-200 transition-colors"
                     aria-label="Facebook"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                     </svg>
                   </a>
-                  <a 
-                    href="https://twitter.com" 
-                    target="_blank" 
+                  <a
+                    href="https://twitter.com"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 hover:bg-primary-200 transition-colors"
                     aria-label="Twitter"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
                       <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                     </svg>
                   </a>
                 </div>
               </div>
             </motion.div>
-            
+
             {/* Contact Form */}
             <motion.div
               className="lg:col-span-2"
@@ -176,7 +209,7 @@ const ContactPage = () => {
             >
               <div className="bg-white p-8 rounded-lg shadow-sm">
                 <h2 className="heading-sm mb-6">Send us a Message</h2>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -193,7 +226,7 @@ const ContactPage = () => {
                         className="input"
                       />
                     </div>
-                    
+
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
                         Email Address *
@@ -209,7 +242,7 @@ const ContactPage = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-neutral-700 mb-1">
@@ -224,7 +257,7 @@ const ContactPage = () => {
                         className="input"
                       />
                     </div>
-                    
+
                     <div>
                       <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 mb-1">
                         Subject *
@@ -245,7 +278,7 @@ const ContactPage = () => {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-1">
                       Message *
@@ -261,7 +294,7 @@ const ContactPage = () => {
                       placeholder="How can we help you?"
                     ></textarea>
                   </div>
-                  
+
                   <div>
                     <button type="submit" className="btn btn-primary flex items-center">
                       <Send size={16} className="mr-2" />
@@ -274,15 +307,21 @@ const ContactPage = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Map Section */}
       <section className="mt-12">
         <div className="h-[400px] w-full bg-neutral-200">
           {/* Placeholder for Google Map (In a real app, you'd use Google Maps API) */}
-          <img 
-            src="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg" 
+          <img
+            src="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop"
+            srcSet="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=800&h=267&fit=crop 800w,
+                    https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop 1200w,
+                    https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=1600&h=533&fit=crop 1600w,
+                    https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=1920&h=640&fit=crop 1920w"
+            sizes="100vw"
             alt="The Social Atelier Location Map"
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
       </section>

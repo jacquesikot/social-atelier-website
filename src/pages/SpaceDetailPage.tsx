@@ -8,7 +8,7 @@ const SpaceDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const space = getSpaceBySlug(id || '');
   const [activeImage, setActiveImage] = useState('');
-  
+
   useEffect(() => {
     window.scrollTo(0, 0);
     if (space) {
@@ -27,7 +27,7 @@ const SpaceDetailPage = () => {
       maximumFractionDigits: 0,
     }).format(amount);
   };
-  
+
   if (!space) {
     return (
       <div className="pt-24 min-h-screen flex flex-col items-center justify-center text-center px-4">
@@ -39,38 +39,43 @@ const SpaceDetailPage = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="pt-24">
       {/* Header Image */}
       <div className="h-[50vh] relative overflow-hidden">
-        <img 
-          src={activeImage} 
-          alt={space.name} 
+        <img
+          src={activeImage}
+          srcSet={`${activeImage.replace('w=600&h=400', 'w=800&h=533')} 800w,
+                  ${activeImage.replace('w=600&h=400', 'w=1200&h=800')} 1200w,
+                  ${activeImage.replace('w=600&h=400', 'w=1600&h=1067')} 1600w,
+                  ${activeImage.replace('w=600&h=400', 'w=1920&h=1280')} 1920w`}
+          sizes="100vw"
+          alt={space.name}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
       </div>
-      
+
       {/* Content */}
       <div className="container-custom py-12">
         <div className="flex flex-wrap items-center mb-6 gap-y-4">
-          <NavLink 
-            to="/spaces" 
+          <NavLink
+            to="/spaces"
             className="flex items-center text-primary-600 hover:text-primary-800 transition-colors mr-auto"
           >
             <ArrowLeft size={16} className="mr-1" />
             <span>Back to All Spaces</span>
           </NavLink>
-          
+
           <NavLink to="/booking" className="btn btn-primary">
             Book This Space
           </NavLink>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           {/* Main Content */}
-          <motion.div 
+          <motion.div
             className="lg:col-span-2"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -78,7 +83,7 @@ const SpaceDetailPage = () => {
           >
             <h1 className="heading-lg mb-4">{space.name}</h1>
             <p className="text-neutral-600 mb-8">{space.description}</p>
-            
+
             <div className="mb-8">
               <h2 className="heading-sm mb-4">Features</h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -90,7 +95,7 @@ const SpaceDetailPage = () => {
                 ))}
               </ul>
             </div>
-            
+
             <div className="mb-8">
               <h2 className="heading-sm mb-4">Ideal For</h2>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -102,26 +107,31 @@ const SpaceDetailPage = () => {
                 ))}
               </ul>
             </div>
-            
+
             {/* Image Gallery */}
             <div>
               <h2 className="heading-sm mb-4">Gallery</h2>
               <div className="grid grid-cols-3 gap-4">
                 {space.images.map((image, index) => (
-                  <img 
+                  <img
                     key={index}
-                    src={image} 
-                    alt={`${space.name} - ${index + 1}`} 
+                    src={image.replace('w=800&h=600', 'w=300&h=225')}
+                    srcSet={`${image.replace('w=800&h=600', 'w=300&h=225')} 300w,
+                            ${image.replace('w=800&h=600', 'w=400&h=300')} 400w,
+                            ${image.replace('w=800&h=600', 'w=500&h=375')} 500w`}
+                    sizes="(max-width: 640px) 100px, (max-width: 1024px) 150px, 200px"
+                    alt={`${space.name} - ${index + 1}`}
                     className={`w-full h-24 object-cover rounded-md cursor-pointer transition-all ${
                       activeImage === image ? 'ring-2 ring-primary-600' : 'hover:opacity-80'
                     }`}
-                    onClick={() => setActiveImage(image)}
+                    onClick={() => setActiveImage(image.replace('w=300&h=225', 'w=600&h=400'))}
+                    loading="lazy"
                   />
                 ))}
               </div>
             </div>
           </motion.div>
-          
+
           {/* Sidebar */}
           <motion.div
             className="lg:col-span-1"
@@ -135,7 +145,7 @@ const SpaceDetailPage = () => {
                 <span>{formatCurrency(space.hourlyRate)}</span>
                 <span className="text-neutral-600 text-base font-sans ml-1">/hour</span>
               </div>
-              
+
               <div className="space-y-4 mb-6">
                 <div className="flex items-start">
                   <Clock size={20} className="text-primary-600 mt-1 mr-3" />
@@ -144,7 +154,7 @@ const SpaceDetailPage = () => {
                     <p className="text-neutral-600 text-sm">{space.openingHours}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <Calendar size={20} className="text-primary-600 mt-1 mr-3" />
                   <div>
@@ -152,7 +162,7 @@ const SpaceDetailPage = () => {
                     <p className="text-neutral-600 text-sm">{space.openingDays}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <Users size={20} className="text-primary-600 mt-1 mr-3" />
                   <div>
@@ -165,16 +175,16 @@ const SpaceDetailPage = () => {
                   </div>
                 </div>
               </div>
-              
-              <NavLink 
-                to={`/booking?space=${space.id}`} 
-                className="w-full block text-center btn btn-primary"
-              >
+
+              <NavLink to={`/booking?space=${space.id}`} className="w-full block text-center btn btn-primary">
                 Book This Space
               </NavLink>
-              
+
               <p className="text-neutral-600 text-xs text-center mt-4">
-                Have questions? <NavLink to="/contact" className="text-primary-600 hover:underline">Contact us</NavLink>
+                Have questions?{' '}
+                <NavLink to="/contact" className="text-primary-600 hover:underline">
+                  Contact us
+                </NavLink>
               </p>
             </div>
           </motion.div>
