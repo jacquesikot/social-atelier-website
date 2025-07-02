@@ -3,6 +3,7 @@ export interface Space {
   name: string;
   slug: string;
   description: string;
+  type: string;
   shortDescription: string;
   mainImage: string;
   images: string[];

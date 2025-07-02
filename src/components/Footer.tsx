@@ -1,5 +1,6 @@
+import { Instagram } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
-import { Facebook, Instagram, Twitter } from 'lucide-react';
+import { spaces } from '../data/spaces';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,47 +15,30 @@ const Footer = () => {
               The Social Atelier
             </NavLink>
             <p className="mt-4 text-neutral-400 text-sm">
-              A curated lifestyle event space offering a variety of unique and themed rooms for events, photoshoots, podcasts, and gatherings.
+              A curated lifestyle event space offering a variety of unique and themed rooms for events, photoshoots,
+              podcasts, and gatherings.
             </p>
             <div className="mt-6 flex space-x-4">
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
+              <a
+                href="https://instagram.com/thesocialatelierng"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-neutral-400 hover:text-white transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram size={20} />
               </a>
-              <a 
-                href="https://facebook.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors"
-                aria-label="Facebook"
-              >
-                <Facebook size={20} />
-              </a>
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter size={20} />
-              </a>
             </div>
           </div>
-          
+
           {/* Quick Links */}
           <div>
             <h3 className="text-lg font-medium mb-4">Quick Links</h3>
             <ul className="space-y-2">
               {['Home', 'Spaces', 'About', 'Contact', 'Book Now'].map((item) => (
                 <li key={item}>
-                  <NavLink 
-                    to={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`} 
+                  <NavLink
+                    to={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`}
                     className="text-neutral-400 hover:text-white transition-colors text-sm"
                   >
                     {item}
@@ -63,35 +47,29 @@ const Footer = () => {
               ))}
             </ul>
           </div>
-          
+
           {/* Spaces */}
           <div>
             <h3 className="text-lg font-medium mb-4">Our Spaces</h3>
             <ul className="space-y-2">
-              {[
-                'Parisian Waiting Area',
-                'Contemporary Kitchen',
-                'Podcast Room',
-                'Grand Piano Room',
-                'Intimate Event Space'
-              ].map((space) => (
-                <li key={space}>
-                  <NavLink 
-                    to={`/spaces/${space.toLowerCase().replace(/\s+/g, '-')}`} 
+              {spaces.map((space) => (
+                <li key={space.slug}>
+                  <NavLink
+                    to={`/spaces/${space.slug}`}
                     className="text-neutral-400 hover:text-white transition-colors text-sm"
                   >
-                    {space}
+                    {space.name}
                   </NavLink>
                 </li>
               ))}
             </ul>
           </div>
-          
+
           {/* Contact */}
           <div>
             <h3 className="text-lg font-medium mb-4">Contact Us</h3>
             <address className="not-italic text-neutral-400 text-sm space-y-2">
-              <p>15B Admiralty Way</p>
+              <p>Plot 59 Chuks Onyebuchi Drive</p>
               <p>Lekki Phase 1</p>
               <p>Lagos State, Nigeria</p>
               <p className="mt-4">
@@ -100,21 +78,23 @@ const Footer = () => {
                 </a>
               </p>
               <p>
-                <a href="mailto:hello@socialatelier.com" className="hover:text-white transition-colors">
-                  hello@socialatelier.com
+                <a href="mailto:socialatelierng@gmail.com" className="hover:text-white transition-colors">
+                  socialatelierng@gmail.com
                 </a>
               </p>
             </address>
           </div>
         </div>
-        
+
         <div className="mt-12 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-neutral-500 text-sm">
-            &copy; {currentYear} The Social Atelier. All rights reserved.
-          </p>
+          <p className="text-neutral-500 text-sm">&copy; {currentYear} The Social Atelier. All rights reserved.</p>
           <div className="mt-4 md:mt-0 flex space-x-6">
-            <a href="#" className="text-neutral-500 hover:text-white text-sm transition-colors">Privacy Policy</a>
-            <a href="#" className="text-neutral-500 hover:text-white text-sm transition-colors">Terms of Service</a>
+            <a href="#" className="text-neutral-500 hover:text-white text-sm transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="text-neutral-500 hover:text-white text-sm transition-colors">
+              Terms of Service
+            </a>
           </div>
         </div>
       </div>

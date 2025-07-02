@@ -27,13 +27,12 @@ const HomePage = () => {
             >
               <h2 className="heading-lg mb-6">Welcome to The Social Atelier</h2>
               <p className="text-neutral-700 mb-4">
-                The Social Atelier is a thoughtfully curated collection of spaces designed to inspire creativity and
-                elevate your events and content creation.
+                The Social Atelier is a curated creative studio empowering storytellers and brands to produce
+                high-quality content in a professional, inspiring space.
               </p>
               <p className="text-neutral-700 mb-6">
-                Our spaces range from elegant sitting rooms to professionally equipped podcast studios, providing the
-                perfect backdrop for any creative vision. Each room has been meticulously designed with both aesthetics
-                and functionality in mind.
+                Our spaces, inspired by European themes, range from elegant sitting rooms to professionally equipped
+                podcast studios—providing the perfect backdrop for any creative vision.
               </p>
               <NavLink to="/about" className="btn btn-secondary">
                 Learn More About Us

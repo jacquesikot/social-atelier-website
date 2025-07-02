@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { spaces } from '../data/spaces';
+import { useEffect, useState } from 'react';
 import SpaceCard from '../components/SpaceCard';
+import { spaces } from '../data/spaces';
 
 const SpacesPage = () => {
   const [filter, setFilter] = useState('all');
@@ -18,32 +18,23 @@ const SpacesPage = () => {
       setFilteredSpaces(spaces);
       return;
     }
-    
+
     // Simple filtering based on space name or features
     // In a real app, you'd have proper categories in your data model
-    const filtered = spaces.filter(space => {
-      const name = space.name.toLowerCase();
-      const features = space.features.join(' ').toLowerCase();
-      const useCases = space.useCases.join(' ').toLowerCase();
-      
+    const filtered = spaces.filter((space) => {
       if (filter === 'event') {
-        return name.includes('event') || useCases.includes('event') || useCases.includes('gathering');
+        return space.type === 'event';
       }
       if (filter === 'photo') {
-        return name.includes('photo') || useCases.includes('photo') || useCases.includes('image');
+        return space.type === 'photo';
       }
       if (filter === 'podcast') {
-        return name.includes('podcast') || useCases.includes('podcast') || useCases.includes('recording');
+        return space.type === 'podcast';
       }
-      if (filter === 'other') {
-        return !name.includes('event') && !useCases.includes('event') && 
-               !name.includes('photo') && !useCases.includes('photo') && 
-               !name.includes('podcast') && !useCases.includes('podcast');
-      }
-      
+
       return true;
     });
-    
+
     setFilteredSpaces(filtered);
   }, [filter]);
 
@@ -52,7 +43,7 @@ const SpacesPage = () => {
       {/* Header */}
       <div className="relative py-16 bg-primary-50">
         <div className="container-custom">
-          <motion.div 
+          <motion.div
             className="max-w-2xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -60,12 +51,13 @@ const SpacesPage = () => {
           >
             <h1 className="heading-lg mb-4">Our Spaces</h1>
             <p className="text-neutral-700">
-              Explore our collection of beautifully designed spaces, each offering unique features and ambiance for your creative projects and events.
+              Explore our collection of beautifully designed spaces, each offering unique features and ambiance for your
+              creative projects and events.
             </p>
           </motion.div>
         </div>
       </div>
-      
+
       {/* Filters */}
       <div className="bg-white border-b">
         <div className="container-custom py-4">
@@ -77,7 +69,6 @@ const SpacesPage = () => {
                 { id: 'event', label: 'Event Spaces' },
                 { id: 'photo', label: 'Photography' },
                 { id: 'podcast', label: 'Podcast & Recording' },
-                { id: 'other', label: 'Other Spaces' }
               ].map((category) => (
                 <button
                   key={category.id}
@@ -95,7 +86,7 @@ const SpacesPage = () => {
           </div>
         </div>
       </div>
-      
+
       {/* Spaces Grid */}
       <section className="section bg-neutral-50">
         <div className="container-custom">
@@ -108,10 +99,7 @@ const SpacesPage = () => {
           ) : (
             <div className="text-center py-12">
               <p className="text-neutral-600">No spaces found matching your filter criteria.</p>
-              <button 
-                onClick={() => setFilter('all')}
-                className="mt-4 btn btn-secondary"
-              >
+              <button onClick={() => setFilter('all')} className="mt-4 btn btn-secondary">
                 View All Spaces
               </button>
             </div>

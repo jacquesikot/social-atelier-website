@@ -3,11 +3,13 @@ import { Space } from '../types';
 export const spaces: Space[] = [
   {
     id: '1',
-    name: 'Parisian Waiting Area',
-    slug: 'parisian-waiting-area',
-    shortDescription: 'An elegant European-inspired lounge with classic details and warm ambiance.',
+    name: 'Maison Paris',
+    slug: 'maison-paris',
+    type: 'photo',
+    shortDescription:
+      'A vintage inspired Parisian waiting lounge and curated photo corner perfect for French ambiance.',
     description:
-      'Step into the charm of Paris with our beautifully curated Parisian Waiting Area. This elegant space features classic moldings, vintage-inspired furniture, and soft, warm lighting that creates an atmosphere of sophisticated comfort. Perfect for intimate conversations, professional photoshoots, or as a welcoming area for your special event.',
+      'Maison Paris is our vintage inspired Parisian waiting lounge and curated photo corner. Perfect for capturing the French ambiance.',
     mainImage:
       'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     images: [
@@ -29,22 +31,23 @@ export const spaces: Space[] = [
       'Bridal preparations',
       'Fashion showcases',
     ],
-    hourlyRate: 50000, // ₦50,000
+    hourlyRate: 80000, // ₦80,000
     durationOptions: [
       { hours: 2, label: '2 hours' },
       { hours: 4, label: '4 hours' },
       { hours: 8, label: 'Full day (8 hours)' },
     ],
-    openingDays: 'Monday - Sunday',
-    openingHours: '9:00 AM - 9:00 PM',
+    openingDays: 'Tuesday - Sunday',
+    openingHours: '10:00 AM - 6:00 PM',
   },
   {
     id: '2',
-    name: 'Contemporary Kitchen',
-    slug: 'contemporary-kitchen',
-    shortDescription: 'A sleek, modern kitchen space ideal for culinary content creation and cooking events.',
+    name: 'The Creperie',
+    slug: 'the-creperie',
+    type: 'photo',
+    shortDescription: 'A photogenic kitchen designed for light bites, coffee breaks and content creation.',
     description:
-      'Our Contemporary Kitchen combines functionality with stunning aesthetics. Featuring high-end appliances, a spacious island, and carefully selected finishes, this space is perfect for food photography, cooking demonstrations, or culinary workshops. The space is flooded with natural light, making it ideal for capturing the perfect shot of your culinary creations.',
+      'A photogenic kitchen designed for light bites, coffee breaks and content creation. The perfect backdrop for culinary shoots, cozy conversations, and playful moments.',
     mainImage:
       'https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     images: [
@@ -66,22 +69,23 @@ export const spaces: Space[] = [
       'Recipe video filming',
       'Intimate dinner parties',
     ],
-    hourlyRate: 65000, // ₦65,000
+    hourlyRate: 75000, // ₦75,000
     durationOptions: [
       { hours: 2, label: '2 hours' },
       { hours: 4, label: '4 hours' },
       { hours: 8, label: 'Full day (8 hours)' },
     ],
-    openingDays: 'Monday - Sunday',
-    openingHours: '9:00 AM - 9:00 PM',
+    openingDays: 'Tuesday - Sunday',
+    openingHours: '10:00 AM - 6:00 PM',
   },
   {
     id: '3',
-    name: 'Hallway',
-    slug: 'hallway',
-    shortDescription: 'An architecturally stunning hallway with artistic details and excellent lighting.',
+    name: 'The Archway',
+    slug: 'the-archway',
+    type: 'photo',
+    shortDescription: 'A stunning, dome-like hallway inspired by iconic European architecture.',
     description:
-      'Our Hallway space offers a unique setting with architectural interest and artistic details. The long, elegant corridor features beautiful moldings, neutral tones, and excellent lighting conditions that photographers love. This versatile space can be styled in multiple ways and connects to other spaces in our atelier.',
+      'A stunning, dome like hallway inspired by iconic European architecture. The ideal setting for dramatic entrances, fashion shoots, and artistic storytelling.',
     mainImage:
       'https://images.pexels.com/photos/1090638/pexels-photo-1090638.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     images: [
@@ -103,22 +107,22 @@ export const spaces: Space[] = [
       'Gallery-style exhibitions',
       'Dramatic portrait settings',
     ],
-    hourlyRate: 40000, // ₦40,000
+    hourlyRate: 50000, // ₦50,000
     durationOptions: [
       { hours: 2, label: '2 hours' },
       { hours: 4, label: '4 hours' },
       { hours: 8, label: 'Full day (8 hours)' },
     ],
-    openingDays: 'Monday - Sunday',
-    openingHours: '9:00 AM - 9:00 PM',
+    openingDays: 'Tuesday - Sunday',
+    openingHours: '10:00 AM - 6:00 PM',
   },
   {
     id: '4',
-    name: 'Podcast Room',
-    slug: 'podcast-room',
-    shortDescription: 'A professionally sound-treated studio space designed for crystal-clear audio recording.',
-    description:
-      'The Podcast Room is a professionally designed space for creators who value both aesthetics and audio quality. With sound-absorbing panels, professional microphones, and comfortable seating, this space ensures your conversations sound as good as they look. The warm, inviting decor creates a comfortable atmosphere that helps guests feel at ease during recording sessions.',
+    name: 'The Pod Loft',
+    slug: 'the-pod-loft',
+    type: 'podcast',
+    shortDescription: 'A sleek, soundproof space built for bold voices and unforgettable conversations.',
+    description: 'A sleek, soundproof space built for bold voices, clear sound and unforgettable conversations.',
     mainImage:
       'https://images.pexels.com/photos/3783471/pexels-photo-3783471.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     images: [
@@ -140,22 +144,23 @@ export const spaces: Space[] = [
       'Small panel discussions',
       'Audio content creation',
     ],
-    hourlyRate: 75000, // ₦75,000
+    hourlyRate: 150000, // ₦150,000
     durationOptions: [
       { hours: 2, label: '2 hours' },
       { hours: 4, label: '4 hours' },
       { hours: 8, label: 'Full day (8 hours)' },
     ],
-    openingDays: 'Monday - Sunday',
-    openingHours: '9:00 AM - 9:00 PM',
+    openingDays: 'Tuesday - Sunday',
+    openingHours: '10:00 AM - 6:00 PM',
   },
   {
     id: '5',
-    name: 'Grand Piano Room',
-    slug: 'grand-piano-room',
-    shortDescription: 'An elegant space centered around a stunning grand piano with superior acoustics.',
+    name: 'The Piano Room',
+    slug: 'the-piano-room',
+    type: 'photo',
+    shortDescription: 'An opulent ballroom style space with grand piano and chandelier for striking portraits.',
     description:
-      "Our Grand Piano Room exudes sophistication and artistic inspiration. Centered around a beautiful grand piano, this space features high ceilings, exceptional acoustics, and tasteful decor. Whether you're recording a musical performance, hosting an intimate concert, or seeking an elegant backdrop for photos, this room provides a refined atmosphere that elevates any creative endeavor.",
+      'An opulent ballroom style space featuring a grand piano and chandelier. Ideal for striking portraits, music inspired shoots, and unforgettable moments with a touch of grandeur.',
     mainImage:
       'https://images.pexels.com/photos/164743/pexels-photo-164743.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     images: [
@@ -177,22 +182,23 @@ export const spaces: Space[] = [
       'Elegant event space',
       'Music video filming',
     ],
-    hourlyRate: 85000, // ₦85,000
+    hourlyRate: 150000, // ₦150,000
     durationOptions: [
       { hours: 2, label: '2 hours' },
       { hours: 4, label: '4 hours' },
       { hours: 8, label: 'Full day (8 hours)' },
     ],
-    openingDays: 'Monday - Sunday',
-    openingHours: '9:00 AM - 9:00 PM',
+    openingDays: 'Tuesday - Sunday',
+    openingHours: '10:00 AM - 6:00 PM',
   },
   {
     id: '6',
-    name: 'Aesthetics Room',
-    slug: 'aesthetics-room',
-    shortDescription: 'A visually captivating space with artistic elements and perfect lighting for content creation.',
+    name: 'Nue Ville',
+    slug: 'nue-ville',
+    type: 'photo',
+    shortDescription: 'A minimalist, nude-toned room designed for clean, modern content creation.',
     description:
-      'The Aesthetics Room is a content creators dream. This carefully curated space features artistic elements, perfect lighting, and thoughtfully arranged vignettes that make for stunning photos and videos. With a mix of textures, colors, and decorative objects, this versatile room can be styled to match various themes and moods for your creative projects.',
+      'Nue Ville is a minimalist, nude-toned room designed for clean, modern content creation. Its neutral palette makes it ideal for fashion, branding, and editorial shoots.',
     mainImage:
       'https://images.pexels.com/photos/4846455/pexels-photo-4846455.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     images: [
@@ -214,22 +220,23 @@ export const spaces: Space[] = [
       'Beauty tutorials filming',
       'Creative portraits',
     ],
-    hourlyRate: 70000, // ₦70,000
+    hourlyRate: 90000, // ₦90,000
     durationOptions: [
       { hours: 2, label: '2 hours' },
       { hours: 4, label: '4 hours' },
       { hours: 8, label: 'Full day (8 hours)' },
     ],
-    openingDays: 'Monday - Sunday',
-    openingHours: '9:00 AM - 9:00 PM',
+    openingDays: 'Tuesday - Sunday',
+    openingHours: '10:00 AM - 6:00 PM',
   },
   {
     id: '7',
-    name: 'Aesthetics Bathroom',
-    slug: 'aesthetics-bathroom',
-    shortDescription: 'A luxurious bathroom setting with designer fixtures, perfect for beauty content.',
+    name: 'Bain & Bubbles',
+    slug: 'bain-bubbles',
+    type: 'photo',
+    shortDescription: 'A stylish bathroom with jacuzzi and walk-in closet for glamorous content creation.',
     description:
-      'Our Aesthetics Bathroom combines luxury and practicality in a stunning setting. Featuring designer fixtures, beautiful tiles, and perfect lighting, this space is ideal for beauty tutorials, product photography, or creative shoots. The generous size allows for comfortable shooting angles while maintaining an intimate atmosphere.',
+      'A stylish bathroom with a jacuzzi and walk in closet crafted for glamorous content, beauty shoots and indulgent behind the scenes experiences.',
     mainImage:
       'https://images.pexels.com/photos/6585598/pexels-photo-6585598.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     images: [
@@ -251,22 +258,23 @@ export const spaces: Space[] = [
       'Self-care themed shoots',
       'Fashion editorial details',
     ],
-    hourlyRate: 55000, // ₦55,000
+    hourlyRate: 95000, // ₦95,000
     durationOptions: [
       { hours: 2, label: '2 hours' },
       { hours: 4, label: '4 hours' },
       { hours: 8, label: 'Full day (8 hours)' },
     ],
-    openingDays: 'Monday - Sunday',
-    openingHours: '9:00 AM - 9:00 PM',
+    openingDays: 'Tuesday - Sunday',
+    openingHours: '10:00 AM - 6:00 PM',
   },
   {
     id: '8',
-    name: 'Intimate Event Space',
-    slug: 'intimate-event-space',
-    shortDescription: 'A versatile space for small gatherings with customizable setups and elegant ambiance.',
+    name: 'Lauren Fair',
+    slug: 'lauren-fair',
+    type: 'event',
+    shortDescription: 'An intimate event space designed for private gatherings and memorable celebrations.',
     description:
-      'The Intimate Event Space offers a flexible environment for hosting small gatherings with style. With customizable layout options, elegant decor, and a warm atmosphere, this space can be transformed to suit various events from workshops to dinner parties. The neutral palette serves as a perfect canvas for your unique vision, while our amenities ensure your guests are comfortable throughout your event.',
+      'Our intimate event space, designed for private gatherings, special occasions, and memorable celebrations in an elegant, welcoming atmosphere.',
     mainImage:
       'https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     images: [
@@ -282,22 +290,23 @@ export const spaces: Space[] = [
       'Customizable decor elements',
     ],
     useCases: ['Small workshops', 'Intimate celebrations', 'Product launches', 'Networking events', 'Private dinners'],
-    hourlyRate: 100000, // ₦100,000
+    hourlyRate: 400000, // ₦400,000
     durationOptions: [
       { hours: 2, label: '2 hours' },
       { hours: 4, label: '4 hours' },
       { hours: 8, label: 'Full day (8 hours)' },
     ],
-    openingDays: 'Monday - Sunday',
-    openingHours: '9:00 AM - 9:00 PM',
+    openingDays: 'Available by appointment',
+    openingHours: 'Available by appointment',
   },
   {
     id: '9',
-    name: 'Outdoor Garden',
-    slug: 'outdoor-garden',
-    shortDescription: 'A serene outdoor space with lush greenery and charming garden features.',
+    name: 'Miguel & Moss Garden',
+    slug: 'miguel-moss-garden',
+    type: 'event',
+    shortDescription: 'A nature inspired gazebo adorned with flowers perfect for outdoor events and photos.',
     description:
-      'Our Outdoor Garden provides a peaceful natural setting in the heart of Lekki. With lush greenery, comfortable seating areas, and beautiful garden features, this space is perfect for outdoor shoots, small gatherings, or simply enjoying some fresh air during your event. The garden offers various backdrops, from flowering plants to architectural elements, providing endless creative possibilities.',
+      'A nature inspired gazebo adorned with flowers perfect for picnics, garden parties, sunlit photos and a tranquil creative space.',
     mainImage:
       'https://images.pexels.com/photos/1122865/pexels-photo-1122865.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
     images: [
@@ -319,14 +328,14 @@ export const spaces: Space[] = [
       'Nature-themed content creation',
       'Intimate ceremonies',
     ],
-    hourlyRate: 80000, // ₦80,000
+    hourlyRate: 250000, // ₦250,000
     durationOptions: [
       { hours: 2, label: '2 hours' },
       { hours: 4, label: '4 hours' },
       { hours: 8, label: 'Full day (8 hours)' },
     ],
-    openingDays: 'Monday - Sunday (Weather Permitting)',
-    openingHours: '9:00 AM - 7:00 PM',
+    openingDays: 'Available by appointment',
+    openingHours: 'Available by appointment',
   },
 ];
 

@@ -79,8 +79,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">Email Us</h3>
-                    <a href="mailto:hello@socialatelier.com" className="text-primary-600 hover:underline">
-                      hello@socialatelier.com
+                    <a href="mailto:socialatelierng@gmail.com" className="text-primary-600 hover:underline">
+                      socialatelierng@gmail.com
                     </a>
                   </div>
                 </div>
@@ -91,8 +91,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">Call Us</h3>
-                    <a href="tel:+1234567890" className="text-primary-600 hover:underline">
-                      (123) 456-7890
+                    <a href="tel:+2348012345678" className="text-primary-600 hover:underline">
+                      +234 801 234 5678
                     </a>
                   </div>
                 </div>
@@ -104,11 +104,11 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-medium mb-1">Visit Us</h3>
                     <address className="not-italic text-neutral-600">
-                      123 Elegant Avenue
+                      Plot 59 Chuks Onyebuchi Drive
                       <br />
-                      Sophistication District
+                      Lekki Phase 1
                       <br />
-                      Stylish City, SC 12345
+                      Lagos State, Nigeria
                     </address>
                   </div>
                 </div>
@@ -118,12 +118,12 @@ const ContactPage = () => {
                 <h3 className="font-medium mb-4">Business Hours</h3>
                 <ul className="space-y-2 text-neutral-600">
                   <li className="flex justify-between">
-                    <span>Monday - Friday:</span>
-                    <span>9:00 AM - 9:00 PM</span>
+                    <span>Tuesday - Saturday:</span>
+                    <span>10:00 AM - 6:00 PM</span>
                   </li>
                   <li className="flex justify-between">
-                    <span>Saturday - Sunday:</span>
-                    <span>9:00 AM - 9:00 PM</span>
+                    <span>Sunday:</span>
+                    <span>1:00 PM - 6:00 PM</span>
                   </li>
                 </ul>
               </div>
@@ -132,7 +132,7 @@ const ContactPage = () => {
                 <h3 className="font-medium mb-4">Follow Us</h3>
                 <div className="flex space-x-4">
                   <a
-                    href="https://instagram.com"
+                    href="https://instagram.com/thesocialatelierng"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 hover:bg-primary-200 transition-colors"
@@ -152,48 +152,6 @@ const ContactPage = () => {
                       <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                       <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                  </a>
-                  <a
-                    href="https://facebook.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 hover:bg-primary-200 transition-colors"
-                    aria-label="Facebook"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                    </svg>
-                  </a>
-                  <a
-                    href="https://twitter.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 hover:bg-primary-200 transition-colors"
-                    aria-label="Twitter"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                     </svg>
                   </a>
                 </div>

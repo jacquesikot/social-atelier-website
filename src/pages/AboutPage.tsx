@@ -187,7 +187,7 @@ const AboutPage = () => {
       </section>
 
       {/* Team Section */}
-      <section className="section">
+      {/* <section className="section">
         <div className="container-custom">
           <div className="text-center mb-12">
             <motion.h2
@@ -261,10 +261,10 @@ const AboutPage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Location */}
-      <section className="section bg-primary-50">
+      <section className="section">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -283,7 +283,7 @@ const AboutPage = () => {
                 <div>
                   <h3 className="font-medium">Address</h3>
                   <address className="not-italic text-neutral-600">
-                    15B Admiralty Way
+                    Plot 59 Chuks Onyebuchi Drive
                     <br />
                     Lekki Phase 1<br />
                     Lagos State, Nigeria
@@ -292,7 +292,10 @@ const AboutPage = () => {
 
                 <div>
                   <h3 className="font-medium">Hours</h3>
-                  <p className="text-neutral-600">Monday - Sunday: 9:00 AM - 9:00 PM</p>
+                  <p className="text-neutral-600">
+                    Tuesday - Saturday: 10:00 AM - 6:00 PM <br />
+                    Sunday: 1:00 PM - 6:00 PM
+                  </p>
                 </div>
 
                 <div>
@@ -300,7 +303,7 @@ const AboutPage = () => {
                   <p className="text-neutral-600">
                     Phone: +234 801 234 5678
                     <br />
-                    Email: hello@socialatelier.com
+                    Email: socialatelierng@gmail.com
                   </p>
                 </div>
               </div>
