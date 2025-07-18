@@ -4,10 +4,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Cormorant Garamond', 'serif'],
-        primary: ['Inter', 'sans-serif'],
-        secondary: ['Cormorant Garamond', 'serif'],
+        sans: ['Maison Neue', 'Arial', 'sans-serif'],
+        serif: ['Maison Neue Extended', 'Maison Neue', 'Arial', 'sans-serif'],
+        primary: ['Maison Neue', 'Arial', 'sans-serif'],
+        secondary: ['Maison Neue Extended', 'Maison Neue', 'Arial', 'sans-serif'],
       },
       colors: {
         primary: {
