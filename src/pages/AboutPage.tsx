@@ -38,18 +38,21 @@ const AboutPage = () => {
             >
               <h2 className="heading-lg mb-6">Our Story</h2>
               <p className="text-neutral-700 mb-4">
-                The Social Atelier was born from a passion for beautiful spaces and the creative energy they inspire.
-                What began as a personal studio quickly evolved into a multi-faceted venue when founder Chioma Okonkwo
-                noticed how different creative professionals constantly asked to use her thoughtfully designed spaces.
+                The Social Atelier was born from a dream and a deep belief that creators deserve more than ordinary
+                spaces. We set out to create something unique in Nigeria, a studio and event space that blends classic
+                elegance, functionality, and sophistication, giving creators the freedom to express themselves and bring
+                their visions to life.
               </p>
               <p className="text-neutral-700 mb-4">
-                Recognizing a need for versatile, aesthetically pleasing environments for content creation and small
-                events in Lagos, Chioma expanded her studio into what is now The Social Atelier—a collection of nine
-                distinct spaces, each with its own character and purpose.
+                With nine thoughtfully designed spaces, The Social Atelier offers versatility and inspiration for every
+                project, from bold shoots to intimate gatherings. More than just beautiful backdrops, we provide an
+                environment where artistry thrives and ideas are nurtured, empowering you to make work that stands out.
               </p>
               <p className="text-neutral-700">
-                Since opening our doors in 2022, we've hosted photographers, podcasters, workshop leaders, and event
-                planners who share our appreciation for intentional design and inspiring surroundings.
+                At our core, The Social Atelier is a creative community, a collective of visionaries and storytellers
+                passionate about content and connection. Here, you'll find not only the tools and settings to realize
+                your ideas but also the support and sense of belonging that comes from a space dedicated to artistic
+                excellence.
               </p>
             </motion.div>
 
@@ -118,9 +121,10 @@ const AboutPage = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
-                <h3 className="font-medium text-lg mb-2">Inspire Creativity</h3>
+                <h3 className="font-medium text-lg mb-2">Creativity Without Limits</h3>
                 <p className="text-neutral-600 text-sm">
-                  We provide thoughtfully designed environments that spark imagination and elevate creative work.
+                  We design our spaces and our culture to inspire bold ideas and authentic expression, empowering
+                  creators to bring their vision to life without constraints.
                 </p>
               </motion.div>
 
@@ -147,9 +151,10 @@ const AboutPage = () => {
                     />
                   </svg>
                 </div>
-                <h3 className="font-medium text-lg mb-2">Foster Community</h3>
+                <h3 className="font-medium text-lg mb-2">Excellence in Every Detail</h3>
                 <p className="text-neutral-600 text-sm">
-                  We create opportunities for connection and collaboration between diverse creative professionals.
+                  From the aesthetic of each room to the experience we deliver, every detail is intentional because we
+                  believe great work deserves a great setting.
                 </p>
               </motion.div>
 
@@ -176,9 +181,10 @@ const AboutPage = () => {
                     />
                   </svg>
                 </div>
-                <h3 className="font-medium text-lg mb-2">Ensure Quality</h3>
+                <h3 className="font-medium text-lg mb-2">Community & Collaboration</h3>
                 <p className="text-neutral-600 text-sm">
-                  We maintain meticulous standards in our spaces and services to support professional creative work.
+                  We're a collective of dreamers, doers, and storytellers. Here, creators come together to share ideas,
+                  connect, and grow.
                 </p>
               </motion.div>
             </div>
@@ -316,14 +322,9 @@ const AboutPage = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="rounded-lg overflow-hidden shadow-md h-[400px]"
             >
-              {/* Placeholder for Google Map (In a real app, you'd use Google Maps API) */}
               <img
-                src="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop"
-                srcSet="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=400&h=267&fit=crop 400w,
-                        https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop 600w,
-                        https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=800&h=533&fit=crop 800w"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                alt="The Social Atelier Location"
+                src="https://images.ctfassets.net/g1pxcpqorahb/3K1lpw8dhqGkWcppWHFLfp/34fe6cfb36332afdc8afae4d40f093ef/tsa-piano-room-4.png"
+                alt="The Social Atelier Piano Room"
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
