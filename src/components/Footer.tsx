@@ -89,11 +89,13 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center">
           <p className="text-neutral-500 text-sm">&copy; {currentYear} The Social Atelier. All rights reserved.</p>
           <div className="mt-4 md:mt-0 flex space-x-6">
-            <a href="#" className="text-neutral-500 hover:text-white text-sm transition-colors">
+            <a
+              href="https://www.freeprivacypolicy.com/live/40d70250-f3bf-439e-b25f-87dcb6ba1e27"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 hover:text-white text-sm transition-colors"
+            >
               Privacy Policy
-            </a>
-            <a href="#" className="text-neutral-500 hover:text-white text-sm transition-colors">
-              Terms of Service
             </a>
           </div>
         </div>
