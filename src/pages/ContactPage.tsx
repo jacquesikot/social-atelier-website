@@ -271,12 +271,7 @@ const ContactPage = () => {
         <div className="h-[400px] w-full bg-neutral-200">
           {/* Placeholder for Google Map (In a real app, you'd use Google Maps API) */}
           <img
-            src="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop"
-            srcSet="https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=800&h=267&fit=crop 800w,
-                    https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=1200&h=400&fit=crop 1200w,
-                    https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=1600&h=533&fit=crop 1600w,
-                    https://images.pexels.com/photos/244206/pexels-photo-244206.jpeg?auto=compress&cs=tinysrgb&w=1920&h=640&fit=crop 1920w"
-            sizes="100vw"
+            src="https://images.ctfassets.net/g1pxcpqorahb/4OumunhLlUuAkr1t23JwmG/83d2a19ca3b85e1a738292626ed33cfc/WhatsApp_Image_2025-07-22_at_10.23.42_PM__2_.jpeg"
             alt="The Social Atelier Location Map"
             className="w-full h-full object-cover"
             loading="lazy"
