@@ -11,11 +11,11 @@ export const spaces: Space[] = [
     description:
       'Maison Paris is our vintage inspired Parisian waiting lounge and curated photo corner. Perfect for capturing the French ambiance.',
     mainImage:
-      'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/4OumunhLlUuAkr1t23JwmG/83d2a19ca3b85e1a738292626ed33cfc/WhatsApp_Image_2025-07-22_at_10.23.42_PM__2_.jpeg',
     images: [
-      'https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/276583/pexels-photo-276583.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/4OumunhLlUuAkr1t23JwmG/83d2a19ca3b85e1a738292626ed33cfc/WhatsApp_Image_2025-07-22_at_10.23.42_PM__2_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/3s5CpLIAbwEC1llFSNk4oL/e2a2d11d2fa34f56a898c3d466be6a51/WhatsApp_Image_2025-07-22_at_10.23.44_PM__1_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/1D9aCk9gUEL2RDhcm430RG/579402909097f6d45e59f63f1fa856a4/WhatsApp_Image_2025-07-22_at_10.23.38_PM.jpeg',
     ],
     features: [
       'Vintage-inspired seating and decor',
@@ -49,11 +49,11 @@ export const spaces: Space[] = [
     description:
       'A photogenic kitchen designed for light bites, coffee breaks and content creation. The perfect backdrop for culinary shoots, cozy conversations, and playful moments.',
     mainImage:
-      'https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/4WUj7CaDAyLNxWN5kFy4HW/3eb4d42bfc0cde8d26f4f7f737141fbb/WhatsApp_Image_2025-07-22_at_10.23.39_PM__3_.jpeg',
     images: [
-      'https://images.pexels.com/photos/2724749/pexels-photo-2724749.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/3926542/pexels-photo-3926542.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/5VsguNqFyck4eSlv2raKgC/17267246f3666260ec24b2f4d7e6ff60/WhatsApp_Image_2025-07-22_at_10.23.39_PM__1_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/6ctQ1IBg0kTZskJDSFPdR/f3949c506110fcb23b2d8f205dc2431a/WhatsApp_Image_2025-07-22_at_10.23.40_PM.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/4WUj7CaDAyLNxWN5kFy4HW/3eb4d42bfc0cde8d26f4f7f737141fbb/WhatsApp_Image_2025-07-22_at_10.23.39_PM__3_.jpeg',
     ],
     features: [
       'High-end appliances and cookware',
@@ -87,11 +87,9 @@ export const spaces: Space[] = [
     description:
       'A stunning, dome like hallway inspired by iconic European architecture. The ideal setting for dramatic entrances, fashion shoots, and artistic storytelling.',
     mainImage:
-      'https://images.pexels.com/photos/1090638/pexels-photo-1090638.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/usqCYLpO8UO4fwfIMQOHn/b65c216d284a48d498aafee284e93e33/WhatsApp_Image_2025-07-22_at_10.23.36_PM.jpeg',
     images: [
-      'https://images.pexels.com/photos/1090638/pexels-photo-1090638.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/380330/pexels-photo-380330.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/3209045/pexels-photo-3209045.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/32wVhQ0g6cTZh7NEVtqW6K/c133d7f2a5aa039d819c812ff447b478/WhatsApp_Image_2025-07-22_at_10.23.38_PM__2_.jpeg',
     ],
     features: [
       'Architectural moldings and details',
@@ -116,43 +114,43 @@ export const spaces: Space[] = [
     openingDays: 'Tuesday - Sunday',
     openingHours: '10:00 AM - 6:00 PM',
   },
-  {
-    id: '4',
-    name: 'The Pod Loft',
-    slug: 'the-pod-loft',
-    type: 'podcast',
-    shortDescription: 'A sleek, soundproof space built for bold voices and unforgettable conversations.',
-    description: 'A sleek, soundproof space built for bold voices, clear sound and unforgettable conversations.',
-    mainImage:
-      'https://images.pexels.com/photos/3783471/pexels-photo-3783471.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-    images: [
-      'https://images.pexels.com/photos/3783471/pexels-photo-3783471.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/1569076/pexels-photo-1569076.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/3784424/pexels-photo-3784424.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-    ],
-    features: [
-      'Professional sound treatment',
-      'High-quality microphones and equipment',
-      'Comfortable seating for up to 4 people',
-      'Soundproof environment',
-      'Recording capabilities',
-    ],
-    useCases: [
-      'Podcast recording',
-      'Interview sessions',
-      'Voiceover work',
-      'Small panel discussions',
-      'Audio content creation',
-    ],
-    hourlyRate: 150000, // ₦150,000
-    durationOptions: [
-      { hours: 2, label: '2 hours' },
-      { hours: 4, label: '4 hours' },
-      { hours: 8, label: 'Full day (8 hours)' },
-    ],
-    openingDays: 'Tuesday - Sunday',
-    openingHours: '10:00 AM - 6:00 PM',
-  },
+  // {
+  //   id: '4',
+  //   name: 'The Pod Loft',
+  //   slug: 'the-pod-loft',
+  //   type: 'podcast',
+  //   shortDescription: 'A sleek, soundproof space built for bold voices and unforgettable conversations.',
+  //   description: 'A sleek, soundproof space built for bold voices, clear sound and unforgettable conversations.',
+  //   mainImage:
+  //     'https://images.pexels.com/photos/3783471/pexels-photo-3783471.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+  //   images: [
+  //     'https://images.pexels.com/photos/3783471/pexels-photo-3783471.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+  //     'https://images.pexels.com/photos/1569076/pexels-photo-1569076.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+  //     'https://images.pexels.com/photos/3784424/pexels-photo-3784424.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+  //   ],
+  //   features: [
+  //     'Professional sound treatment',
+  //     'High-quality microphones and equipment',
+  //     'Comfortable seating for up to 4 people',
+  //     'Soundproof environment',
+  //     'Recording capabilities',
+  //   ],
+  //   useCases: [
+  //     'Podcast recording',
+  //     'Interview sessions',
+  //     'Voiceover work',
+  //     'Small panel discussions',
+  //     'Audio content creation',
+  //   ],
+  //   hourlyRate: 150000, // ₦150,000
+  //   durationOptions: [
+  //     { hours: 2, label: '2 hours' },
+  //     { hours: 4, label: '4 hours' },
+  //     { hours: 8, label: 'Full day (8 hours)' },
+  //   ],
+  //   openingDays: 'Tuesday - Sunday',
+  //   openingHours: '10:00 AM - 6:00 PM',
+  // },
   {
     id: '5',
     name: 'The Piano Room',
@@ -162,11 +160,11 @@ export const spaces: Space[] = [
     description:
       'An opulent ballroom style space featuring a grand piano and chandelier. Ideal for striking portraits, music inspired shoots, and unforgettable moments with a touch of grandeur.',
     mainImage:
-      'https://images.pexels.com/photos/164743/pexels-photo-164743.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/73TEHG9mEcoPeuu6SC5psB/6efa39aded5f6e7e811b2f522e412df2/WhatsApp_Image_2025-07-22_at_10.23.44_PM__2_.jpeg',
     images: [
-      'https://images.pexels.com/photos/164743/pexels-photo-164743.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/110954/pexels-photo-110954.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/1021142/pexels-photo-1021142.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/73TEHG9mEcoPeuu6SC5psB/6efa39aded5f6e7e811b2f522e412df2/WhatsApp_Image_2025-07-22_at_10.23.44_PM__2_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/MGpJLqVtV16etyLRAbQYx/8c4107ba00e02972164d504683d52b19/WhatsApp_Image_2025-07-22_at_10.23.39_PM__2_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/1cvfX2zHDNqqZxdmJcL9Pw/c32b3b66dbc457985735ed54b7dd72f8/tsa-piano-room-3.png',
     ],
     features: [
       'Professionally tuned grand piano',
@@ -200,11 +198,10 @@ export const spaces: Space[] = [
     description:
       'Nue Ville is a minimalist, nude-toned room designed for clean, modern content creation. Its neutral palette makes it ideal for fashion, branding, and editorial shoots.',
     mainImage:
-      'https://images.pexels.com/photos/4846455/pexels-photo-4846455.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/5UtPSybebHZE6rvahaDhh2/2df82a01cdbc5e43a3677a1941377366/WhatsApp_Image_2025-07-22_at_10.23.38_PM__3_.jpeg',
     images: [
-      'https://images.pexels.com/photos/4846455/pexels-photo-4846455.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/6969809/pexels-photo-6969809.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/4352247/pexels-photo-4352247.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/5UtPSybebHZE6rvahaDhh2/2df82a01cdbc5e43a3677a1941377366/WhatsApp_Image_2025-07-22_at_10.23.38_PM__3_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/7gY3Mt0n4h019mBBM1EfwA/cb583555f7c075d331c7d7860033b6f8/WhatsApp_Image_2025-07-22_at_10.23.39_PM.jpeg',
     ],
     features: [
       'Perfect natural lighting with diffusers',
@@ -238,11 +235,11 @@ export const spaces: Space[] = [
     description:
       'A stylish bathroom with a jacuzzi and walk in closet crafted for glamorous content, beauty shoots and indulgent behind the scenes experiences.',
     mainImage:
-      'https://images.pexels.com/photos/6585598/pexels-photo-6585598.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/5nxkLuH37DAXSsDPWd6ZWb/cd99552d2bb7dfdbe4e8d59ec0372cba/WhatsApp_Image_2025-07-22_at_10.23.38_PM__1_.jpeg',
     images: [
-      'https://images.pexels.com/photos/6585598/pexels-photo-6585598.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/1910472/pexels-photo-1910472.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/1457847/pexels-photo-1457847.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/5nxkLuH37DAXSsDPWd6ZWb/cd99552d2bb7dfdbe4e8d59ec0372cba/WhatsApp_Image_2025-07-22_at_10.23.38_PM__1_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/5ezyDak7RyZ1QZYiDkxxYJ/8f7a47088da6b8ee2bce77138dc67a24/WhatsApp_Image_2025-07-22_at_10.23.42_PM__1_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/6lkk7FsrC7ENWnfnmu42Oz/83bbdce8504798080cb31a4954359da8/WhatsApp_Image_2025-07-22_at_10.23.42_PM__4_.jpeg',
     ],
     features: [
       'Designer fixtures and finishes',
@@ -276,11 +273,11 @@ export const spaces: Space[] = [
     description:
       'Our intimate event space, designed for private gatherings, special occasions, and memorable celebrations in an elegant, welcoming atmosphere.',
     mainImage:
-      'https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/21QSKot59kNpCsWFy8foaB/3faac807ee126b188aee993f06c8e1a5/WhatsApp_Image_2025-07-22_at_10.23.45_PM__1_.jpeg',
     images: [
-      'https://images.pexels.com/photos/2774556/pexels-photo-2774556.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/5503956/pexels-photo-5503956.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/21QSKot59kNpCsWFy8foaB/3faac807ee126b188aee993f06c8e1a5/WhatsApp_Image_2025-07-22_at_10.23.45_PM__1_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/1TpyJAFuWZGqiKadgdZOLd/436d33ed178bc250e302e883fee8441f/WhatsApp_Image_2025-07-22_at_10.23.42_PM.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/3jA33WuIMDcAng1EPO7Pzq/31f9efc208dd1b0844b2af77e5451fe5/WhatsApp_Image_2025-07-22_at_10.23.44_PM__3_.jpeg',
     ],
     features: [
       'Flexible seating arrangements',
@@ -308,11 +305,12 @@ export const spaces: Space[] = [
     description:
       'A nature inspired gazebo adorned with flowers perfect for picnics, garden parties, sunlit photos and a tranquil creative space.',
     mainImage:
-      'https://images.pexels.com/photos/1122865/pexels-photo-1122865.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/2GPPNzKmkoYkJwoSUIEb2N/4026710b30fdab773839fe27b6ba2f24/WhatsApp_Image_2025-07-22_at_10.23.40_PM__2_.jpeg',
     images: [
-      'https://images.pexels.com/photos/1122865/pexels-photo-1122865.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/4986481/pexels-photo-4986481.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-      'https://images.pexels.com/photos/2286078/pexels-photo-2286078.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+      'https://images.ctfassets.net/g1pxcpqorahb/2GPPNzKmkoYkJwoSUIEb2N/4026710b30fdab773839fe27b6ba2f24/WhatsApp_Image_2025-07-22_at_10.23.40_PM__2_.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/4McRX9TJeSsXIGu8p5GrSU/e6a472ecb15d82a349a1a79b92317529/WhatsApp_Image_2025-07-22_at_10.23.41_PM.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/58iqFXzbNURylUJT60k5IY/5218ff6f99c87bfdcc105152ae5831b2/WhatsApp_Image_2025-07-22_at_10.23.37_PM.jpeg',
+      'https://images.ctfassets.net/g1pxcpqorahb/3z5UaD36qIqWhIOOcVtTSs/2fe97e42a29e9273733c05c8622c9dee/WhatsApp_Image_2025-07-22_at_10.23.41_PM__1_.jpeg',
     ],
     features: [
       'Lush landscaping and greenery',

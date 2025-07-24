@@ -47,21 +47,13 @@ const HomePage = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img
-                src="https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
-                srcSet="https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop 200w,
-                        https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop 400w,
-                        https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop 600w"
-                sizes="(max-width: 640px) 200px, (max-width: 1024px) 300px, 400px"
+                src="https://images.ctfassets.net/g1pxcpqorahb/58iqFXzbNURylUJT60k5IY/5218ff6f99c87bfdcc105152ae5831b2/WhatsApp_Image_2025-07-22_at_10.23.37_PM.jpeg"
                 alt="Social Atelier Space"
                 className="w-full h-64 object-cover rounded-lg shadow-sm"
                 loading="lazy"
               />
               <img
-                src="https://images.pexels.com/photos/3209045/pexels-photo-3209045.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
-                srcSet="https://images.pexels.com/photos/3209045/pexels-photo-3209045.jpeg?auto=compress&cs=tinysrgb&w=200&h=150&fit=crop 200w,
-                        https://images.pexels.com/photos/3209045/pexels-photo-3209045.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop 400w,
-                        https://images.pexels.com/photos/3209045/pexels-photo-3209045.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop 600w"
-                sizes="(max-width: 640px) 200px, (max-width: 1024px) 300px, 400px"
+                src="https://images.ctfassets.net/g1pxcpqorahb/MGpJLqVtV16etyLRAbQYx/8c4107ba00e02972164d504683d52b19/WhatsApp_Image_2025-07-22_at_10.23.39_PM__2_.jpeg"
                 alt="Social Atelier Space"
                 className="w-full h-64 object-cover rounded-lg shadow-sm mt-8"
                 loading="lazy"

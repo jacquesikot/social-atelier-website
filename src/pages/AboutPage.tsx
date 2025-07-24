@@ -64,21 +64,13 @@ const AboutPage = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img
-                src="https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
-                srcSet="https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=300&h=225&fit=crop 300w,
-                        https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop 400w,
-                        https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop 600w"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+                src="https://images.ctfassets.net/g1pxcpqorahb/73TEHG9mEcoPeuu6SC5psB/6efa39aded5f6e7e811b2f522e412df2/WhatsApp_Image_2025-07-22_at_10.23.44_PM__2_.jpeg"
                 alt="The Social Atelier Interior"
                 className="absolute top-0 left-0 w-8/12 h-64 object-cover rounded-lg shadow-lg z-10"
                 loading="lazy"
               />
               <img
-                src="https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop"
-                srcSet="https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=300&h=225&fit=crop 300w,
-                        https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=400&h=300&fit=crop 400w,
-                        https://images.pexels.com/photos/2062426/pexels-photo-2062426.jpeg?auto=compress&cs=tinysrgb&w=600&h=450&fit=crop 600w"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 400px"
+                src="https://images.ctfassets.net/g1pxcpqorahb/32wVhQ0g6cTZh7NEVtqW6K/c133d7f2a5aa039d819c812ff447b478/WhatsApp_Image_2025-07-22_at_10.23.38_PM__2_.jpeg"
                 alt="The Social Atelier Interior"
                 className="absolute bottom-0 right-0 w-8/12 h-72 object-cover rounded-lg shadow-lg"
                 loading="lazy"
@@ -323,7 +315,7 @@ const AboutPage = () => {
               className="rounded-lg overflow-hidden shadow-md h-[400px]"
             >
               <img
-                src="https://images.ctfassets.net/g1pxcpqorahb/3K1lpw8dhqGkWcppWHFLfp/34fe6cfb36332afdc8afae4d40f093ef/tsa-piano-room-4.png"
+                src="https://images.ctfassets.net/g1pxcpqorahb/1D9aCk9gUEL2RDhcm430RG/579402909097f6d45e59f63f1fa856a4/WhatsApp_Image_2025-07-22_at_10.23.38_PM.jpeg"
                 alt="The Social Atelier Piano Room"
                 className="w-full h-full object-cover"
                 loading="lazy"

@@ -7,12 +7,7 @@ const Hero = () => {
       {/* Hero Background Image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop"
-          srcSet="https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=800&h=533&fit=crop 800w,
-                  https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop 1200w,
-                  https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1067&fit=crop 1600w,
-                  https://images.pexels.com/photos/1643383/pexels-photo-1643383.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1280&fit=crop 1920w"
-          sizes="100vw"
+          src="https://images.ctfassets.net/g1pxcpqorahb/5UtPSybebHZE6rvahaDhh2/2df82a01cdbc5e43a3677a1941377366/WhatsApp_Image_2025-07-22_at_10.23.38_PM__3_.jpeg"
           alt="The Social Atelier Hero"
           className="w-full h-full object-cover"
         />

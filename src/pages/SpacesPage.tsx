@@ -68,7 +68,7 @@ const SpacesPage = () => {
                 { id: 'all', label: 'All Spaces' },
                 { id: 'event', label: 'Event Spaces' },
                 { id: 'photo', label: 'Photography' },
-                { id: 'podcast', label: 'Podcast & Recording' },
+                // { id: 'podcast', label: 'Podcast & Recording' },
               ].map((category) => (
                 <button
                   key={category.id}
