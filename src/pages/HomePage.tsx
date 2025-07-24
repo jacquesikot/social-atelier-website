@@ -1,9 +1,8 @@
-import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Hero from '../components/Hero';
-import FeaturedSpaces from '../components/FeaturedSpaces';
-import Testimonials from '../components/Testimonials';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
+import FeaturedSpaces from '../components/FeaturedSpaces';
+import Hero from '../components/Hero';
 
 const HomePage = () => {
   useEffect(() => {
@@ -47,7 +46,7 @@ const HomePage = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img
-                src="https://images.ctfassets.net/g1pxcpqorahb/58iqFXzbNURylUJT60k5IY/5218ff6f99c87bfdcc105152ae5831b2/WhatsApp_Image_2025-07-22_at_10.23.37_PM.jpeg"
+                src="https://images.ctfassets.net/g1pxcpqorahb/4McRX9TJeSsXIGu8p5GrSU/e6a472ecb15d82a349a1a79b92317529/WhatsApp_Image_2025-07-22_at_10.23.41_PM.jpeg"
                 alt="Social Atelier Space"
                 className="w-full h-64 object-cover rounded-lg shadow-sm"
                 loading="lazy"
@@ -69,12 +68,7 @@ const HomePage = () => {
       <section className="py-20 relative">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop"
-            srcSet="https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=800&h=533&fit=crop 800w,
-                    https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop 1200w,
-                    https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=1600&h=1067&fit=crop 1600w,
-                    https://images.pexels.com/photos/1024248/pexels-photo-1024248.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1280&fit=crop 1920w"
-            sizes="100vw"
+            src="https://images.ctfassets.net/g1pxcpqorahb/4OumunhLlUuAkr1t23JwmG/83d2a19ca3b85e1a738292626ed33cfc/WhatsApp_Image_2025-07-22_at_10.23.42_PM__2_.jpeg"
             alt="Book your space"
             className="w-full h-full object-cover"
             loading="lazy"
@@ -115,8 +109,6 @@ const HomePage = () => {
           </div>
         </div>
       </section>
-
-      <Testimonials />
     </div>
   );
 };
