@@ -23,6 +23,81 @@ interface ApiResponse {
   spaces: ApiSpace[]; // Note: no 'count' field in actual response
 }
 
+// Helper function to format time from 24-hour to 12-hour format
+const formatTime = (time: string): string => {
+  const [hours, minutes] = time.split(':');
+  const hour = parseInt(hours, 10);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
+  return `${displayHour}:${minutes} ${ampm}`;
+};
+
+// Helper function to format availability data
+const formatAvailability = (
+  availability: { dayOfWeek: number; startTime: string; endTime: string }[]
+): { openingDays: string; openingHours: string } => {
+  const dayNames: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  if (!availability || availability.length === 0) {
+    return {
+      openingDays: 'Contact for availability',
+      openingHours: 'Contact for hours',
+    };
+  }
+
+  // Group consecutive days with same hours
+  const grouped = availability.reduce((acc, curr) => {
+    const timeSlot = `${formatTime(curr.startTime)} - ${formatTime(curr.endTime)}`;
+    if (!acc[timeSlot]) {
+      acc[timeSlot] = [];
+    }
+    acc[timeSlot].push(curr.dayOfWeek);
+    return acc;
+  }, {} as Record<string, number[]>);
+
+  // Format the grouped data
+  const timeSlots = Object.entries(grouped);
+
+  if (timeSlots.length === 1) {
+    // All days have same hours
+    const [timeRange, days] = timeSlots[0];
+    const sortedDays = days.sort((a, b) => a - b);
+
+    // Check if it's consecutive days
+    const dayRanges = [];
+    let start = sortedDays[0];
+    let end = start;
+
+    for (let i = 1; i < sortedDays.length; i++) {
+      if (sortedDays[i] === end + 1) {
+        end = sortedDays[i];
+      } else {
+        dayRanges.push(start === end ? dayNames[start] : `${dayNames[start]} - ${dayNames[end]}`);
+        start = sortedDays[i];
+        end = start;
+      }
+    }
+    dayRanges.push(start === end ? dayNames[start] : `${dayNames[start]} - ${dayNames[end]}`);
+
+    return {
+      openingDays: dayRanges.join(', '),
+      openingHours: timeRange,
+    };
+  } else {
+    // Different hours for different days - show most common pattern
+    const mostCommonTime = timeSlots.reduce((prev, current) => (prev[1].length > current[1].length ? prev : current));
+
+    const [timeRange, days] = mostCommonTime;
+    const sortedDays = days.sort((a, b) => a - b);
+    const formattedDayNames = sortedDays.map((day) => dayNames[day]);
+
+    return {
+      openingDays: formattedDayNames.join(', '),
+      openingHours: timeRange,
+    };
+  }
+};
+
 // Hardcoded data that will be merged with API data
 const hardcodedSpaceData: Record<string, Partial<Space>> = {
   '68834e6a058284898c872505': {
@@ -273,6 +348,9 @@ export const fetchSpacesFromApi = async (): Promise<Space[]> => {
     const mappedSpaces: Space[] = data.spaces.map((apiSpace) => {
       const hardcodedData = hardcodedSpaceData[apiSpace.id] || {};
 
+      // Format availability data for better UX
+      const availability = formatAvailability(apiSpace.availability);
+
       // Use API data for name, description, and images
       // Use hardcoded data for everything else
       return {
@@ -287,14 +365,15 @@ export const fetchSpacesFromApi = async (): Promise<Space[]> => {
         shortDescription: hardcodedData.shortDescription || apiSpace.description,
         features: hardcodedData.features || [],
         useCases: hardcodedData.useCases || [],
-        hourlyRate: hardcodedData.hourlyRate || apiSpace.pricePerHour, // Use API price if no hardcoded rate
+        hourlyRate: hardcodedData.hourlyRate || apiSpace.pricePerHour,
         durationOptions: hardcodedData.durationOptions || [
           { hours: 2, label: '2 hours' },
           { hours: 4, label: '4 hours' },
           { hours: 8, label: 'Full day (8 hours)' },
         ],
-        openingDays: hardcodedData.openingDays || 'Tuesday - Sunday',
-        openingHours: hardcodedData.openingHours || '10:00 AM - 6:00 PM',
+        // Use formatted availability or fall back to hardcoded data
+        openingDays: hardcodedData.openingDays || availability.openingDays,
+        openingHours: hardcodedData.openingHours || availability.openingHours,
       };
     });
 

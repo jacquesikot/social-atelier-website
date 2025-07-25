@@ -98,7 +98,11 @@ const SpaceDetailPage = () => {
             <span>Back to All Spaces</span>
           </NavLink>
 
-          <NavLink to="/booking" className="btn btn-primary">
+          <NavLink
+            to={`https://app.easybookr.com/book/the-social-atelier/?spaceId=${space.id}`}
+            target="_blank"
+            className="btn btn-primary"
+          >
             Book This Space
           </NavLink>
         </div>
