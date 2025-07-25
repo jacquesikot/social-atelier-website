@@ -1,27 +1,46 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import SpaceCard from '../components/SpaceCard';
-import { spaces } from '../data/spaces';
+import { getSpaces, spaces as fallbackSpaces } from '../data/spaces';
+import { Space } from '../types';
 
 const SpacesPage = () => {
   const [filter, setFilter] = useState('all');
-  const [filteredSpaces, setFilteredSpaces] = useState(spaces);
+  const [filteredSpaces, setFilteredSpaces] = useState<Space[]>(fallbackSpaces);
+  const [allSpaces, setAllSpaces] = useState<Space[]>(fallbackSpaces);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Our Spaces | The Social Atelier';
+
+    // Load spaces from API
+    const loadSpaces = async () => {
+      try {
+        const spacesData = await getSpaces();
+        setAllSpaces(spacesData);
+        setFilteredSpaces(spacesData);
+      } catch (error) {
+        console.error('Error loading spaces:', error);
+        // Keep using fallback data
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSpaces();
   }, []);
 
   // Filter spaces based on selected category
   useEffect(() => {
     if (filter === 'all') {
-      setFilteredSpaces(spaces);
+      setFilteredSpaces(allSpaces);
       return;
     }
 
     // Simple filtering based on space name or features
     // In a real app, you'd have proper categories in your data model
-    const filtered = spaces.filter((space) => {
+    const filtered = allSpaces.filter((space) => {
       if (filter === 'event') {
         return space.type === 'event';
       }
@@ -36,7 +55,7 @@ const SpacesPage = () => {
     });
 
     setFilteredSpaces(filtered);
-  }, [filter]);
+  }, [filter, allSpaces]);
 
   return (
     <div className="pt-24">
@@ -90,7 +109,11 @@ const SpacesPage = () => {
       {/* Spaces Grid */}
       <section className="section bg-neutral-50">
         <div className="container-custom">
-          {filteredSpaces.length > 0 ? (
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+            </div>
+          ) : filteredSpaces.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredSpaces.map((space, index) => (
                 <SpaceCard key={space.id} space={space} index={index} />

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams, NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { getSpaceById, spaces } from '../data/spaces';
-import { BookingFormData } from '../types';
+import { getSpaceById, getSpaces } from '../data/spaces';
+import { BookingFormData, Space } from '../types';
 import toast from 'react-hot-toast';
 
 const BookingPage = () => {
@@ -20,16 +20,43 @@ const BookingPage = () => {
     message: '',
   });
 
-  const selectedSpace = formData.spaceId ? getSpaceById(formData.spaceId) : null;
+  const [selectedSpace, setSelectedSpace] = useState<Space | null>(null);
+  const [allSpaces, setAllSpaces] = useState<Space[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     document.title = 'Book a Space | The Social Atelier';
-  }, []);
+
+    const loadSpaces = async () => {
+      try {
+        const spacesData = await getSpaces();
+        setAllSpaces(spacesData);
+
+        // Load selected space if spaceId is provided
+        if (formData.spaceId) {
+          const space = await getSpaceById(formData.spaceId);
+          setSelectedSpace(space || null);
+        }
+      } catch (error) {
+        console.error('Error loading spaces:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadSpaces();
+  }, [formData.spaceId]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Update selected space when spaceId changes
+    if (name === 'spaceId') {
+      const space = allSpaces.find((s) => s.id === value);
+      setSelectedSpace(space || null);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -50,7 +77,16 @@ const BookingPage = () => {
       phone: '',
       message: '',
     });
+    setSelectedSpace(null);
   };
+
+  if (loading) {
+    return (
+      <div className="pt-24 min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-24">
@@ -96,9 +132,9 @@ const BookingPage = () => {
                     className="input"
                   >
                     <option value="">Select a space</option>
-                    {spaces.map((space) => (
+                    {allSpaces.map((space) => (
                       <option key={space.id} value={space.id}>
-                        {space.name} (${space.hourlyRate}/hour)
+                        {space.name} (₦{space.hourlyRate.toLocaleString()}/hour)
                       </option>
                     ))}
                   </select>
@@ -149,9 +185,17 @@ const BookingPage = () => {
                     required
                     className="input"
                   >
-                    <option value={2}>2 hours</option>
-                    <option value={4}>4 hours</option>
-                    <option value={8}>Full day (8 hours)</option>
+                    {selectedSpace?.durationOptions.map((option) => (
+                      <option key={option.hours} value={option.hours}>
+                        {option.label}
+                      </option>
+                    )) || (
+                      <>
+                        <option value={2}>2 hours</option>
+                        <option value={4}>4 hours</option>
+                        <option value={8}>Full day (8 hours)</option>
+                      </>
+                    )}
                   </select>
                 </div>
 
@@ -250,7 +294,7 @@ const BookingPage = () => {
                     </div>
 
                     <h3 className="font-medium text-lg">{selectedSpace.name}</h3>
-                    <p className="text-primary-600 font-medium">${selectedSpace.hourlyRate}/hour</p>
+                    <p className="text-primary-600 font-medium">₦{selectedSpace.hourlyRate.toLocaleString()}/hour</p>
                     <p className="text-sm text-neutral-600 mt-2">{selectedSpace.shortDescription}</p>
 
                     <div className="mt-4 pt-4 border-t border-neutral-200">

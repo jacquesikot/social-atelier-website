@@ -2,24 +2,44 @@ import { useEffect, useState } from 'react';
 import { useParams, NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getSpaceBySlug } from '../data/spaces';
+import { Space } from '../types';
 import { ArrowLeft, Clock, Calendar, DollarSign, Users, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SpaceDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const space = getSpaceBySlug(id || '');
+  const [space, setSpace] = useState<Space | null>(null);
+  const [loading, setLoading] = useState(true);
   const [activeImage, setActiveImage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImageIndex, setModalImageIndex] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (space) {
-      document.title = `${space.name} | The Social Atelier`;
-      setActiveImage(space.mainImage);
-    } else {
-      document.title = 'Space Not Found | The Social Atelier';
-    }
-  }, [space]);
+
+    const loadSpace = async () => {
+      if (id) {
+        try {
+          const spaceData = await getSpaceBySlug(id);
+          setSpace(spaceData || null);
+          if (spaceData) {
+            document.title = `${spaceData.name} | The Social Atelier`;
+            setActiveImage(spaceData.mainImage);
+          } else {
+            document.title = 'Space Not Found | The Social Atelier';
+          }
+        } catch (error) {
+          console.error('Error loading space:', error);
+          document.title = 'Space Not Found | The Social Atelier';
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        setLoading(false);
+      }
+    };
+
+    loadSpace();
+  }, [id]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-NG', {
@@ -29,6 +49,14 @@ const SpaceDetailPage = () => {
       maximumFractionDigits: 0,
     }).format(amount);
   };
+
+  if (loading) {
+    return (
+      <div className="pt-24 min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+      </div>
+    );
+  }
 
   if (!space) {
     return (

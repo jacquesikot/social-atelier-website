@@ -1,6 +1,8 @@
 import { Space } from '../types';
+import { fetchSpacesFromApi } from '../services/spacesApi';
 
-export const spaces: Space[] = [
+// Fallback spaces data (in case API fails)
+const fallbackSpaces: Space[] = [
   {
     id: '1',
     name: 'Maison Paris',
@@ -114,43 +116,6 @@ export const spaces: Space[] = [
     openingDays: 'Tuesday - Sunday',
     openingHours: '10:00 AM - 6:00 PM',
   },
-  // {
-  //   id: '4',
-  //   name: 'The Pod Loft',
-  //   slug: 'the-pod-loft',
-  //   type: 'podcast',
-  //   shortDescription: 'A sleek, soundproof space built for bold voices and unforgettable conversations.',
-  //   description: 'A sleek, soundproof space built for bold voices, clear sound and unforgettable conversations.',
-  //   mainImage:
-  //     'https://images.pexels.com/photos/3783471/pexels-photo-3783471.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&fit=crop',
-  //   images: [
-  //     'https://images.pexels.com/photos/3783471/pexels-photo-3783471.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-  //     'https://images.pexels.com/photos/1569076/pexels-photo-1569076.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-  //     'https://images.pexels.com/photos/3784424/pexels-photo-3784424.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
-  //   ],
-  //   features: [
-  //     'Professional sound treatment',
-  //     'High-quality microphones and equipment',
-  //     'Comfortable seating for up to 4 people',
-  //     'Soundproof environment',
-  //     'Recording capabilities',
-  //   ],
-  //   useCases: [
-  //     'Podcast recording',
-  //     'Interview sessions',
-  //     'Voiceover work',
-  //     'Small panel discussions',
-  //     'Audio content creation',
-  //   ],
-  //   hourlyRate: 150000, // ₦150,000
-  //   durationOptions: [
-  //     { hours: 2, label: '2 hours' },
-  //     { hours: 4, label: '4 hours' },
-  //     { hours: 8, label: 'Full day (8 hours)' },
-  //   ],
-  //   openingDays: 'Tuesday - Sunday',
-  //   openingHours: '10:00 AM - 6:00 PM',
-  // },
   {
     id: '5',
     name: 'The Piano Room',
@@ -337,10 +302,49 @@ export const spaces: Space[] = [
   },
 ];
 
-export const getSpaceBySlug = (slug: string): Space | undefined => {
+// Cache for API data
+let cachedSpaces: Space[] | null = null;
+let cacheTimestamp: number = 0;
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+// Function to get spaces (from API or fallback)
+export const getSpaces = async (): Promise<Space[]> => {
+  // Check if we have cached data that's still fresh
+  if (cachedSpaces && Date.now() - cacheTimestamp < CACHE_DURATION) {
+    return cachedSpaces;
+  }
+
+  try {
+    const apiSpaces = await fetchSpacesFromApi();
+    cachedSpaces = apiSpaces;
+    cacheTimestamp = Date.now();
+    return apiSpaces;
+  } catch (error) {
+    console.warn('Failed to fetch spaces from API, using fallback data:', error);
+    return fallbackSpaces;
+  }
+};
+
+// Synchronous access to spaces (for backward compatibility)
+// This will return cached data if available, otherwise fallback data
+export const spaces: Space[] = cachedSpaces || fallbackSpaces;
+
+// Helper functions
+export const getSpaceBySlug = async (slug: string): Promise<Space | undefined> => {
+  const allSpaces = await getSpaces();
+  return allSpaces.find((space) => space.slug === slug);
+};
+
+export const getSpaceById = async (id: string): Promise<Space | undefined> => {
+  const allSpaces = await getSpaces();
+  return allSpaces.find((space) => space.id === id);
+};
+
+// Synchronous helper functions (for backward compatibility)
+export const getSpaceBySlugSync = (slug: string): Space | undefined => {
   return spaces.find((space) => space.slug === slug);
 };
 
-export const getSpaceById = (id: string): Space | undefined => {
+export const getSpaceByIdSync = (id: string): Space | undefined => {
   return spaces.find((space) => space.id === id);
 };
