@@ -23,15 +23,6 @@ interface ApiResponse {
   spaces: ApiSpace[]; // Note: no 'count' field in actual response
 }
 
-// Helper function to format time from 24-hour to 12-hour format
-const formatTime = (time: string): string => {
-  const [hours, minutes] = time.split(':');
-  const hour = parseInt(hours, 10);
-  const ampm = hour >= 12 ? 'PM' : 'AM';
-  const displayHour = hour === 0 ? 12 : hour > 12 ? hour - 12 : hour;
-  return `${displayHour}:${minutes} ${ampm}`;
-};
-
 // Helper function to format availability data
 const formatAvailability = (
   availability: { dayOfWeek: number; startTime: string; endTime: string }[]
@@ -47,7 +38,7 @@ const formatAvailability = (
 
   // Group consecutive days with same hours
   const grouped = availability.reduce((acc, curr) => {
-    const timeSlot = `${formatTime(curr.startTime)} - ${formatTime(curr.endTime)}`;
+    const timeSlot = `${curr.startTime} - ${curr.endTime}`;
     if (!acc[timeSlot]) {
       acc[timeSlot] = [];
     }
@@ -359,21 +350,21 @@ export const fetchSpacesFromApi = async (): Promise<Space[]> => {
         description: apiSpace.description,
         images: apiSpace.images.length > 0 ? apiSpace.images : [hardcodedData.mainImage || ''],
         mainImage: apiSpace.images[0] || hardcodedData.mainImage || '',
-        // Use hardcoded data for remaining fields
+        hourlyRate: apiSpace.pricePerHour || hardcodedData.hourlyRate || 0,
         slug: hardcodedData.slug || apiSpace.name.toLowerCase().replace(/\s+/g, '-'),
+        shortDescription: apiSpace.description || hardcodedData.shortDescription || apiSpace.description,
+        // Use hardcoded data for remaining fields
         type: hardcodedData.type || 'photo',
-        shortDescription: hardcodedData.shortDescription || apiSpace.description,
         features: hardcodedData.features || [],
         useCases: hardcodedData.useCases || [],
-        hourlyRate: hardcodedData.hourlyRate || apiSpace.pricePerHour,
         durationOptions: hardcodedData.durationOptions || [
           { hours: 2, label: '2 hours' },
           { hours: 4, label: '4 hours' },
           { hours: 8, label: 'Full day (8 hours)' },
         ],
         // Use formatted availability or fall back to hardcoded data
-        openingDays: hardcodedData.openingDays || availability.openingDays,
-        openingHours: hardcodedData.openingHours || availability.openingHours,
+        openingDays: availability.openingDays,
+        openingHours: availability.openingHours,
       };
     });
 
