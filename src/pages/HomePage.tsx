@@ -63,52 +63,6 @@ const HomePage = () => {
       </section>
 
       <FeaturedSpaces />
-
-      {/* Booking CTA */}
-      <section className="py-20 relative">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.ctfassets.net/g1pxcpqorahb/4OumunhLlUuAkr1t23JwmG/83d2a19ca3b85e1a738292626ed33cfc/WhatsApp_Image_2025-07-22_at_10.23.42_PM__2_.jpeg"
-            alt="Book your space"
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-primary-900/70"></div>
-        </div>
-
-        <div className="container-custom relative z-10">
-          <div className="max-w-2xl mx-auto text-center text-white">
-            <motion.h2
-              className="heading-lg mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              Ready to Bring Your Vision to Life?
-            </motion.h2>
-            <motion.p
-              className="text-lg mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              Book one of our unique spaces for your next creative project, event, or gathering.
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <NavLink to="/booking" className="btn btn-primary bg-white text-primary-800 hover:bg-neutral-100">
-                Book Now
-              </NavLink>
-            </motion.div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

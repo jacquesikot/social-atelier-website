@@ -74,12 +74,12 @@ const Footer = () => {
               <p>Lagos State, Nigeria</p>
               <p className="mt-4">
                 <a href="tel:+2348012345678" className="hover:text-white transition-colors">
-                  +234 801 234 5678
+                  +234 903 118 9697
                 </a>
               </p>
               <p>
-                <a href="mailto:socialatelierng@gmail.com" className="hover:text-white transition-colors">
-                  socialatelierng@gmail.com
+                <a href="mailto:hello@socialatelierng.com" className="hover:text-white transition-colors">
+                  hello@socialatelierng.com
                 </a>
               </p>
             </address>

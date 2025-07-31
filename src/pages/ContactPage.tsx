@@ -79,8 +79,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h3 className="font-medium mb-1">Email Us</h3>
-                    <a href="mailto:socialatelierng@gmail.com" className="text-primary-600 hover:underline">
-                      socialatelierng@gmail.com
+                    <a href="mailto:hello@socialatelierng.com" className="text-primary-600 hover:underline">
+                      hello@socialatelierng.com
                     </a>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ const ContactPage = () => {
                   <div>
                     <h3 className="font-medium mb-1">Call Us</h3>
                     <a href="tel:+2348012345678" className="text-primary-600 hover:underline">
-                      +234 801 234 5678
+                      +234 903 118 9697
                     </a>
                   </div>
                 </div>

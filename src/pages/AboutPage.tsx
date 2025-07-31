@@ -299,9 +299,9 @@ const AboutPage = () => {
                 <div>
                   <h3 className="font-medium">Contact</h3>
                   <p className="text-neutral-600">
-                    Phone: +234 801 234 5678
+                    Phone: +234 903 118 9697
                     <br />
-                    Email: socialatelierng@gmail.com
+                    Email: hello@socialatelierng.com
                   </p>
                 </div>
               </div>
