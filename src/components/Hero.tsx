@@ -35,8 +35,12 @@ const Hero = () => {
                 Explore Our Spaces
               </NavLink>
 
-              <NavLink to="/booking" className="btn btn-secondary !text-white !border-white hover:!bg-white/10">
-                Book a Session
+              <NavLink
+                to={`https://app.easybookr.com/book/the-social-atelier/`}
+                target="_blank"
+                className="btn btn-secondary !text-white !border-white hover:!bg-white/10"
+              >
+                Book a Space
               </NavLink>
             </div>
           </motion.div>
