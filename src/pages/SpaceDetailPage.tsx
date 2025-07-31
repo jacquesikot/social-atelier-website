@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { ArrowLeft, Calendar, ChevronLeft, ChevronRight, Clock, Users, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 import { getSpaceBySlug } from '../data/spaces';
 import { Space } from '../types';
-import { ArrowLeft, Clock, Calendar, DollarSign, Users, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SpaceDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -192,7 +192,6 @@ const SpaceDetailPage = () => {
           >
             <div className="bg-white p-6 rounded-lg shadow-sm border border-neutral-200 sticky top-24">
               <div className="flex items-center text-primary-800 font-serif text-2xl mb-4">
-                <DollarSign size={24} className="mr-1" />
                 <span>{formatCurrency(space.hourlyRate)}</span>
                 <span className="text-neutral-600 text-base font-sans ml-1">/hour</span>
               </div>
