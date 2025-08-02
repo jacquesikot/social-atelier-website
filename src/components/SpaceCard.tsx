@@ -42,7 +42,12 @@ const SpaceCard = ({ space, index }: SpaceCardProps) => {
         <h3 className="text-xl font-serif font-light mb-2">{space.name}</h3>
         <p className="text-neutral-600 text-sm mb-4 line-clamp-2">{space.shortDescription}</p>
         <div className="flex justify-between items-center">
-          <span className="text-primary-600 font-medium">{formatCurrency(space.hourlyRate)}/hour</span>
+          <span className="text-primary-600 font-medium">
+            {formatCurrency(space.hourlyRate * Number((space.bookingDuration || 60) / 60))} for{' '}
+            {`${Number((space.bookingDuration || 60) / 60)} hour${
+              space.bookingDuration && space.bookingDuration > 60 ? 's' : ''
+            }`}
+          </span>
           <NavLink
             to={`/spaces/${space.slug}`}
             className="text-sm font-medium text-primary-700 hover:text-primary-800 transition-colors"

@@ -10,6 +10,7 @@ export interface Space {
   features: string[];
   useCases: string[];
   hourlyRate: number;
+  bookingDuration?: number;
   durationOptions: {
     hours: number;
     label: string;

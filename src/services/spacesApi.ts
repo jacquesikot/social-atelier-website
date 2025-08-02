@@ -351,6 +351,7 @@ export const fetchSpacesFromApi = async (): Promise<Space[]> => {
         images: apiSpace.images.length > 0 ? apiSpace.images : [hardcodedData.mainImage || ''],
         mainImage: apiSpace.images[0] || hardcodedData.mainImage || '',
         hourlyRate: apiSpace.pricePerHour || hardcodedData.hourlyRate || 0,
+        bookingDuration: apiSpace.bookingDuration || hardcodedData.bookingDuration || 0,
         slug: hardcodedData.slug || apiSpace.name.toLowerCase().replace(/\s+/g, '-'),
         shortDescription: apiSpace.description || hardcodedData.shortDescription || apiSpace.description,
         // Use hardcoded data for remaining fields

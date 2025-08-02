@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, ChevronLeft, ChevronRight, Clock, Users, X } from 'lucide-react';
+import { ArrowLeft, Calendar, ChevronLeft, ChevronRight, Clock, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { getSpaceBySlug } from '../data/spaces';
@@ -192,8 +192,12 @@ const SpaceDetailPage = () => {
           >
             <div className="bg-white p-6 rounded-lg shadow-sm border border-neutral-200 sticky top-24">
               <div className="flex items-center text-primary-800 font-serif text-2xl mb-4">
-                <span>{formatCurrency(space.hourlyRate)}</span>
-                <span className="text-neutral-600 text-base font-sans ml-1">/hour</span>
+                <span>{formatCurrency(space.hourlyRate * Number((space.bookingDuration || 60) / 60))}</span>
+                <span className="text-neutral-600 text-base font-sans ml-1">
+                  {`for ${Number((space.bookingDuration || 60) / 60)} hour${
+                    space.bookingDuration && space.bookingDuration > 60 ? 's' : ''
+                  }`}
+                </span>
               </div>
 
               <div className="space-y-4 mb-6">
@@ -210,18 +214,6 @@ const SpaceDetailPage = () => {
                   <div>
                     <h3 className="font-medium">Available Days</h3>
                     <p className="text-neutral-600 text-sm">{space.openingDays}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <Users size={20} className="text-primary-600 mt-1 mr-3" />
-                  <div>
-                    <h3 className="font-medium">Duration Options</h3>
-                    <ul className="text-neutral-600 text-sm space-y-1 mt-1">
-                      {space.durationOptions.map((option, index) => (
-                        <li key={index}>{option.label}</li>
-                      ))}
-                    </ul>
                   </div>
                 </div>
               </div>
