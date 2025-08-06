@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton';
 import HomePage from './pages/HomePage';
 import SpacesPage from './pages/SpacesPage';
 import SpaceDetailPage from './pages/SpaceDetailPage';
@@ -26,6 +27,10 @@ function App() {
         </main>
         <Footer />
         <Toaster position="bottom-right" />
+        <WhatsAppButton
+          phoneNumber="+2349031189697"
+          message="Hello! I'm interested in learning more about your creative spaces."
+        />
       </div>
     </Router>
   );
