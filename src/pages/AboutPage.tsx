@@ -64,13 +64,13 @@ const AboutPage = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img
-                src="https://images.ctfassets.net/g1pxcpqorahb/73TEHG9mEcoPeuu6SC5psB/6efa39aded5f6e7e811b2f522e412df2/WhatsApp_Image_2025-07-22_at_10.23.44_PM__2_.jpeg"
+                src="https://images.ctfassets.net/g1pxcpqorahb/4WzljLOx2Tsl1ImAyVVKn/83a3ef45fdebfedf739953698092807d/WhatsApp_Image_2025-08-15_at_9.21.46_PM__1_.jpeg"
                 alt="The Social Atelier Interior"
                 className="absolute top-0 left-0 w-8/12 h-64 object-cover rounded-lg shadow-lg z-10"
                 loading="lazy"
               />
               <img
-                src="https://images.ctfassets.net/g1pxcpqorahb/32wVhQ0g6cTZh7NEVtqW6K/c133d7f2a5aa039d819c812ff447b478/WhatsApp_Image_2025-07-22_at_10.23.38_PM__2_.jpeg"
+                src="https://images.ctfassets.net/g1pxcpqorahb/52TCZDguO32xdYNxhB9wDE/d5aecca7708a0fe7219f0885d06b4c9e/WhatsApp_Image_2025-08-15_at_9.21.46_PM__2_.jpeg"
                 alt="The Social Atelier Interior"
                 className="absolute bottom-0 right-0 w-8/12 h-72 object-cover rounded-lg shadow-lg"
                 loading="lazy"

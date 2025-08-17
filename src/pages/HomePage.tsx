@@ -46,13 +46,13 @@ const HomePage = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <img
-                src="https://images.ctfassets.net/g1pxcpqorahb/4McRX9TJeSsXIGu8p5GrSU/e6a472ecb15d82a349a1a79b92317529/WhatsApp_Image_2025-07-22_at_10.23.41_PM.jpeg"
+                src="https://images.ctfassets.net/g1pxcpqorahb/7E8VmzPBWYrixvdQyJrEWi/90c9b1ac6d8de826625c9e69eb4531e0/WhatsApp_Image_2025-08-15_at_9.21.46_PM.jpeg"
                 alt="Social Atelier Space"
                 className="w-full h-64 object-cover rounded-lg shadow-sm"
                 loading="lazy"
               />
               <img
-                src="https://images.ctfassets.net/g1pxcpqorahb/MGpJLqVtV16etyLRAbQYx/8c4107ba00e02972164d504683d52b19/WhatsApp_Image_2025-07-22_at_10.23.39_PM__2_.jpeg"
+                src="https://images.ctfassets.net/g1pxcpqorahb/7IshJLtI5Gc4a3Ctjz4JnL/e0bbe8d0c43655df7afcf12d1b988fce/WhatsApp_Image_2025-08-15_at_9.21.47_PM.jpeg"
                 alt="Social Atelier Space"
                 className="w-full h-64 object-cover rounded-lg shadow-sm mt-8"
                 loading="lazy"
