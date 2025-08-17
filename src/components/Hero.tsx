@@ -4,13 +4,18 @@ import { NavLink } from 'react-router-dom';
 const Hero = () => {
   return (
     <div className="relative h-screen w-full overflow-hidden">
-      {/* Hero Background Image */}
+      {/* Hero Background Video */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.ctfassets.net/g1pxcpqorahb/5UtPSybebHZE6rvahaDhh2/2df82a01cdbc5e43a3677a1941377366/WhatsApp_Image_2025-07-22_at_10.23.38_PM__3_.jpeg"
-          alt="The Social Atelier Hero"
+        <video
+          src="https://videos.ctfassets.net/g1pxcpqorahb/5jLFMzLqLX3GwauwSrJ3px/3257eb50d5a508068219d5f6359fff78/WhatsApp_Video_Aug_8_2025.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
           className="w-full h-full object-cover"
-        />
+        >
+          Your browser does not support the video tag.
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40"></div>
       </div>
 
