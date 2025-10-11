@@ -1,10 +1,10 @@
 import { Space } from '../types';
-import { fetchSpacesFromApi } from '../services/spacesApi';
+import { fetchSpacesFromApi, checkForUpdates } from '../services/spacesApi';
 
 // Fallback spaces data (in case API fails)
 const fallbackSpaces: Space[] = [
   {
-    id: '1',
+    id: '68834e6a058284898c872505',
     name: 'Maison Paris',
     slug: 'maison-paris',
     type: 'photo',
@@ -43,7 +43,7 @@ const fallbackSpaces: Space[] = [
     openingHours: '10:00 AM - 6:00 PM',
   },
   {
-    id: '2',
+    id: '68838d0a95036160c0726e01',
     name: 'The Creperie',
     slug: 'the-creperie',
     type: 'photo',
@@ -81,7 +81,7 @@ const fallbackSpaces: Space[] = [
     openingHours: '10:00 AM - 6:00 PM',
   },
   {
-    id: '3',
+    id: '6883b9ed28abbe958302778e',
     name: 'The Archway',
     slug: 'the-archway',
     type: 'photo',
@@ -117,7 +117,7 @@ const fallbackSpaces: Space[] = [
     openingHours: '10:00 AM - 6:00 PM',
   },
   {
-    id: '5',
+    id: '6883baad28abbe9583027796',
     name: 'The Piano Room',
     slug: 'the-piano-room',
     type: 'photo',
@@ -155,7 +155,7 @@ const fallbackSpaces: Space[] = [
     openingHours: '10:00 AM - 6:00 PM',
   },
   {
-    id: '6',
+    id: '6883bb6128abbe958302779e',
     name: 'Nue Ville',
     slug: 'nue-ville',
     type: 'photo',
@@ -192,7 +192,7 @@ const fallbackSpaces: Space[] = [
     openingHours: '10:00 AM - 6:00 PM',
   },
   {
-    id: '7',
+    id: '6883bc0528abbe95830277a6',
     name: 'Bain & Bubbles',
     slug: 'bain-bubbles',
     type: 'photo',
@@ -230,7 +230,7 @@ const fallbackSpaces: Space[] = [
     openingHours: '10:00 AM - 6:00 PM',
   },
   {
-    id: '8',
+    id: '6883bc6628abbe95830277ae',
     name: 'Lauren Fair',
     slug: 'lauren-fair',
     type: 'event',
@@ -262,7 +262,7 @@ const fallbackSpaces: Space[] = [
     openingHours: 'Available by appointment',
   },
   {
-    id: '9',
+    id: '6883bcc528abbe95830277b6',
     name: 'Miguel & Moss Garden',
     slug: 'miguel-moss-garden',
     type: 'event',
@@ -305,24 +305,67 @@ const fallbackSpaces: Space[] = [
 // Cache for API data
 let cachedSpaces: Space[] | null = null;
 let cacheTimestamp: number = 0;
-const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+const CACHE_DURATION = 30 * 1000; // 30 seconds (reduced from 5 minutes)
+const VERSION_CHECK_INTERVAL = 10 * 1000; // Check for updates every 10 seconds
+let lastVersionCheck: number = 0;
 
 // Function to get spaces (from API or fallback)
 export const getSpaces = async (): Promise<Space[]> => {
+  const now = Date.now();
+
+  // First, check if we should do a version check (lightweight check)
+  const shouldCheckVersion = now - lastVersionCheck >= VERSION_CHECK_INTERVAL;
+  
+  if (shouldCheckVersion && cachedSpaces) {
+    lastVersionCheck = now;
+    try {
+      const hasUpdates = await checkForUpdates();
+      if (hasUpdates) {
+        console.log('[Spaces] Server has updates, invalidating cache');
+        cachedSpaces = null;
+        cacheTimestamp = 0;
+        
+        // Emit event to notify React components
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('spaces-updated'));
+        }
+      }
+    } catch (error) {
+      console.warn('Version check failed:', error);
+      // Continue with existing cache
+    }
+  }
+
   // Check if we have cached data that's still fresh
-  if (cachedSpaces && Date.now() - cacheTimestamp < CACHE_DURATION) {
+  if (cachedSpaces && now - cacheTimestamp < CACHE_DURATION) {
     return cachedSpaces;
   }
 
+  // Cache is stale or doesn't exist, fetch fresh data
   try {
+    console.log('[Spaces] Fetching fresh data from API');
     const apiSpaces = await fetchSpacesFromApi();
     cachedSpaces = apiSpaces;
-    cacheTimestamp = Date.now();
+    cacheTimestamp = now;
     return apiSpaces;
   } catch (error) {
     console.warn('Failed to fetch spaces from API, using fallback data:', error);
+    // If we have stale cached data, return it instead of fallback
+    if (cachedSpaces) {
+      console.log('[Spaces] Using stale cache as fallback');
+      return cachedSpaces;
+    }
     return fallbackSpaces;
   }
+};
+
+// Manual refresh function (forces cache invalidation)
+export const refreshSpaces = async (): Promise<Space[]> => {
+  console.log('[Spaces] Manual refresh triggered');
+  cachedSpaces = null;
+  cacheTimestamp = 0;
+  lastVersionCheck = 0;
+  return await getSpaces();
 };
 
 // Synchronous access to spaces (for backward compatibility)

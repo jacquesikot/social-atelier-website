@@ -312,8 +312,55 @@ const hardcodedSpaceData: Record<string, Partial<Space>> = {
   },
 };
 
-const API_URL = 'https://bookspace-server.onrender.com/api/public/spaces';
+// TODO: Update this URL after deploying to Render
+// Replace with your new Render deployment URL (e.g., https://bookspace-api-v2.onrender.com/api/public/spaces)
+const API_URL = 'https://bookspace-api-v2.onrender.com/api/public/spaces';
 const API_KEY = 'a81a64bdc43d3cca969e90153ad0945cffd1a85d73293371ce2f07bb31108b87';
+
+// Track current version for efficient polling
+let currentVersion = 0;
+
+/**
+ * Check if spaces data has been updated on the server
+ * Returns true if updates are available
+ */
+export const checkForUpdates = async (): Promise<boolean> => {
+  try {
+    const response = await fetch(`${API_URL}/version`, {
+      method: 'GET',
+      headers: {
+        'X-API-Key': API_KEY,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      console.warn('Failed to check for updates:', response.status);
+      return false;
+    }
+
+    const data = await response.json();
+    const serverVersion = data.version;
+
+    // If this is the first check, just store the version
+    if (currentVersion === 0) {
+      currentVersion = serverVersion;
+      return false;
+    }
+
+    // Check if server version is newer
+    if (serverVersion > currentVersion) {
+      console.log('[SpacesAPI] Updates detected, server version:', serverVersion, 'current:', currentVersion);
+      currentVersion = serverVersion;
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error('Error checking for updates:', error);
+    return false;
+  }
+};
 
 export const fetchSpacesFromApi = async (): Promise<Space[]> => {
   try {

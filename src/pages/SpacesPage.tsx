@@ -29,6 +29,15 @@ const SpacesPage = () => {
     };
 
     loadSpaces();
+
+    // Listen for spaces updates
+    const handleSpacesUpdate = () => {
+      console.log('[SpacesPage] Detected spaces update, reloading...');
+      loadSpaces();
+    };
+
+    window.addEventListener('spaces-updated', handleSpacesUpdate);
+    return () => window.removeEventListener('spaces-updated', handleSpacesUpdate);
   }, []);
 
   // Filter spaces based on selected category
