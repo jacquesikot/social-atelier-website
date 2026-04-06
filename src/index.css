@@ -79,11 +79,13 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     font-family: 'Maison Neue', Arial, sans-serif;
     @apply text-neutral-800 bg-neutral-50;
+    overflow-x: hidden;
   }
 
   h1,

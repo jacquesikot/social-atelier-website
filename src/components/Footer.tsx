@@ -6,43 +6,70 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-primary-950 text-white py-12">
-      <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {/* Brand Column */}
-          <div className="col-span-1 md:col-span-1 lg:col-span-1">
-            <NavLink to="/" className="text-2xl font-serif font-light tracking-wider">
+    <footer className="bg-primary-950 text-white">
+      {/* Main footer body */}
+      <div className="container-custom pt-16 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+          {/* Brand */}
+          <div className="lg:col-span-1">
+            <NavLink
+              to="/"
+              className="block text-white mb-5"
+              style={{
+                fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+                fontWeight: 300,
+                fontSize: '1.2rem',
+                letterSpacing: '0.04em',
+              }}
+            >
               The Social Atelier
             </NavLink>
-            <p className="mt-4 text-neutral-400 text-sm">
-              A curated lifestyle event space offering a variety of unique and themed rooms for events, photoshoots,
-              podcasts, and gatherings.
+            <p className="text-neutral-500 text-sm font-light leading-relaxed mb-6 max-w-xs">
+              Lagos' premier curated content studio — where creators come to produce work that stands out.
             </p>
-            <div className="mt-6 flex space-x-4">
-              <a
-                href="https://instagram.com/thesocialatelierng"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-white transition-colors"
-                aria-label="Instagram"
-              >
-                <Instagram size={20} />
-              </a>
-            </div>
+            <a
+              href="https://instagram.com/thesocialatelierng"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-neutral-500 hover:text-secondary-300 transition-colors duration-300"
+              aria-label="Instagram"
+            >
+              <Instagram size={16} />
+              <span className="text-xs tracking-[0.15em] uppercase font-light">@thesocialatelierng</span>
+            </a>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-medium mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              {['Home', 'Spaces', 'About', 'Contact', 'Book Now'].map((item) => (
-                <li key={item}>
-                  <NavLink
-                    to={item === 'Home' ? '/' : `/${item.toLowerCase().replace(' ', '-')}`}
-                    className="text-neutral-400 hover:text-white transition-colors text-sm"
-                  >
-                    {item}
-                  </NavLink>
+            <p className="text-neutral-500 text-[10px] tracking-[0.2em] uppercase font-light mb-5">
+              Navigate
+            </p>
+            <ul className="space-y-3">
+              {[
+                { label: 'Home', path: '/' },
+                { label: 'Spaces', path: '/spaces' },
+                { label: 'About', path: '/about' },
+                { label: 'Contact', path: '/contact' },
+                { label: 'Book Now', path: 'https://app.easybookr.com/book/the-social-atelier/', external: true },
+              ].map((item) => (
+                <li key={item.label}>
+                  {item.external ? (
+                    <a
+                      href={item.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
+                    >
+                      {item.label}
+                    </a>
+                  ) : (
+                    <NavLink
+                      to={item.path}
+                      className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
+                    >
+                      {item.label}
+                    </NavLink>
+                  )}
                 </li>
               ))}
             </ul>
@@ -50,13 +77,15 @@ const Footer = () => {
 
           {/* Spaces */}
           <div>
-            <h3 className="text-lg font-medium mb-4">Our Spaces</h3>
-            <ul className="space-y-2">
+            <p className="text-neutral-500 text-[10px] tracking-[0.2em] uppercase font-light mb-5">
+              Our Spaces
+            </p>
+            <ul className="space-y-3">
               {spaces.map((space) => (
                 <li key={space.slug}>
                   <NavLink
                     to={`/spaces/${space.slug}`}
-                    className="text-neutral-400 hover:text-white transition-colors text-sm"
+                    className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
                   >
                     {space.name}
                   </NavLink>
@@ -67,37 +96,57 @@ const Footer = () => {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg font-medium mb-4">Contact Us</h3>
-            <address className="not-italic text-neutral-400 text-sm space-y-2">
-              <p>Plot 59 Chuks Onyebuchi Drive</p>
-              <p>Lekki Phase 1</p>
-              <p>Lagos State, Nigeria</p>
-              <p className="mt-4">
-                <a href="tel:+2348012345678" className="hover:text-white transition-colors">
+            <p className="text-neutral-500 text-[10px] tracking-[0.2em] uppercase font-light mb-5">
+              Contact
+            </p>
+            <address className="not-italic space-y-3">
+              <p className="text-neutral-400 text-sm font-light leading-relaxed">
+                Plot 59 Chuks Onyebuchi Drive<br />
+                Lekki Phase 1, Lagos State
+              </p>
+              <p>
+                <a
+                  href="tel:+2349031189697"
+                  className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
+                >
                   +234 903 118 9697
                 </a>
               </p>
               <p>
-                <a href="mailto:hello@socialatelierng.com" className="hover:text-white transition-colors">
+                <a
+                  href="mailto:hello@socialatelierng.com"
+                  className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
+                >
                   hello@socialatelierng.com
                 </a>
               </p>
             </address>
+
+            <div className="mt-6 pt-6 border-t border-white/5">
+              <p className="text-neutral-500 text-[10px] tracking-[0.15em] uppercase font-light mb-2">Hours</p>
+              <p className="text-neutral-500 text-xs font-light leading-relaxed">
+                Tue–Sat: 10:00 AM – 6:00 PM<br />
+                Sun: 1:00 PM – 6:00 PM
+              </p>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="mt-12 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-neutral-500 text-sm">&copy; {currentYear} The Social Atelier. All rights reserved.</p>
-          <div className="mt-4 md:mt-0 flex space-x-6">
-            <a
-              href="https://www.freeprivacypolicy.com/live/40d70250-f3bf-439e-b25f-87dcb6ba1e27"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-white text-sm transition-colors"
-            >
-              Privacy Policy
-            </a>
-          </div>
+      {/* Bottom bar */}
+      <div className="border-t border-white/5">
+        <div className="container-custom py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-neutral-600 text-xs font-light">
+            &copy; {currentYear} The Social Atelier. All rights reserved.
+          </p>
+          <a
+            href="https://www.freeprivacypolicy.com/live/40d70250-f3bf-439e-b25f-87dcb6ba1e27"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-neutral-600 hover:text-neutral-400 text-xs font-light transition-colors"
+          >
+            Privacy Policy
+          </a>
         </div>
       </div>
     </footer>

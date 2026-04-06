@@ -3,6 +3,19 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      delay,
+      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
+    },
+  }),
+};
+
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -25,259 +38,304 @@ const ContactPage = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success('Message sent! We will get back to you soon.');
-
-    // In a real app, you'd send this to your backend
-    console.log('Contact form data:', formData);
-
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: '',
-    });
+    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
   };
 
   return (
-    <div className="pt-24">
-      {/* Header */}
-      <div className="relative py-16 bg-primary-50">
-        <div className="container-custom">
+    <div className="bg-neutral-50">
+      {/* ── PAGE HEADER ──────────────────────────────────────── */}
+      <div
+        className="relative bg-primary-950 overflow-hidden"
+        style={{ paddingTop: '7rem', paddingBottom: '5rem' }}
+      >
+        <div className="absolute inset-0">
+          <img
+            src="https://images.ctfassets.net/g1pxcpqorahb/4OumunhLlUuAkr1t23JwmG/83d2a19ca3b85e1a738292626ed33cfc/WhatsApp_Image_2025-07-22_at_10.23.42_PM__2_.jpeg"
+            alt=""
+            className="w-full h-full object-cover opacity-15"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary-950/80 to-primary-950" />
+        </div>
+
+        <div className="container-custom relative z-10">
           <motion.div
-            className="max-w-2xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={fadeUp}
+            custom={0}
+            initial="hidden"
+            animate="visible"
+            className="flex items-center gap-3 mb-5"
           >
-            <h1 className="heading-lg mb-4">Contact Us</h1>
-            <p className="text-neutral-700">
-              Have questions or need assistance? We're here to help. Reach out to our team using the form below or
-              contact us directly.
-            </p>
+            <span className="block w-8 h-px bg-secondary-300 opacity-60" />
+            <span className="text-secondary-300 text-xs tracking-[0.25em] uppercase font-light">
+              Get in Touch
+            </span>
           </motion.div>
+
+          <motion.h1
+            variants={fadeUp}
+            custom={0.1}
+            initial="hidden"
+            animate="visible"
+            className="text-white mb-4"
+            style={{
+              fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+              fontWeight: 300,
+              lineHeight: 1.05,
+              letterSpacing: '-0.02em',
+              fontSize: 'clamp(2.2rem, 5vw, 4.5rem)',
+            }}
+          >
+            Contact Us
+          </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            custom={0.2}
+            initial="hidden"
+            animate="visible"
+            className="text-neutral-400 font-light max-w-md"
+            style={{ fontSize: '1.05rem' }}
+          >
+            Have questions or need assistance? Our team is here to help.
+          </motion.p>
         </div>
       </div>
 
-      {/* Contact Section */}
-      <section className="section">
+      {/* ── CONTACT SECTION ──────────────────────────────────── */}
+      <section className="py-24 lg:py-32">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Contact Info */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+            {/* ── Info column ── */}
             <motion.div
+              variants={fadeUp}
+              custom={0}
+              initial="hidden"
+              animate="visible"
               className="lg:col-span-1"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
             >
-              <h2 className="heading-sm mb-6">Get in Touch</h2>
-
-              <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mr-4">
-                    <Mail size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-medium mb-1">Email Us</h3>
-                    <a href="mailto:hello@socialatelierng.com" className="text-primary-600 hover:underline">
-                      hello@socialatelierng.com
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mr-4">
-                    <Phone size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-medium mb-1">Call Us</h3>
-                    <a href="tel:+2348012345678" className="text-primary-600 hover:underline">
-                      +234 903 118 9697
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 mr-4">
-                    <MapPin size={18} />
-                  </div>
-                  <div>
-                    <h3 className="font-medium mb-1">Visit Us</h3>
-                    <address className="not-italic text-neutral-600">
-                      Plot 59 Chuks Onyebuchi Drive
-                      <br />
-                      Lekki Phase 1
-                      <br />
-                      Lagos State, Nigeria
-                    </address>
-                  </div>
-                </div>
+              <div className="flex items-center gap-3 mb-8">
+                <span className="block w-8 h-px bg-primary-800 opacity-40" />
+                <span className="text-primary-800 text-xs tracking-[0.25em] uppercase font-light">
+                  Contact Info
+                </span>
               </div>
 
-              <div className="mt-8 pt-8 border-t border-neutral-200">
-                <h3 className="font-medium mb-4">Business Hours</h3>
-                <ul className="space-y-2 text-neutral-600">
-                  <li className="flex justify-between">
-                    <span>Tuesday - Saturday:</span>
-                    <span>10:00 AM - 6:00 PM</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>Sunday:</span>
-                    <span>1:00 PM - 6:00 PM</span>
-                  </li>
+              <h2
+                className="text-primary-950 mb-8"
+                style={{
+                  fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+                  fontWeight: 300,
+                  fontSize: '1.5rem',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                Let's talk about your vision.
+              </h2>
+
+              <div className="space-y-7">
+                {[
+                  {
+                    icon: <Mail size={16} />,
+                    label: 'Email',
+                    content: (
+                      <a href="mailto:hello@socialatelierng.com" className="text-primary-600 hover:text-primary-800 transition-colors text-sm font-light">
+                        hello@socialatelierng.com
+                      </a>
+                    ),
+                  },
+                  {
+                    icon: <Phone size={16} />,
+                    label: 'Phone',
+                    content: (
+                      <a href="tel:+2349031189697" className="text-primary-600 hover:text-primary-800 transition-colors text-sm font-light">
+                        +234 903 118 9697
+                      </a>
+                    ),
+                  },
+                  {
+                    icon: <MapPin size={16} />,
+                    label: 'Visit',
+                    content: (
+                      <address className="not-italic text-neutral-600 font-light text-sm leading-relaxed">
+                        Plot 59 Chuks Onyebuchi Drive<br />
+                        Lekki Phase 1, Lagos State, Nigeria
+                      </address>
+                    ),
+                  },
+                ].map((item) => (
+                  <div key={item.label} className="flex gap-5">
+                    <div className="w-9 h-9 border border-primary-200 flex items-center justify-center text-primary-800 shrink-0 mt-0.5">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <p className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase mb-1">{item.label}</p>
+                      {item.content}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Hours */}
+              <div className="mt-10 pt-8 border-t border-neutral-200">
+                <p className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase mb-4">Business Hours</p>
+                <ul className="space-y-2">
+                  {[
+                    { day: 'Tue – Sat', hours: '10:00 AM – 6:00 PM' },
+                    { day: 'Sunday', hours: '1:00 PM – 6:00 PM' },
+                  ].map((h) => (
+                    <li key={h.day} className="flex justify-between text-sm font-light text-neutral-600">
+                      <span>{h.day}</span>
+                      <span>{h.hours}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
+              {/* Social */}
               <div className="mt-8 pt-8 border-t border-neutral-200">
-                <h3 className="font-medium mb-4">Follow Us</h3>
-                <div className="flex space-x-4">
-                  <a
-                    href="https://instagram.com/thesocialatelierng"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 hover:bg-primary-200 transition-colors"
-                    aria-label="Instagram"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                  </a>
-                </div>
+                <p className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase mb-4">Follow Us</p>
+                <a
+                  href="https://instagram.com/thesocialatelierng"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-3 text-primary-800 text-sm font-light tracking-[0.1em] uppercase border-b border-primary-800/30 pb-1 hover:border-primary-800 transition-colors duration-300"
+                  aria-label="Instagram"
+                >
+                  @thesocialatelierng
+                  <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
               </div>
             </motion.div>
 
-            {/* Contact Form */}
+            {/* ── Form column ── */}
             <motion.div
+              variants={fadeUp}
+              custom={0.15}
+              initial="hidden"
+              animate="visible"
               className="lg:col-span-2"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="bg-white p-8 rounded-lg shadow-sm">
-                <h2 className="heading-sm mb-6">Send us a Message</h2>
-
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
-                        Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        className="input"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        className="input"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-neutral-700 mb-1">
-                        Phone Number
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        className="input"
-                      />
-                    </div>
-
-                    <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-neutral-700 mb-1">
-                        Subject *
-                      </label>
-                      <select
-                        id="subject"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        required
-                        className="input"
-                      >
-                        <option value="">Select a subject</option>
-                        <option value="booking">Booking Inquiry</option>
-                        <option value="info">General Information</option>
-                        <option value="feedback">Feedback</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-1">
-                      Message *
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={6}
-                      required
-                      className="input"
-                      placeholder="How can we help you?"
-                    ></textarea>
-                  </div>
-
-                  <div>
-                    <button type="submit" className="btn btn-primary flex items-center">
-                      <Send size={16} className="mr-2" />
-                      Send Message
-                    </button>
-                  </div>
-                </form>
+              <div className="flex items-center gap-3 mb-8">
+                <span className="block w-8 h-px bg-primary-800 opacity-40" />
+                <span className="text-primary-800 text-xs tracking-[0.25em] uppercase font-light">
+                  Send a Message
+                </span>
               </div>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="name" className="block text-[10px] tracking-[0.15em] uppercase text-neutral-400 mb-2">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b border-neutral-300 focus:border-primary-800 focus:outline-none text-primary-950 font-light text-sm placeholder:text-neutral-300 transition-colors duration-200"
+                      placeholder="Your name"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-[10px] tracking-[0.15em] uppercase text-neutral-400 mb-2">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b border-neutral-300 focus:border-primary-800 focus:outline-none text-primary-950 font-light text-sm placeholder:text-neutral-300 transition-colors duration-200"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phone" className="block text-[10px] tracking-[0.15em] uppercase text-neutral-400 mb-2">
+                      Phone Number
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b border-neutral-300 focus:border-primary-800 focus:outline-none text-primary-950 font-light text-sm placeholder:text-neutral-300 transition-colors duration-200"
+                      placeholder="+234 ..."
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="subject" className="block text-[10px] tracking-[0.15em] uppercase text-neutral-400 mb-2">
+                      Subject *
+                    </label>
+                    <select
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-0 py-3 bg-transparent border-0 border-b border-neutral-300 focus:border-primary-800 focus:outline-none text-primary-950 font-light text-sm transition-colors duration-200 appearance-none"
+                    >
+                      <option value="">Select a subject</option>
+                      <option value="booking">Booking Inquiry</option>
+                      <option value="info">General Information</option>
+                      <option value="feedback">Feedback</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-[10px] tracking-[0.15em] uppercase text-neutral-400 mb-2">
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={5}
+                    required
+                    className="w-full px-0 py-3 bg-transparent border-0 border-b border-neutral-300 focus:border-primary-800 focus:outline-none text-primary-950 font-light text-sm placeholder:text-neutral-300 transition-colors duration-200 resize-none"
+                    placeholder="How can we help you?"
+                  />
+                </div>
+
+                <div className="pt-4">
+                  <button
+                    type="submit"
+                    className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white text-sm font-medium tracking-[0.08em] uppercase transition-all duration-300 hover:bg-primary-800 hover:scale-[1.02]"
+                  >
+                    <Send size={14} />
+                    Send Message
+                  </button>
+                </div>
+              </form>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="mt-12">
-        <div className="h-[400px] w-full bg-neutral-200">
-          {/* Placeholder for Google Map (In a real app, you'd use Google Maps API) */}
-          <img
-            src="https://images.ctfassets.net/g1pxcpqorahb/4OumunhLlUuAkr1t23JwmG/83d2a19ca3b85e1a738292626ed33cfc/WhatsApp_Image_2025-07-22_at_10.23.42_PM__2_.jpeg"
-            alt="The Social Atelier Location Map"
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </div>
-      </section>
+      {/* ── FULL-WIDTH IMAGE ──────────────────────────────────── */}
+      <div className="h-[380px] overflow-hidden">
+        <img
+          src="https://images.ctfassets.net/g1pxcpqorahb/4OumunhLlUuAkr1t23JwmG/83d2a19ca3b85e1a738292626ed33cfc/WhatsApp_Image_2025-07-22_at_10.23.42_PM__2_.jpeg"
+          alt="The Social Atelier"
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
     </div>
   );
 };

@@ -5,6 +5,24 @@ import { getSpaceById, getSpaces } from '../data/spaces';
 import { BookingFormData, Space } from '../types';
 import toast from 'react-hot-toast';
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      delay,
+      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
+    },
+  }),
+};
+
+const inputClass =
+  'w-full px-0 py-3 bg-transparent border-0 border-b border-neutral-300 focus:border-primary-800 focus:outline-none text-primary-950 font-light text-sm placeholder:text-neutral-300 transition-colors duration-200';
+
+const labelClass = 'block text-[10px] tracking-[0.15em] uppercase text-neutral-400 mb-2';
+
 const BookingPage = () => {
   const [searchParams] = useSearchParams();
   const initialSpaceId = searchParams.get('space') || '';
@@ -32,8 +50,6 @@ const BookingPage = () => {
       try {
         const spacesData = await getSpaces();
         setAllSpaces(spacesData);
-
-        // Load selected space if spaceId is provided
         if (formData.spaceId) {
           const space = await getSpaceById(formData.spaceId);
           setSelectedSpace(space || null);
@@ -51,162 +67,232 @@ const BookingPage = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-
-    // Update selected space when spaceId changes
     if (name === 'spaceId') {
-      const space = allSpaces.find((s) => s.id === value);
-      setSelectedSpace(space || null);
+      setSelectedSpace(allSpaces.find((s) => s.id === value) || null);
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success('Booking request submitted! We will contact you shortly.');
-
-    // In a real app, you'd send this to your backend
-    console.log('Booking form data:', formData);
-
-    // Reset form
-    setFormData({
-      spaceId: '',
-      date: '',
-      startTime: '',
-      duration: 2,
-      name: '',
-      email: '',
-      phone: '',
-      message: '',
-    });
+    setFormData({ spaceId: '', date: '', startTime: '', duration: 2, name: '', email: '', phone: '', message: '' });
     setSelectedSpace(null);
   };
 
+  const formatCurrency = (amount: number) =>
+    new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(amount);
+
   if (loading) {
     return (
-      <div className="pt-24 min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <div className="w-px h-12 bg-primary-950 animate-pulse" />
       </div>
     );
   }
 
   return (
-    <div className="pt-24">
-      {/* Header */}
-      <div className="relative py-16 bg-primary-50">
-        <div className="container-custom">
+    <div className="bg-neutral-50">
+      {/* ── PAGE HEADER ──────────────────────────────────────── */}
+      <div
+        className="relative bg-primary-950 overflow-hidden"
+        style={{ paddingTop: '7rem', paddingBottom: '5rem' }}
+      >
+        <div className="absolute inset-0">
+          <img
+            src="https://images.ctfassets.net/g1pxcpqorahb/73TEHG9mEcoPeuu6SC5psB/6efa39aded5f6e7e811b2f522e412df2/WhatsApp_Image_2025-07-22_at_10.23.44_PM__2_.jpeg"
+            alt=""
+            className="w-full h-full object-cover opacity-15"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-primary-950/80 to-primary-950" />
+        </div>
+
+        <div className="container-custom relative z-10">
           <motion.div
-            className="max-w-2xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            variants={fadeUp}
+            custom={0}
+            initial="hidden"
+            animate="visible"
+            className="flex items-center gap-3 mb-5"
           >
-            <h1 className="heading-lg mb-4">Book Your Space</h1>
-            <p className="text-neutral-700">
-              Complete the form below to book one of our unique spaces for your next creative project or event.
-            </p>
+            <span className="block w-8 h-px bg-secondary-300 opacity-60" />
+            <span className="text-secondary-300 text-xs tracking-[0.25em] uppercase font-light">
+              Reserve Your Space
+            </span>
           </motion.div>
+
+          <motion.h1
+            variants={fadeUp}
+            custom={0.1}
+            initial="hidden"
+            animate="visible"
+            className="text-white mb-4"
+            style={{
+              fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+              fontWeight: 300,
+              lineHeight: 1.05,
+              letterSpacing: '-0.02em',
+              fontSize: 'clamp(2.2rem, 5vw, 4.5rem)',
+            }}
+          >
+            Book Your Space
+          </motion.h1>
+
+          <motion.p
+            variants={fadeUp}
+            custom={0.2}
+            initial="hidden"
+            animate="visible"
+            className="text-neutral-400 font-light max-w-md"
+            style={{ fontSize: '1.05rem' }}
+          >
+            Complete the form below to reserve one of our curated spaces.
+          </motion.p>
         </div>
       </div>
 
-      {/* Booking Form */}
-      <section className="section bg-white">
+      {/* ── BOOKING FORM ─────────────────────────────────────── */}
+      <section className="py-20 lg:py-28">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            {/* Form */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+            {/* ── Form ── */}
             <motion.div
+              variants={fadeUp}
+              custom={0}
+              initial="hidden"
+              animate="visible"
               className="lg:col-span-2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
             >
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-10">
+                {/* Space selection */}
                 <div>
-                  <label htmlFor="spaceId" className="block text-sm font-medium text-neutral-700 mb-1">
-                    Select a Space *
-                  </label>
-                  <select
-                    id="spaceId"
-                    name="spaceId"
-                    value={formData.spaceId}
-                    onChange={handleChange}
-                    required
-                    className="input"
-                  >
-                    <option value="">Select a space</option>
+                  <div className="flex items-center gap-3 mb-8">
+                    <span className="block w-6 h-px bg-primary-800 opacity-40" />
+                    <span className="text-primary-800 text-xs tracking-[0.2em] uppercase font-light">
+                      Select a Space
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
                     {allSpaces.map((space) => (
-                      <option key={space.id} value={space.id}>
-                        {space.name} (₦{space.hourlyRate.toLocaleString()}/hour)
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="date" className="block text-sm font-medium text-neutral-700 mb-1">
-                      Date *
-                    </label>
-                    <input
-                      type="date"
-                      id="date"
-                      name="date"
-                      value={formData.date}
-                      onChange={handleChange}
-                      required
-                      min={new Date().toISOString().split('T')[0]}
-                      className="input"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="startTime" className="block text-sm font-medium text-neutral-700 mb-1">
-                      Start Time *
-                    </label>
-                    <input
-                      type="time"
-                      id="startTime"
-                      name="startTime"
-                      value={formData.startTime}
-                      onChange={handleChange}
-                      required
-                      className="input"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label htmlFor="duration" className="block text-sm font-medium text-neutral-700 mb-1">
-                    Duration *
-                  </label>
-                  <select
-                    id="duration"
-                    name="duration"
-                    value={formData.duration}
-                    onChange={handleChange}
-                    required
-                    className="input"
-                  >
-                    {selectedSpace?.durationOptions.map((option) => (
-                      <option key={option.hours} value={option.hours}>
-                        {option.label}
-                      </option>
-                    )) || (
-                      <>
-                        <option value={2}>2 hours</option>
-                        <option value={4}>4 hours</option>
-                        <option value={8}>Full day (8 hours)</option>
-                      </>
-                    )}
-                  </select>
-                </div>
-
-                <div className="border-t border-neutral-200 pt-6">
-                  <h2 className="text-lg font-medium mb-4">Your Information</h2>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
-                        Full Name *
+                      <label
+                        key={space.id}
+                        className={`flex items-center gap-4 p-4 border cursor-pointer transition-all duration-200 ${
+                          formData.spaceId === space.id
+                            ? 'border-primary-800 bg-primary-50/50'
+                            : 'border-neutral-200 hover:border-neutral-400'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="spaceId"
+                          value={space.id}
+                          checked={formData.spaceId === space.id}
+                          onChange={handleChange}
+                          required
+                          className="sr-only"
+                        />
+                        <div className="w-12 h-12 overflow-hidden shrink-0">
+                          <img src={space.mainImage} alt={space.name} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="min-w-0">
+                          <p
+                            className="text-primary-950 text-sm truncate"
+                            style={{ fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif", fontWeight: 300 }}
+                          >
+                            {space.name}
+                          </p>
+                          <p className="text-primary-600 text-xs font-light">
+                            {formatCurrency(space.hourlyRate)}/hr
+                          </p>
+                        </div>
+                        {formData.spaceId === space.id && (
+                          <div className="ml-auto shrink-0 w-4 h-4 bg-primary-800 rounded-full flex items-center justify-center">
+                            <div className="w-1.5 h-1.5 bg-white rounded-full" />
+                          </div>
+                        )}
                       </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Booking details */}
+                <div>
+                  <div className="flex items-center gap-3 mb-8">
+                    <span className="block w-6 h-px bg-primary-800 opacity-40" />
+                    <span className="text-primary-800 text-xs tracking-[0.2em] uppercase font-light">
+                      Session Details
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div>
+                      <label htmlFor="date" className={labelClass}>Date *</label>
+                      <input
+                        type="date"
+                        id="date"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleChange}
+                        required
+                        min={new Date().toISOString().split('T')[0]}
+                        className={inputClass}
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="startTime" className={labelClass}>Start Time *</label>
+                      <input
+                        type="time"
+                        id="startTime"
+                        name="startTime"
+                        value={formData.startTime}
+                        onChange={handleChange}
+                        required
+                        className={inputClass}
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="duration" className={labelClass}>Duration *</label>
+                      <select
+                        id="duration"
+                        name="duration"
+                        value={formData.duration}
+                        onChange={handleChange}
+                        required
+                        className={`${inputClass} appearance-none`}
+                      >
+                        {selectedSpace?.durationOptions.map((opt) => (
+                          <option key={opt.hours} value={opt.hours}>{opt.label}</option>
+                        )) || (
+                          <>
+                            <option value={2}>2 hours</option>
+                            <option value={4}>4 hours</option>
+                            <option value={8}>Full day (8 hours)</option>
+                          </>
+                        )}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Personal info */}
+                <div>
+                  <div className="flex items-center gap-3 mb-8">
+                    <span className="block w-6 h-px bg-primary-800 opacity-40" />
+                    <span className="text-primary-800 text-xs tracking-[0.2em] uppercase font-light">
+                      Your Information
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                      <label htmlFor="name" className={labelClass}>Full Name *</label>
                       <input
                         type="text"
                         id="name"
@@ -214,14 +300,13 @@ const BookingPage = () => {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="input"
+                        placeholder="Your full name"
+                        className={inputClass}
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
-                        Email Address *
-                      </label>
+                      <label htmlFor="email" className={labelClass}>Email Address *</label>
                       <input
                         type="email"
                         id="email"
@@ -229,113 +314,139 @@ const BookingPage = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="input"
+                        placeholder="your@email.com"
+                        className={inputClass}
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label htmlFor="phone" className={labelClass}>Phone (preferably WhatsApp) *</label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        placeholder="+234 ..."
+                        className={inputClass}
+                      />
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label htmlFor="message" className={labelClass}>Additional Details</label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleChange}
+                        rows={4}
+                        placeholder="Tell us about your project or any special requirements..."
+                        className={`${inputClass} resize-none`}
                       />
                     </div>
                   </div>
-
-                  <div className="mt-6">
-                    <label htmlFor="phone" className="block text-sm font-medium text-neutral-700 mb-1">
-                      Phone Number(preferably WhatsApp) *
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      required
-                      className="input"
-                    />
-                  </div>
-
-                  <div className="mt-6">
-                    <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-1">
-                      Additional Details
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      rows={4}
-                      className="input"
-                      placeholder="Tell us about your event or any special requirements..."
-                    ></textarea>
-                  </div>
                 </div>
 
-                <div className="pt-4">
-                  <button type="submit" className="btn btn-primary w-full sm:w-auto">
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    className="inline-flex items-center gap-3 px-10 py-4 bg-primary-950 text-white text-sm font-medium tracking-[0.08em] uppercase transition-all duration-300 hover:bg-primary-800 hover:scale-[1.02]"
+                  >
                     Submit Booking Request
                   </button>
                 </div>
               </form>
             </motion.div>
 
-            {/* Sidebar */}
+            {/* ── Sidebar ── */}
             <motion.div
+              variants={fadeUp}
+              custom={0.15}
+              initial="hidden"
+              animate="visible"
               className="lg:col-span-1"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <div className="bg-primary-50 p-6 rounded-lg sticky top-24">
-                <h2 className="heading-sm mb-4">Booking Information</h2>
-
+              <div className="sticky top-24">
+                {/* Selected space preview */}
                 {selectedSpace ? (
-                  <div className="mb-6">
-                    <div className="aspect-video mb-4 overflow-hidden rounded-md">
+                  <div className="mb-8">
+                    <div className="aspect-[4/3] overflow-hidden mb-5">
                       <img
                         src={selectedSpace.mainImage}
                         alt={selectedSpace.name}
                         className="w-full h-full object-cover"
                       />
                     </div>
-
-                    <h3 className="font-medium text-lg">{selectedSpace.name}</h3>
-                    <p className="text-primary-600 font-medium">₦{selectedSpace.hourlyRate.toLocaleString()}/hour</p>
-                    <p className="text-sm text-neutral-600 mt-2">{selectedSpace.shortDescription}</p>
-
+                    <h3
+                      className="text-primary-950 mb-1"
+                      style={{
+                        fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+                        fontWeight: 300,
+                        fontSize: '1.1rem',
+                        letterSpacing: '-0.01em',
+                      }}
+                    >
+                      {selectedSpace.name}
+                    </h3>
+                    <p className="text-primary-600 text-sm font-light mb-2">
+                      {formatCurrency(selectedSpace.hourlyRate)}/hr
+                    </p>
+                    <p className="text-neutral-500 text-sm font-light leading-relaxed">
+                      {selectedSpace.shortDescription}
+                    </p>
                     <div className="mt-4 pt-4 border-t border-neutral-200">
-                      <h4 className="font-medium mb-2">Available Hours</h4>
-                      <p className="text-sm text-neutral-600">{selectedSpace.openingDays}</p>
-                      <p className="text-sm text-neutral-600">{selectedSpace.openingHours}</p>
+                      <p className="text-neutral-500 text-sm font-light">{selectedSpace.openingDays}</p>
+                      <p className="text-neutral-500 text-sm font-light">{selectedSpace.openingHours}</p>
                     </div>
                   </div>
                 ) : (
-                  <div className="mb-6 text-neutral-600">
-                    <p>Select a space to see details.</p>
+                  <div className="border border-dashed border-neutral-300 p-8 text-center mb-8">
+                    <p className="text-neutral-400 text-sm font-light">Select a space to see details.</p>
                   </div>
                 )}
 
-                <div className="space-y-4">
-                  <div>
-                    <h3 className="font-medium mb-1">Booking Process</h3>
-                    <ol className="text-sm text-neutral-600 space-y-2 pl-5 list-decimal">
-                      <li>Complete and submit the booking form</li>
-                      <li>Receive confirmation of availability within 24 hours</li>
-                      <li>Pay the deposit to secure your booking</li>
-                      <li>Receive all details for your visit</li>
-                    </ol>
+                {/* Process */}
+                <div className="border border-neutral-200 p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="block w-6 h-px bg-primary-800 opacity-40" />
+                    <span className="text-primary-800 text-xs tracking-[0.2em] uppercase font-light">
+                      Booking Process
+                    </span>
                   </div>
+                  <ol className="space-y-4">
+                    {[
+                      'Submit your booking request',
+                      'Receive availability confirmation within 24 hrs',
+                      'Pay the deposit to secure your session',
+                      'Receive visit details and arrival guide',
+                    ].map((step, i) => (
+                      <li key={i} className="flex gap-4 text-sm text-neutral-600 font-light">
+                        <span className="text-primary-800/50 text-xs font-medium w-4 shrink-0 pt-0.5">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        {step}
+                      </li>
+                    ))}
+                  </ol>
 
-                  <div>
-                    <h3 className="font-medium mb-1">Cancellation Policy</h3>
-                    <p className="text-sm text-neutral-600">
-                      Free cancellation up to 48 hours before your booking. Cancellations within 48 hours are subject to
-                      a 50% fee.
+                  <div className="mt-6 pt-6 border-t border-neutral-100">
+                    <p className="text-neutral-400 text-xs tracking-[0.1em] uppercase mb-2 font-light">
+                      Cancellation
+                    </p>
+                    <p className="text-neutral-500 text-sm font-light leading-relaxed">
+                      Free cancellation up to 48 hours before your session. Within 48 hours, a 50% fee applies.
                     </p>
                   </div>
-                </div>
 
-                <div className="mt-6 pt-4 border-t border-neutral-200">
-                  <p className="text-sm text-neutral-600">
-                    Questions about booking?{' '}
-                    <NavLink to="/contact" className="text-primary-600 hover:underline">
-                      Contact us
-                    </NavLink>
-                  </p>
+                  <div className="mt-6 pt-6 border-t border-neutral-100">
+                    <p className="text-neutral-500 text-sm font-light">
+                      Questions?{' '}
+                      <NavLink to="/contact" className="text-primary-600 hover:text-primary-800 transition-colors">
+                        Contact us
+                      </NavLink>
+                    </p>
+                  </div>
                 </div>
               </div>
             </motion.div>

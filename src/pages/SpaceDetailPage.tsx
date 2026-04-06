@@ -1,9 +1,22 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, ChevronLeft, ChevronRight, Clock, X } from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, Clock, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { getSpaceBySlug } from '../data/spaces';
 import { Space } from '../types';
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      delay,
+      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
+    },
+  }),
+};
 
 const SpaceDetailPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -41,29 +54,40 @@ const SpaceDetailPage = () => {
     loadSpace();
   }, [id]);
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('en-NG', {
+  const formatCurrency = (amount: number) =>
+    new Intl.NumberFormat('en-NG', {
       style: 'currency',
       currency: 'NGN',
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(amount);
-  };
 
   if (loading) {
     return (
-      <div className="pt-24 min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <div className="w-px h-12 bg-primary-950 animate-pulse" />
       </div>
     );
   }
 
   if (!space) {
     return (
-      <div className="pt-24 min-h-screen flex flex-col items-center justify-center text-center px-4">
-        <h1 className="heading-lg mb-4">Space Not Found</h1>
-        <p className="text-neutral-600 mb-8">The space you're looking for doesn't exist or may have been moved.</p>
-        <NavLink to="/spaces" className="btn btn-primary">
+      <div className="pt-24 min-h-screen bg-neutral-50 flex flex-col items-center justify-center text-center px-4">
+        <h1
+          className="text-primary-950 mb-4"
+          style={{
+            fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+            fontWeight: 300,
+            fontSize: 'clamp(1.8rem, 3vw, 2.8rem)',
+          }}
+        >
+          Space Not Found
+        </h1>
+        <p className="text-neutral-500 font-light mb-8">The space you're looking for doesn't exist or may have been moved.</p>
+        <NavLink
+          to="/spaces"
+          className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white text-sm font-medium tracking-[0.08em] uppercase transition-all duration-300 hover:bg-primary-800"
+        >
           View All Spaces
         </NavLink>
       </div>
@@ -71,164 +95,231 @@ const SpaceDetailPage = () => {
   }
 
   return (
-    <div className="pt-24">
-      {/* Header Image */}
-      <div className="h-[50vh] relative overflow-hidden">
-        <img
+    <div className="bg-neutral-50">
+      {/* ── HERO IMAGE ───────────────────────────────────────── */}
+      <div className="relative h-[65vh] overflow-hidden">
+        <motion.img
+          key={activeImage}
           src={activeImage}
-          srcSet={`${activeImage.replace('w=600&h=400', 'w=800&h=533')} 800w,
-                  ${activeImage.replace('w=600&h=400', 'w=1200&h=800')} 1200w,
-                  ${activeImage.replace('w=600&h=400', 'w=1600&h=1067')} 1600w,
-                  ${activeImage.replace('w=600&h=400', 'w=1920&h=1280')} 1920w`}
-          sizes="100vw"
           alt={space.name}
           className="w-full h-full object-cover"
+          initial={{ opacity: 0, scale: 1.04 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20" />
 
-      {/* Content */}
-      <div className="container-custom py-12">
-        <div className="flex flex-wrap items-center mb-6 gap-y-4">
-          <NavLink
-            to="/spaces"
-            className="flex items-center text-primary-600 hover:text-primary-800 transition-colors mr-auto"
-          >
-            <ArrowLeft size={16} className="mr-1" />
-            <span>Back to All Spaces</span>
-          </NavLink>
-
-          <NavLink
-            to={`https://app.easybookr.com/book/the-social-atelier/?spaceId=${space.id}`}
-            target="_blank"
-            className="btn btn-primary"
-          >
-            Book This Space
-          </NavLink>
+        {/* Back link */}
+        <div className="absolute top-0 left-0 right-0 z-10 pt-24">
+          <div className="container-custom">
+            <NavLink
+              to="/spaces"
+              className="inline-flex items-center gap-2 text-white/70 hover:text-white text-xs tracking-[0.15em] uppercase font-light transition-colors duration-200"
+            >
+              <ChevronLeft size={14} />
+              All Spaces
+            </NavLink>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Main Content */}
+        {/* Space name overlay */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 pb-12">
+          <div className="container-custom">
+            <motion.div
+              variants={fadeUp}
+              custom={0}
+              initial="hidden"
+              animate="visible"
+            >
+              <span className="text-white/60 text-xs tracking-[0.2em] uppercase font-light">
+                {space.type === 'event' ? 'Event Space' : 'Photography Studio'}
+              </span>
+              <h1
+                className="text-white mt-2"
+                style={{
+                  fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+                  fontWeight: 300,
+                  lineHeight: 1.05,
+                  letterSpacing: '-0.02em',
+                  fontSize: 'clamp(2rem, 5vw, 4rem)',
+                }}
+              >
+                {space.name}
+              </h1>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── CONTENT ──────────────────────────────────────────── */}
+      <div className="container-custom py-16 lg:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
+          {/* ── Main column ── */}
           <motion.div
+            variants={fadeUp}
+            custom={0}
+            initial="hidden"
+            animate="visible"
             className="lg:col-span-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
           >
-            <h1 className="heading-lg mb-4">{space.name}</h1>
-            <p className="text-neutral-600 mb-8">{space.description}</p>
+            {/* Description */}
+            <p
+              className="text-primary-900/65 font-light leading-relaxed mb-12"
+              style={{ fontSize: '1.1rem' }}
+            >
+              {space.description}
+            </p>
 
-            <div className="mb-8">
-              <h2 className="heading-sm mb-4">Features</h2>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {space.features.map((feature, index) => (
-                  <li key={index} className="flex items-center text-neutral-700">
-                    <span className="w-2 h-2 bg-primary-600 rounded-full mr-2"></span>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+            {/* Features + Use cases */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-14 border-t border-neutral-200 pt-12">
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="block w-6 h-px bg-primary-800 opacity-40" />
+                  <span className="text-primary-800 text-xs tracking-[0.2em] uppercase font-light">
+                    Features
+                  </span>
+                </div>
+                <ul className="space-y-3">
+                  {space.features.map((feature, i) => (
+                    <li key={i} className="flex items-start gap-3 text-neutral-700 font-light text-sm">
+                      <span className="w-1 h-1 bg-primary-600 rounded-full mt-2 shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="block w-6 h-px bg-primary-800 opacity-40" />
+                  <span className="text-primary-800 text-xs tracking-[0.2em] uppercase font-light">
+                    Ideal For
+                  </span>
+                </div>
+                <ul className="space-y-3">
+                  {space.useCases.map((useCase, i) => (
+                    <li key={i} className="flex items-start gap-3 text-neutral-700 font-light text-sm">
+                      <span className="w-1 h-1 bg-primary-600 rounded-full mt-2 shrink-0" />
+                      {useCase}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            <div className="mb-8">
-              <h2 className="heading-sm mb-4">Ideal For</h2>
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {space.useCases.map((useCase, index) => (
-                  <li key={index} className="flex items-center text-neutral-700">
-                    <span className="w-2 h-2 bg-primary-600 rounded-full mr-2"></span>
-                    {useCase}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Image Gallery */}
+            {/* Gallery */}
             <div>
-              <h2 className="heading-sm mb-6">Gallery</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="flex items-center gap-3 mb-8">
+                <span className="block w-6 h-px bg-primary-800 opacity-40" />
+                <span className="text-primary-800 text-xs tracking-[0.2em] uppercase font-light">Gallery</span>
+              </div>
+
+              {/* Thumbnail strip */}
+              <div className="flex gap-3 mb-8 overflow-x-auto pb-2">
+                {space.images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveImage(img)}
+                    className={`shrink-0 w-20 h-20 overflow-hidden transition-all duration-200 ${
+                      activeImage === img ? 'ring-2 ring-primary-800 ring-offset-2' : 'opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    <img src={img} alt={`${space.name} ${i + 1}`} className="w-full h-full object-cover" />
+                  </button>
+                ))}
+              </div>
+
+              {/* Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {space.images.map((image, index) => (
-                  <div
+                  <motion.div
                     key={index}
-                    className="relative group cursor-pointer overflow-hidden rounded-lg shadow-sm hover:shadow-md transition-all duration-300"
+                    className="relative group cursor-pointer overflow-hidden aspect-square"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.3 }}
                     onClick={() => {
                       setModalImageIndex(index);
                       setModalOpen(true);
                     }}
                   >
                     <img
-                      src={image.replace('w=800&h=600', 'w=400&h=300')}
-                      srcSet={`${image.replace('w=800&h=600', 'w=400&h=300')} 400w,
-                              ${image.replace('w=800&h=600', 'w=600&h=450')} 600w,
-                              ${image.replace('w=800&h=600', 'w=800&h=600')} 800w`}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      src={image}
                       alt={`${space.name} - ${index + 1}`}
-                      className="w-full h-48 sm:h-56 lg:h-64 object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm rounded-full p-2">
-                        <svg className="w-6 h-6 text-neutral-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                          />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all duration-300 flex items-center justify-center">
+                      <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                         </svg>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
           </motion.div>
 
-          {/* Sidebar */}
+          {/* ── Sidebar ── */}
           <motion.div
+            variants={fadeUp}
+            custom={0.15}
+            initial="hidden"
+            animate="visible"
             className="lg:col-span-1"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="bg-white p-6 rounded-lg shadow-sm border border-neutral-200 sticky top-24">
-              <div className="flex items-center text-primary-800 font-serif text-2xl mb-4">
-                <span>{formatCurrency(space.hourlyRate * Number((space.bookingDuration || 60) / 60))}</span>
-                <span className="text-neutral-600 text-base font-sans ml-1">
-                  {`for ${Number((space.bookingDuration || 60) / 60)} hour${
-                    space.bookingDuration && space.bookingDuration > 60 ? 's' : ''
-                  }`}
-                </span>
-              </div>
-
-              <div className="space-y-4 mb-6">
-                <div className="flex items-start">
-                  <Clock size={20} className="text-primary-600 mt-1 mr-3" />
-                  <div>
-                    <h3 className="font-medium">Opening Hours</h3>
-                    <p className="text-neutral-600 text-sm">{space.openingHours}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <Calendar size={20} className="text-primary-600 mt-1 mr-3" />
-                  <div>
-                    <h3 className="font-medium">Available Days</h3>
-                    <p className="text-neutral-600 text-sm">{space.openingDays}</p>
-                  </div>
+            <div className="sticky top-24 border border-neutral-200 bg-white p-8">
+              {/* Pricing */}
+              <div className="mb-8 pb-8 border-b border-neutral-100">
+                <p className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase mb-2">Starting from</p>
+                <div className="flex items-baseline gap-2">
+                  <span
+                    className="text-primary-950"
+                    style={{
+                      fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+                      fontWeight: 300,
+                      fontSize: '2rem',
+                      letterSpacing: '-0.02em',
+                    }}
+                  >
+                    {formatCurrency(space.hourlyRate)}
+                  </span>
+                  <span className="text-neutral-400 font-light text-sm">/hr</span>
                 </div>
               </div>
 
+              {/* Hours info */}
+              <div className="space-y-5 mb-8">
+                <div className="flex gap-4">
+                  <Clock size={15} className="text-primary-600 mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase mb-1">Opening Hours</p>
+                    <p className="text-neutral-700 font-light text-sm">{space.openingHours}</p>
+                  </div>
+                </div>
+
+                <div className="flex gap-4">
+                  <Calendar size={15} className="text-primary-600 mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase mb-1">Available Days</p>
+                    <p className="text-neutral-700 font-light text-sm">{space.openingDays}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA */}
               <NavLink
                 to={`https://app.easybookr.com/book/the-social-atelier/?spaceId=${space.id}`}
                 target="_blank"
-                className="w-full block text-center btn btn-primary"
+                className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-primary-950 text-white text-sm font-medium tracking-[0.08em] uppercase transition-all duration-300 hover:bg-primary-800 mb-4"
               >
                 Book This Space
               </NavLink>
 
-              <p className="text-neutral-600 text-xs text-center mt-4">
-                Have questions?{' '}
-                <NavLink to="/contact" className="text-primary-600 hover:underline">
+              <p className="text-neutral-400 text-xs text-center font-light">
+                Questions?{' '}
+                <NavLink to="/contact" className="text-primary-600 hover:text-primary-800 transition-colors">
                   Contact us
                 </NavLink>
               </p>
@@ -237,45 +328,51 @@ const SpaceDetailPage = () => {
         </div>
       </div>
 
-      {/* Image Modal */}
+      {/* ── IMAGE MODAL ──────────────────────────────────────── */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm">
-          <div className="relative max-w-7xl max-h-full mx-4">
-            {/* Close Button */}
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95"
+          onClick={() => setModalOpen(false)}
+        >
+          <div
+            className="relative max-w-6xl w-full mx-4"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+              className="absolute top-4 right-4 z-10 text-white/60 hover:text-white transition-colors"
             >
-              <X size={24} />
+              <X size={22} />
             </button>
 
-            {/* Navigation Buttons */}
             {space.images.length > 1 && (
               <>
                 <button
                   onClick={() => setModalImageIndex((prev) => (prev - 1 + space.images.length) % space.images.length)}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 text-white/60 hover:text-white transition-colors hidden sm:block"
                 >
-                  <ChevronLeft size={24} />
+                  <ChevronLeft size={28} />
                 </button>
                 <button
                   onClick={() => setModalImageIndex((prev) => (prev + 1) % space.images.length)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 text-white/60 hover:text-white transition-colors hidden sm:block"
                 >
-                  <ChevronRight size={24} />
+                  <ChevronRight size={28} />
                 </button>
               </>
             )}
 
-            {/* Main Image */}
-            <img
-              src={space.images[modalImageIndex].replace('w=800&h=600', 'w=1920&h=1440')}
+            <motion.img
+              key={modalImageIndex}
+              src={space.images[modalImageIndex]}
               alt={`${space.name} - ${modalImageIndex + 1}`}
-              className="max-w-full max-h-[90vh] object-contain rounded-lg"
+              className="max-w-full max-h-[88vh] object-contain mx-auto block"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3 }}
             />
 
-            {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/40 text-xs tracking-[0.15em] uppercase">
               {modalImageIndex + 1} / {space.images.length}
             </div>
           </div>
