@@ -24,6 +24,15 @@ const FeaturedSpaces = ({ minimal = false }: FeaturedSpacesProps) => {
       }
     };
     loadSpaces();
+
+    // Listen for spaces updates
+    const handleSpacesUpdate = () => {
+      console.log('[FeaturedSpaces] Detected spaces update, reloading...');
+      loadSpaces();
+    };
+
+    window.addEventListener('spaces-updated', handleSpacesUpdate);
+    return () => window.removeEventListener('spaces-updated', handleSpacesUpdate);
   }, []);
 
   const formatCurrency = (amount: number) =>

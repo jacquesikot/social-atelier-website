@@ -52,6 +52,15 @@ const SpaceDetailPage = () => {
     };
 
     loadSpace();
+
+    // Listen for spaces updates
+    const handleSpacesUpdate = () => {
+      console.log('[SpaceDetailPage] Detected spaces update, reloading...');
+      loadSpace();
+    };
+
+    window.addEventListener('spaces-updated', handleSpacesUpdate);
+    return () => window.removeEventListener('spaces-updated', handleSpacesUpdate);
   }, [id]);
 
   const formatCurrency = (amount: number) =>
