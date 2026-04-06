@@ -25,7 +25,7 @@ interface ApiResponse {
 
 // Helper function to format availability data
 const formatAvailability = (
-  availability: { dayOfWeek: number; startTime: string; endTime: string }[]
+  availability: { dayOfWeek: number; startTime: string; endTime: string }[],
 ): { openingDays: string; openingHours: string } => {
   const dayNames: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -37,14 +37,17 @@ const formatAvailability = (
   }
 
   // Group consecutive days with same hours
-  const grouped = availability.reduce((acc, curr) => {
-    const timeSlot = `${curr.startTime} - ${curr.endTime}`;
-    if (!acc[timeSlot]) {
-      acc[timeSlot] = [];
-    }
-    acc[timeSlot].push(curr.dayOfWeek);
-    return acc;
-  }, {} as Record<string, number[]>);
+  const grouped = availability.reduce(
+    (acc, curr) => {
+      const timeSlot = `${curr.startTime} - ${curr.endTime}`;
+      if (!acc[timeSlot]) {
+        acc[timeSlot] = [];
+      }
+      acc[timeSlot].push(curr.dayOfWeek);
+      return acc;
+    },
+    {} as Record<string, number[]>,
+  );
 
   // Format the grouped data
   const timeSlots = Object.entries(grouped);
@@ -314,7 +317,7 @@ const hardcodedSpaceData: Record<string, Partial<Space>> = {
 
 // TODO: Update this URL after deploying to Render
 // Replace with your new Render deployment URL (e.g., https://bookspace-api-v2.onrender.com/api/public/spaces)
-const API_URL = 'https://bookspace-api-v2.onrender.com/api/public/spaces';
+const API_URL = 'https://advisory-rosaline-jacquesikot-5eacbc0c.koyeb.app/api/public/spaces';
 const API_KEY = 'a81a64bdc43d3cca969e90153ad0945cffd1a85d73293371ce2f07bb31108b87';
 
 // Track current version for efficient polling
