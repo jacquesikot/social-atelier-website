@@ -83,7 +83,7 @@ const BlogPostPage = () => {
             className="inline-flex items-center gap-2 text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-xs tracking-[0.15em] uppercase mb-8"
           >
             <ChevronLeft size={14} />
-            The Journal
+            The Blog
           </NavLink>
 
           <motion.h1

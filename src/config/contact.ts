@@ -13,7 +13,7 @@ export const WHATSAPP_NUMBER = '2349031189697';
 export const PHONE_DISPLAY = '+234 903 118 9697';
 export const PHONE_E164 = '+2349031189697';
 
-export const CONTACT_EMAIL = 'hello@socialatelierng.com';
+export const CONTACT_EMAIL = 'hello@thesocialatelierng.com';
 export const INSTAGRAM_HANDLE = '@thesocialatelierng';
 
 /**

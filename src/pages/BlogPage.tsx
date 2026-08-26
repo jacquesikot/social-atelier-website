@@ -64,7 +64,7 @@ const PostCard = ({ post, index }: { post: BlogPost; index: number }) => (
 const BlogPage = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = 'Journal | The Social Atelier';
+    document.title = 'Blog | The Social Atelier';
   }, []);
 
   return (
@@ -89,7 +89,7 @@ const BlogPage = () => {
             className="flex items-center gap-3 mb-5"
           >
             <span className="block w-8 h-px bg-secondary-300 opacity-60" />
-            <span className="text-secondary-300 text-xs tracking-[0.25em] uppercase font-light">The Journal</span>
+            <span className="text-secondary-300 text-xs tracking-[0.25em] uppercase font-light">The Blog</span>
           </motion.div>
 
           <motion.h1
@@ -106,7 +106,7 @@ const BlogPage = () => {
               fontSize: 'clamp(2.2rem, 5vw, 4.5rem)',
             }}
           >
-            Journal
+            Blog
           </motion.h1>
 
           <motion.p

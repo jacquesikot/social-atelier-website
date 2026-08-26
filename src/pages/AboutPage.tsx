@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
+import { CONTACT_EMAIL, PHONE_DISPLAY, PHONE_E164 } from '../config/contact';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
@@ -312,13 +313,13 @@ const AboutPage = () => {
                     content: (
                       <div className="space-y-1">
                         <p>
-                          <a href="tel:+2349031189697" className="text-primary-600 font-light text-sm hover:text-primary-800 transition-colors">
-                            +234 903 118 9697
+                          <a href={`tel:${PHONE_E164}`} className="text-primary-600 font-light text-sm hover:text-primary-800 transition-colors">
+                            {PHONE_DISPLAY}
                           </a>
                         </p>
                         <p>
-                          <a href="mailto:hello@socialatelierng.com" className="text-primary-600 font-light text-sm hover:text-primary-800 transition-colors">
-                            hello@socialatelierng.com
+                          <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary-600 font-light text-sm hover:text-primary-800 transition-colors">
+                            {CONTACT_EMAIL}
                           </a>
                         </p>
                       </div>
