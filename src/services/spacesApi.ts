@@ -315,10 +315,28 @@ const hardcodedSpaceData: Record<string, Partial<Space>> = {
   },
 };
 
-// TODO: Update this URL after deploying to Render
-// Replace with your new Render deployment URL (e.g., https://bookspace-api-v2.onrender.com/api/public/spaces)
-const API_URL = 'https://advisory-rosaline-jacquesikot-5eacbc0c.koyeb.app/api/public/spaces';
-const API_KEY = 'a81a64bdc43d3cca969e90153ad0945cffd1a85d73293371ce2f07bb31108b87';
+// Booking API config comes from the build environment (see .env.example).
+//
+// Anything Vite inlines at build time ends up readable in the shipped bundle,
+// so VITE_SPACES_API_KEY is NOT a secret — it is only kept out of the repo so
+// it is not committed and so it can be rotated without a code change. A key
+// that must stay secret has to move behind a server-side proxy instead; see
+// README for the Worker-function route.
+//
+// Both are optional: with no API configured, callers fall back to the static
+// space data bundled in src/data/spaces.ts.
+const API_URL = import.meta.env.VITE_SPACES_API_URL ?? '';
+const API_KEY = import.meta.env.VITE_SPACES_API_KEY ?? '';
+
+/** Whether a booking API is configured for this build. */
+export const isApiConfigured = (): boolean => API_URL !== '';
+
+const apiHeaders = (): HeadersInit => ({
+  'Content-Type': 'application/json',
+  // Only send the header when a key exists, so an unauthenticated API is not
+  // handed an empty credential.
+  ...(API_KEY ? { 'X-API-Key': API_KEY } : {}),
+});
 
 // Track current version for efficient polling
 let currentVersion = 0;
@@ -328,13 +346,12 @@ let currentVersion = 0;
  * Returns true if updates are available
  */
 export const checkForUpdates = async (): Promise<boolean> => {
+  if (!isApiConfigured()) return false;
+
   try {
     const response = await fetch(`${API_URL}/version`, {
       method: 'GET',
-      headers: {
-        'X-API-Key': API_KEY,
-        'Content-Type': 'application/json',
-      },
+      headers: apiHeaders(),
     });
 
     if (!response.ok) {
@@ -366,13 +383,14 @@ export const checkForUpdates = async (): Promise<boolean> => {
 };
 
 export const fetchSpacesFromApi = async (): Promise<Space[]> => {
+  if (!isApiConfigured()) {
+    throw new Error('No booking API configured (VITE_SPACES_API_URL is unset)');
+  }
+
   try {
     const response = await fetch(API_URL, {
       method: 'GET',
-      headers: {
-        'X-API-Key': API_KEY,
-        'Content-Type': 'application/json',
-      },
+      headers: apiHeaders(),
     });
 
     if (!response.ok) {

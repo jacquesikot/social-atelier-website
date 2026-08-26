@@ -299,8 +299,7 @@ const SpacesPage = () => {
               Get in Touch
             </NavLink>
             <NavLink
-              to="https://app.easybookr.com/book/the-social-atelier/"
-              target="_blank"
+              to="/booking"
               className="inline-flex items-center justify-center px-8 py-4 border border-primary-950/30 text-primary-950 text-sm font-light tracking-[0.08em] uppercase transition-all duration-300 hover:border-primary-950 hover:bg-primary-950/5"
             >
               Book Directly

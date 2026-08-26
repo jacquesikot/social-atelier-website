@@ -147,8 +147,7 @@ const Hero = () => {
               </NavLink>
 
               <NavLink
-                to="https://app.easybookr.com/book/the-social-atelier/"
-                target="_blank"
+                to="/booking"
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-white/30 text-white text-sm font-light tracking-[0.08em] uppercase transition-all duration-300 hover:border-white/70 hover:bg-white/5"
               >
                 Book a Session

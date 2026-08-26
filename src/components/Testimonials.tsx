@@ -1,20 +1,8 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
 import { testimonials } from '../data/testimonials';
 import TestimonialCard from './TestimonialCard';
 
 const Testimonials = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  
-  // Auto advance testimonials
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-    }, 5000);
-    
-    return () => clearInterval(interval);
-  }, []);
-  
   return (
     <section className="section">
       <div className="container-custom">

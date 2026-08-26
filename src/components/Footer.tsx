@@ -1,6 +1,7 @@
 import { Instagram } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { spaces } from '../data/spaces';
+import { CONTACT_EMAIL, PHONE_DISPLAY, PHONE_E164 } from '../config/contact';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -50,26 +51,15 @@ const Footer = () => {
                 { label: 'Spaces', path: '/spaces' },
                 { label: 'About', path: '/about' },
                 { label: 'Contact', path: '/contact' },
-                { label: 'Book Now', path: 'https://app.easybookr.com/book/the-social-atelier/', external: true },
+                { label: 'Book Now', path: '/booking' },
               ].map((item) => (
                 <li key={item.label}>
-                  {item.external ? (
-                    <a
-                      href={item.path}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
-                    >
-                      {item.label}
-                    </a>
-                  ) : (
-                    <NavLink
-                      to={item.path}
-                      className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
-                    >
-                      {item.label}
-                    </NavLink>
-                  )}
+                  <NavLink
+                    to={item.path}
+                    className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
+                  >
+                    {item.label}
+                  </NavLink>
                 </li>
               ))}
             </ul>
@@ -106,18 +96,18 @@ const Footer = () => {
               </p>
               <p>
                 <a
-                  href="tel:+2349031189697"
+                  href={`tel:${PHONE_E164}`}
                   className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
                 >
-                  +234 903 118 9697
+                  {PHONE_DISPLAY}
                 </a>
               </p>
               <p>
                 <a
-                  href="mailto:hello@socialatelierng.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="text-neutral-400 hover:text-secondary-300 transition-colors duration-200 text-sm font-light"
                 >
-                  hello@socialatelierng.com
+                  {CONTACT_EMAIL}
                 </a>
               </p>
             </address>

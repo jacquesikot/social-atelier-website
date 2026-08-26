@@ -459,8 +459,7 @@ const HomePage = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <NavLink
-              to="https://app.easybookr.com/book/the-social-atelier/"
-              target="_blank"
+              to="/booking"
               className="inline-flex items-center justify-center gap-3 px-10 py-4 bg-secondary-300 text-primary-950 text-sm font-medium tracking-[0.08em] uppercase transition-all duration-300 hover:bg-white hover:scale-[1.02]"
             >
               Book a Space
