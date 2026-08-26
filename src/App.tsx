@@ -11,6 +11,8 @@ import SpaceDetailPage from './pages/SpaceDetailPage';
 import BookingPage from './pages/BookingPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
+import BlogPage from './pages/BlogPage';
+import BlogPostPage from './pages/BlogPostPage';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
             <Route path="/booking" element={<BookingPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<BlogPostPage />} />
           </Routes>
         </main>
         <Footer />

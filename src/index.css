@@ -156,3 +156,100 @@
     @apply aspect-[4/3] w-full object-cover;
   }
 }
+
+/*
+ * Styles for Webflow rich-text bodies on blog posts.
+ *
+ * The CMS emits plain HTML tags with no classes, so they cannot be styled with
+ * Tailwind utilities inline and are targeted by element instead.
+ */
+@layer components {
+  .prose-atelier {
+    @apply text-neutral-700 font-light;
+    font-size: 1.02rem;
+    line-height: 1.85;
+  }
+
+  .prose-atelier > * + * {
+    @apply mt-6;
+  }
+
+  .prose-atelier h2,
+  .prose-atelier h3,
+  .prose-atelier h4 {
+    @apply text-primary-950 mt-12 mb-4;
+    font-family: 'Maison Neue Extended', 'Maison Neue', Arial, sans-serif;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .prose-atelier h2 {
+    font-size: 1.55rem;
+  }
+
+  .prose-atelier h3 {
+    font-size: 1.25rem;
+  }
+
+  .prose-atelier h4 {
+    font-size: 1.1rem;
+  }
+
+  .prose-atelier a {
+    @apply text-primary-700 underline decoration-primary-300 underline-offset-4 transition-colors duration-200;
+  }
+
+  .prose-atelier a:hover {
+    @apply text-primary-950 decoration-primary-800;
+  }
+
+  .prose-atelier strong {
+    @apply text-primary-950 font-medium;
+  }
+
+  .prose-atelier ul,
+  .prose-atelier ol {
+    @apply pl-6 space-y-2;
+  }
+
+  .prose-atelier ul {
+    @apply list-disc;
+  }
+
+  .prose-atelier ol {
+    @apply list-decimal;
+  }
+
+  .prose-atelier blockquote {
+    @apply border-l-2 border-primary-300 pl-6 my-10 text-primary-800 italic;
+  }
+
+  .prose-atelier img,
+  .prose-atelier figure img {
+    @apply w-full my-10;
+  }
+
+  .prose-atelier figcaption {
+    @apply text-neutral-400 text-xs tracking-[0.05em] mt-3 text-center;
+  }
+
+  /* Webflow wraps embeds (video, maps) in a ratio container. */
+  .prose-atelier .w-embed,
+  .prose-atelier .w-video {
+    @apply my-10;
+  }
+
+  .prose-atelier .w-video iframe,
+  .prose-atelier iframe {
+    @apply w-full aspect-video;
+  }
+
+  .prose-atelier hr {
+    @apply my-12 border-neutral-200;
+  }
+
+  .prose-atelier code {
+    @apply bg-neutral-100 px-1.5 py-0.5 text-[0.9em] rounded;
+  }
+}

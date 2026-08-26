@@ -50,6 +50,7 @@ const Footer = () => {
                 { label: 'Home', path: '/' },
                 { label: 'Spaces', path: '/spaces' },
                 { label: 'About', path: '/about' },
+                { label: 'Journal', path: '/blog' },
                 { label: 'Contact', path: '/contact' },
                 { label: 'Book Now', path: '/booking' },
               ].map((item) => (

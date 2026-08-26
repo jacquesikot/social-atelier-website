@@ -38,3 +38,22 @@ export interface BookingFormData {
   phone: string;
   message: string;
 }
+
+export interface BlogImage {
+  url: string;
+  alt: string;
+}
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  /** Rich text from Webflow, already HTML. */
+  body: string;
+  mainImage: BlogImage | null;
+  thumbnailImage: BlogImage | null;
+  featured: boolean;
+  author: string;
+  publishedDate: string | null;
+}
