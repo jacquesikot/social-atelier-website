@@ -64,13 +64,36 @@ jobs:
           echo "Titles:" >> "$GITHUB_STEP_SUMMARY"
           node -e 'require("./src/data/blog.json").forEach(p => console.log("- " + p.title))' >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Deploy to Cloudflare Workers
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # The build already ran above; don't rebuild without the secrets.
-          command: deploy
+      # Uploads a new version, then shifts all traffic to it.
+      #
+      # `wrangler deploy` also reconciles the custom domains in wrangler.jsonc,
+      # which needs a zone-scoped Workers Routes permission that the standard
+      # "Edit Cloudflare Workers" token does not grant — it fails with a 403 on
+      # /zones/{id}/workers/routes even though the Worker itself uploads fine.
+      # The domains are already bound and do not change between deploys, so
+      # publishing a version avoids touching routes at all.
+      #
+      # Note: if the routes or custom domains in wrangler.jsonc ever change,
+      # that change has to be applied once with `wrangler triggers deploy`
+      # (or `wrangler deploy`) using a token that has the zone permission.
+      # Run wrangler directly rather than via the action, so the uploaded
+      # version ID can be captured and passed to the deploy step. Omitting the
+      # version makes `versions deploy` resolve a default interactively, which
+      # is not something to rely on in CI.
+      - name: Upload and release new Worker version
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          npx wrangler versions upload | tee upload.log
+          version_id=$(grep -oE 'Worker Version ID: [0-9a-f-]+' upload.log | awk '{print $NF}')
+          if [ -z "$version_id" ]; then
+            echo "::error::could not parse the uploaded version ID"
+            exit 1
+          fi
+          echo "Releasing version $version_id"
+          npx wrangler versions deploy "$version_id@100" --yes
 
       - name: Verify the deployed site
         run: |
