@@ -125,7 +125,8 @@ const SpacesPage = () => {
             className="text-neutral-400 font-light max-w-lg"
             style={{ fontSize: '1.05rem' }}
           >
-            Nine distinct rooms, each designed with intention. Every space is a world of its own.
+            {allSpaces.length} distinct rooms, each designed with intention. Every space is a world of
+            its own.
           </motion.p>
         </div>
       </div>

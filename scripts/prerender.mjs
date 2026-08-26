@@ -416,7 +416,7 @@ ${spaces
         to express themselves and bring their visions to life.
       </p>
       <p>
-        With nine thoughtfully designed spaces, The Social Atelier offers versatility and inspiration
+        With eight thoughtfully designed spaces, The Social Atelier offers versatility and inspiration
         for every project, from bold shoots to intimate gatherings. More than just beautiful
         backdrops, we provide an environment where artistry thrives and ideas are nurtured.
       </p>
