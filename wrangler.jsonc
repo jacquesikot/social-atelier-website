@@ -9,12 +9,19 @@
     { "pattern": "www.thesocialatelierng.com", "custom_domain": true }
   ],
   "assets": {
-    // Vite build output. Static assets are served straight from Cloudflare's
-    // edge — there is no Worker script, since the app is entirely client-side
-    // and talks to the booking API directly from the browser.
+    // Vite build output, with prerendered HTML per route on top of it. Static
+    // assets are served straight from Cloudflare's edge — there is still no
+    // Worker script: the pages are baked at build time, and the app talks to
+    // the booking API directly from the browser once it hydrates.
     "directory": "./dist",
-    // React Router owns routing, so unknown paths (e.g. /spaces/:id on a hard
-    // refresh or a shared link) must return index.html rather than a 404.
+    // scripts/prerender.mjs emits dist/<route>/index.html for every route, so
+    // most paths are now real assets rather than SPA fallbacks. Serve them at
+    // the canonical, slash-less URL: the default would 307 /about -> /about/,
+    // adding a redirect hop in front of every URL in the sitemap and pointing
+    // crawlers at a URL that disagrees with the page's own canonical tag.
+    "html_handling": "drop-trailing-slash",
+    // React Router still owns any path without a prerendered file, so those
+    // must return index.html rather than a 404.
     "not_found_handling": "single-page-application"
   }
 }
