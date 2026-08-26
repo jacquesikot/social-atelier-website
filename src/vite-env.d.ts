@@ -8,6 +8,8 @@ interface ImportMetaEnv {
    * publicly readable — see the note in src/services/spacesApi.ts.
    */
   readonly VITE_SPACES_API_KEY?: string;
+  /** GA4 measurement ID (G-XXXXXXXXXX). Unset disables analytics entirely. */
+  readonly VITE_GA4_MEASUREMENT_ID?: string;
 }
 
 interface ImportMeta {

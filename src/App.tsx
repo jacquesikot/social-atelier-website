@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import Analytics from './components/Analytics';
+import Canonical from './components/Canonical';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -13,6 +15,8 @@ import ContactPage from './pages/ContactPage';
 function App() {
   return (
     <Router>
+      <Analytics />
+      <Canonical />
       <div className="font-sans text-neutral-800 bg-neutral-50 min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-grow">

@@ -5,6 +5,7 @@ import { getSpaceById, getSpaces } from '../data/spaces';
 import { BookingFormData, Space } from '../types';
 import toast from 'react-hot-toast';
 import { bookingMessage, openWhatsApp } from '../config/contact';
+import { trackEvent } from '../config/analytics';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -83,6 +84,16 @@ const BookingPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // The visitor leaves for WhatsApp here, so record the handoff before
+    // navigating away — otherwise bookings are invisible in analytics.
+    trackEvent('booking_request', {
+      space_name: selectedSpace?.name,
+      space_id: formData.spaceId,
+      duration_hours: formData.duration,
+      value: estimatedTotal,
+      currency: 'NGN',
+    });
 
     // Bookings are completed over WhatsApp: hand the visitor a prefilled
     // message rather than accepting details we have nowhere to send.
