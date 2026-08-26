@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { CONTACT_EMAIL, PHONE_DISPLAY, PHONE_E164, enquiryMessage, openWhatsApp } from '../config/contact';
+import { trackEvent } from '../config/analytics';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -46,6 +47,10 @@ const ContactPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    trackEvent('contact_enquiry', {
+      subject: SUBJECT_LABELS[formData.subject] ?? formData.subject,
+    });
 
     // Enquiries reach us over WhatsApp; prefill the chat instead of
     // reporting a send that never happened.
