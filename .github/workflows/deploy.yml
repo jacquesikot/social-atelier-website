@@ -1,0 +1,82 @@
+# Manual deploy: publishes the site, picking up whatever is currently live
+# in the Webflow CMS.
+#
+# Run this after publishing a post in Webflow — Actions tab → "Deploy to
+# Cloudflare" → "Run workflow". Deliberately manual rather than triggered by a
+# Webflow webhook: a failed automatic deploy is easy to miss, whereas a run you
+# started yourself shows its result.
+name: Deploy to Cloudflare
+
+on:
+  workflow_dispatch:
+    inputs:
+      skip_blog_fetch:
+        description: 'Deploy the committed posts instead of re-fetching from Webflow'
+        type: boolean
+        default: false
+
+# Never let two deploys race to publish the same Worker.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Verify types and lint
+        run: |
+          npx tsc --noEmit -p tsconfig.app.json
+          yarn lint
+
+      # `yarn build` fetches live Webflow posts and fails if the CMS is
+      # unreachable, so a broken fetch never ships a site with no blog.
+      - name: Build
+        env:
+          WEBFLOW_API_TOKEN: ${{ secrets.WEBFLOW_API_TOKEN }}
+          WEBFLOW_SITE_ID: ${{ secrets.WEBFLOW_SITE_ID }}
+        run: |
+          if [ "${{ inputs.skip_blog_fetch }}" = "true" ]; then
+            yarn build:offline
+          else
+            yarn build
+          fi
+
+      - name: Show what will deploy
+        run: |
+          echo "### Deploy summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Posts: $(node -e 'console.log(require("./src/data/blog.json").length)')" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Sitemap URLs: $(grep -c '<loc>' public/sitemap.xml)" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Titles:" >> "$GITHUB_STEP_SUMMARY"
+          node -e 'require("./src/data/blog.json").forEach(p => console.log("- " + p.title))' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # The build already ran above; don't rebuild without the secrets.
+          command: deploy
+
+      - name: Verify the deployed site
+        run: |
+          set -e
+          for path in / /blog /sitemap.xml; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://thesocialatelierng.com$path")
+            echo "$code  $path"
+            [ "$code" = "200" ] || { echo "::error::$path returned $code"; exit 1; }
+          done
