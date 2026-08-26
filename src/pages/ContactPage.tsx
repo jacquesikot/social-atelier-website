@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { CONTACT_EMAIL, PHONE_DISPLAY, PHONE_E164, enquiryMessage, openWhatsApp } from '../config/contact';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
@@ -14,6 +15,14 @@ const fadeUp = {
       ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
     },
   }),
+};
+
+/** Subject options, keyed by the value stored in form state. */
+const SUBJECT_LABELS: Record<string, string> = {
+  booking: 'Booking Inquiry',
+  info: 'General Information',
+  feedback: 'Feedback',
+  other: 'Other',
 };
 
 const ContactPage = () => {
@@ -37,8 +46,17 @@ const ContactPage = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success('Message sent! We will get back to you soon.');
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+
+    // Enquiries reach us over WhatsApp; prefill the chat instead of
+    // reporting a send that never happened.
+    openWhatsApp(
+      enquiryMessage({
+        ...formData,
+        // Send the option's label, not its internal value ("booking").
+        subject: SUBJECT_LABELS[formData.subject] ?? formData.subject,
+      }),
+    );
+    toast.success('Opening WhatsApp so you can send your message…');
   };
 
   return (
@@ -138,8 +156,8 @@ const ContactPage = () => {
                     icon: <Mail size={16} />,
                     label: 'Email',
                     content: (
-                      <a href="mailto:hello@socialatelierng.com" className="text-primary-600 hover:text-primary-800 transition-colors text-sm font-light">
-                        hello@socialatelierng.com
+                      <a href={`mailto:${CONTACT_EMAIL}`} className="text-primary-600 hover:text-primary-800 transition-colors text-sm font-light">
+                        {CONTACT_EMAIL}
                       </a>
                     ),
                   },
@@ -147,8 +165,8 @@ const ContactPage = () => {
                     icon: <Phone size={16} />,
                     label: 'Phone',
                     content: (
-                      <a href="tel:+2349031189697" className="text-primary-600 hover:text-primary-800 transition-colors text-sm font-light">
-                        +234 903 118 9697
+                      <a href={`tel:${PHONE_E164}`} className="text-primary-600 hover:text-primary-800 transition-colors text-sm font-light">
+                        {PHONE_DISPLAY}
                       </a>
                     ),
                   },
@@ -288,10 +306,11 @@ const ContactPage = () => {
                       className="w-full px-0 py-3 bg-transparent border-0 border-b border-neutral-300 focus:border-primary-800 focus:outline-none text-primary-950 font-light text-sm transition-colors duration-200 appearance-none"
                     >
                       <option value="">Select a subject</option>
-                      <option value="booking">Booking Inquiry</option>
-                      <option value="info">General Information</option>
-                      <option value="feedback">Feedback</option>
-                      <option value="other">Other</option>
+                      {Object.entries(SUBJECT_LABELS).map(([value, label]) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -318,8 +337,11 @@ const ContactPage = () => {
                     className="inline-flex items-center gap-3 px-8 py-4 bg-primary-950 text-white text-sm font-medium tracking-[0.08em] uppercase transition-all duration-300 hover:bg-primary-800 hover:scale-[1.02]"
                   >
                     <Send size={14} />
-                    Send Message
+                    Send on WhatsApp
                   </button>
+                  <p className="text-neutral-400 text-xs font-light mt-4 max-w-sm leading-relaxed">
+                    Your message opens in WhatsApp so you can review it before sending.
+                  </p>
                 </div>
               </form>
             </motion.div>

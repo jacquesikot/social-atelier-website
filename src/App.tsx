@@ -27,10 +27,7 @@ function App() {
         </main>
         <Footer />
         <Toaster position="bottom-right" />
-        <WhatsAppButton
-          phoneNumber="+2349031189697"
-          message="Hello! I'm interested in learning more about your creative spaces."
-        />
+        <WhatsAppButton />
       </div>
     </Router>
   );

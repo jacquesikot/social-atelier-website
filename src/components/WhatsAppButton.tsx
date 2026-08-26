@@ -1,23 +1,19 @@
 import React from 'react';
+import { GENERAL_ENQUIRY_MESSAGE, whatsappLink } from '../config/contact';
 
 interface WhatsAppButtonProps {
-  phoneNumber: string;
+  /** Overrides the default opening message, e.g. to name a specific space. */
   message?: string;
 }
 
 const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
-  phoneNumber,
-  message = "Hello! I'm interested in your spaces.",
+  message = GENERAL_ENQUIRY_MESSAGE,
 }) => {
-  const handleWhatsAppClick = () => {
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    window.open(whatsappUrl, '_blank');
-  };
-
   return (
-    <button
-      onClick={handleWhatsAppClick}
+    <a
+      href={whatsappLink(message)}
+      target="_blank"
+      rel="noopener noreferrer"
       className="fixed bottom-6 right-6 z-50 bg-green-500 hover:bg-green-600 text-white rounded-full p-4 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-110 group"
       aria-label="Contact us on WhatsApp"
     >
@@ -34,7 +30,7 @@ const WhatsAppButton: React.FC<WhatsAppButtonProps> = ({
         Chat with us on WhatsApp
         <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-800"></div>
       </div>
-    </button>
+    </a>
   );
 };
 

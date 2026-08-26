@@ -66,8 +66,7 @@ const Navbar = () => {
               </NavLink>
             ))}
             <NavLink
-              to="https://app.easybookr.com/book/the-social-atelier"
-              target="_blank"
+              to="/booking"
               className={`btn ${isScrolled ? 'btn-primary' : 'bg-white text-primary-950 hover:bg-white/90'}`}
             >
               Book Now

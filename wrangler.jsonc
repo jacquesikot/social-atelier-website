@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "social-atelier-website",
+  "compatibility_date": "2026-08-25",
+  "assets": {
+    // Vite build output. Static assets are served straight from Cloudflare's
+    // edge — there is no Worker script, since the app is entirely client-side
+    // and talks to the booking API directly from the browser.
+    "directory": "./dist",
+    // React Router owns routing, so unknown paths (e.g. /spaces/:id on a hard
+    // refresh or a shared link) must return index.html rather than a 404.
+    "not_found_handling": "single-page-application"
+  }
+}
