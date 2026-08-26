@@ -2,6 +2,12 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "social-atelier-website",
   "compatibility_date": "2026-08-25",
+  // Cloudflare creates and manages the DNS records and TLS certificates for
+  // these hostnames. Both apex and www are bound so neither is a dead end.
+  "routes": [
+    { "pattern": "thesocialatelierng.com", "custom_domain": true },
+    { "pattern": "www.thesocialatelierng.com", "custom_domain": true }
+  ],
   "assets": {
     // Vite build output. Static assets are served straight from Cloudflare's
     // edge — there is no Worker script, since the app is entirely client-side
