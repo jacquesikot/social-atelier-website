@@ -72,33 +72,46 @@ try {
 const domainIds = (site.customDomains ?? []).map((d) => d.id);
 const domainNames = (site.customDomains ?? []).map((d) => d.url).join(', ');
 
-let queued = false;
-try {
-  await api(`/sites/${SITE_ID}/publish`, {
+const publish = () =>
+  api(`/sites/${SITE_ID}/publish`, {
     method: 'POST',
     body: JSON.stringify({
       publishToWebflowSubdomain: true,
       ...(domainIds.length ? { customDomains: domainIds } : {}),
     }),
   });
-  queued = true;
-} catch (err) {
-  // One successful publish per minute is allowed. A 429 means the site was
-  // published within the last minute, so the CMS state this script wanted is
-  // already live and there is nothing to wait for.
-  if (err.status === 429) {
-    console.log('publish-webflow: published less than a minute ago — already up to date, continuing');
-  } else {
-    fail(err.message);
+
+/**
+ * Webflow allows one successful publish per minute. A 429 must not be treated
+ * as "already up to date": an edit made *after* that recent publish is still
+ * unpublished, so giving up here would read the same stale collection this
+ * script exists to refresh — the exact bug it is meant to prevent. Wait for the
+ * window to clear and try again instead.
+ */
+const RETRY_MS = 20_000;
+const MAX_ATTEMPTS = 5;
+
+for (let attempt = 1; ; attempt += 1) {
+  try {
+    await publish();
+    break;
+  } catch (err) {
+    if (err.status !== 429) fail(err.message);
+    if (attempt === MAX_ATTEMPTS) {
+      fail(`still rate limited after ${MAX_ATTEMPTS} attempts — could not publish`);
+    }
+    console.log(
+      `publish-webflow: rate limited (429), waiting ${RETRY_MS / 1000}s to retry ` +
+        `(attempt ${attempt}/${MAX_ATTEMPTS})`,
+    );
+    await sleep(RETRY_MS);
   }
 }
 
-if (queued) {
-  console.log(
-    `publish-webflow: queued a publish for ${site.displayName ?? SITE_ID}` +
-      `${domainNames ? ` (${domainNames})` : ' (webflow.io subdomain only)'}`,
-  );
-}
+console.log(
+  `publish-webflow: queued a publish for ${site.displayName ?? SITE_ID}` +
+    `${domainNames ? ` (${domainNames})` : ' (webflow.io subdomain only)'}`,
+);
 
 /**
  * Publishing is asynchronous: the API returns 202 as soon as the job is
@@ -107,7 +120,5 @@ if (queued) {
  * before the blog fetch reads the collection.
  */
 const SETTLE_MS = 15_000;
-if (queued) {
-  console.log(`publish-webflow: waiting ${SETTLE_MS / 1000}s for the publish to finish`);
-  await sleep(SETTLE_MS);
-}
+console.log(`publish-webflow: waiting ${SETTLE_MS / 1000}s for the publish to finish`);
+await sleep(SETTLE_MS);
