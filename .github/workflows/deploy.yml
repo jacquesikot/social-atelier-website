@@ -1,15 +1,25 @@
-# Manual deploy: publishes the site, picking up whatever is currently live
-# in the Webflow CMS.
+# Manual deploy: publishes the Webflow site, then rebuilds and ships this site
+# with whatever the CMS now holds.
 #
-# Run this after publishing a post in Webflow — Actions tab → "Deploy to
-# Cloudflare" → "Run workflow". Deliberately manual rather than triggered by a
-# Webflow webhook: a failed automatic deploy is easy to miss, whereas a run you
-# started yourself shows its result.
+# Publishing Webflow first is what makes CMS edits actually appear. The build
+# reads Webflow's `/items/live` endpoint, which serves the last *published*
+# state of the collection — so a post added or deleted in the Webflow editor
+# but never published is invisible to the build, and the deploy rebuilds the
+# same posts it already had.
+#
+# Run it from the Actions tab → "Deploy to Cloudflare" → "Run workflow".
+# Deliberately manual rather than triggered by a Webflow webhook: a failed
+# automatic deploy is easy to miss, whereas a run you started yourself shows
+# its result.
 name: Deploy to Cloudflare
 
 on:
   workflow_dispatch:
     inputs:
+      publish_webflow:
+        description: 'Publish the Webflow site first, so CMS edits are picked up'
+        type: boolean
+        default: true
       skip_blog_fetch:
         description: 'Deploy the committed posts instead of re-fetching from Webflow'
         type: boolean
@@ -43,6 +53,11 @@ jobs:
 
       # `yarn build` fetches live Webflow posts and fails if the CMS is
       # unreachable, so a broken fetch never ships a site with no blog.
+      # `yarn build:publish` publishes the Webflow site first, so posts added or
+      # deleted in the CMS are actually reflected in what gets fetched.
+      #
+      # skip_blog_fetch wins over publish_webflow: it means "don't talk to
+      # Webflow at all", so publishing would contradict it.
       - name: Build
         env:
           WEBFLOW_API_TOKEN: ${{ secrets.WEBFLOW_API_TOKEN }}
@@ -50,6 +65,8 @@ jobs:
         run: |
           if [ "${{ inputs.skip_blog_fetch }}" = "true" ]; then
             yarn build:offline
+          elif [ "${{ inputs.publish_webflow }}" = "true" ]; then
+            yarn build:publish
           else
             yarn build
           fi

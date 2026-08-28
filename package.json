@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "node scripts/fetch-blog.mjs --strict && node scripts/generate-sitemap.mjs && vite build && node scripts/prerender.mjs",
+    "build:publish": "node scripts/publish-webflow.mjs --strict && yarn build",
     "lint": "eslint .",
     "preview": "vite preview",
     "deploy": "yarn build && wrangler deploy",
@@ -13,6 +14,7 @@
     "prerender": "node scripts/prerender.mjs",
     "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "fetch:blog": "node scripts/fetch-blog.mjs",
+    "publish:webflow": "node scripts/publish-webflow.mjs",
     "build:offline": "node scripts/fetch-blog.mjs && node scripts/generate-sitemap.mjs && vite build && node scripts/prerender.mjs"
   },
   "dependencies": {
