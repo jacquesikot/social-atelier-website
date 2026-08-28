@@ -72,6 +72,7 @@ try {
 const domainIds = (site.customDomains ?? []).map((d) => d.id);
 const domainNames = (site.customDomains ?? []).map((d) => d.url).join(', ');
 
+let queued = false;
 try {
   await api(`/sites/${SITE_ID}/publish`, {
     method: 'POST',
@@ -80,20 +81,24 @@ try {
       ...(domainIds.length ? { customDomains: domainIds } : {}),
     }),
   });
+  queued = true;
 } catch (err) {
   // One successful publish per minute is allowed. A 429 means the site was
-  // just published anyway, which is the state this script wanted.
+  // published within the last minute, so the CMS state this script wanted is
+  // already live and there is nothing to wait for.
   if (err.status === 429) {
-    console.warn('publish-webflow: rate limited (429) — the site was published very recently, continuing');
+    console.log('publish-webflow: published less than a minute ago — already up to date, continuing');
   } else {
     fail(err.message);
   }
 }
 
-console.log(
-  `publish-webflow: queued a publish for ${site.displayName ?? SITE_ID}` +
-    `${domainNames ? ` (${domainNames})` : ' (webflow.io subdomain only)'}`,
-);
+if (queued) {
+  console.log(
+    `publish-webflow: queued a publish for ${site.displayName ?? SITE_ID}` +
+      `${domainNames ? ` (${domainNames})` : ' (webflow.io subdomain only)'}`,
+  );
+}
 
 /**
  * Publishing is asynchronous: the API returns 202 as soon as the job is
@@ -102,5 +107,7 @@ console.log(
  * before the blog fetch reads the collection.
  */
 const SETTLE_MS = 15_000;
-console.log(`publish-webflow: waiting ${SETTLE_MS / 1000}s for the publish to finish`);
-await sleep(SETTLE_MS);
+if (queued) {
+  console.log(`publish-webflow: waiting ${SETTLE_MS / 1000}s for the publish to finish`);
+  await sleep(SETTLE_MS);
+}
