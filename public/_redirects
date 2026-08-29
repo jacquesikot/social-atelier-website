@@ -1,0 +1,15 @@
+# Cloudflare static-asset redirects. Vite copies this file from public/ into
+# dist/, which is the directory wrangler.jsonc serves assets from.
+#
+# Format: <source> <destination> <status>
+#
+# Redirects are evaluated before the asset lookup, so a rule here wins over
+# both a prerendered file and the 404 handling.
+
+# Webflow appended a numeric suffix to disambiguate duplicate slugs, and that
+# suffixed URL was crawled while the site was still on Webflow. After the
+# migration it pointed at nothing, but not_found_handling was serving the
+# prerendered homepage with a 200 — so AI crawlers kept treating this dead URL
+# as a live page and reading homepage copy off it. Send it to the real post so
+# the accumulated attention lands on the article it was always meant to be.
+/blog/location-and-layout-details-33958 /blog/location-and-layout-details 301

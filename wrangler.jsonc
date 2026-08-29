@@ -20,8 +20,15 @@
     // adding a redirect hop in front of every URL in the sitemap and pointing
     // crawlers at a URL that disagrees with the page's own canonical tag.
     "html_handling": "drop-trailing-slash",
-    // React Router still owns any path without a prerendered file, so those
-    // must return index.html rather than a 404.
-    "not_found_handling": "single-page-application"
+    // Every route in src/App.tsx is prerendered to a real file, so an unmatched
+    // path is a genuine 404 rather than a route the SPA still has to resolve.
+    //
+    // The old "single-page-application" value served dist/index.html — the
+    // prerendered *homepage* — with a 200 for any unknown URL. Crawlers that do
+    // not run JavaScript (the AI ones, mostly) never reached the app's "Story
+    // Not Found" screen; they saw a success code and a page of real homepage
+    // copy, so dead URLs like the stale Webflow slug in _redirects looked live
+    // and stayed in their indexes. This serves dist/404.html with a true 404.
+    "not_found_handling": "404-page"
   }
 }
