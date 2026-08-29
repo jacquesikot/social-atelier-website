@@ -505,6 +505,42 @@ ${posts
   ...posts.map(postPage),
 ];
 
+/**
+ * The 404 body, served by Cloudflare for any unmatched path (see the
+ * not_found_handling note in wrangler.jsonc).
+ *
+ * It is deliberately kept out of `pages`: it is written to dist/404.html
+ * rather than a directory index, it must not claim a canonical URL of its own,
+ * and it carries no JSON-LD — a missing page is not an entity worth
+ * describing. `noindex` keeps it out of indexes even though Cloudflare already
+ * sends a 404, since the same file is reachable at /404.html directly.
+ *
+ * The links matter: a crawler that lands here should still be able to reach
+ * the real pages instead of hitting a dead end.
+ */
+const notFoundPage = {
+  path: '/404',
+  noindex: true,
+  title: 'Page Not Found | The Social Atelier',
+  description:
+    'This page does not exist. Browse our spaces, the Journal, or book a studio at The Social Atelier in Lekki, Lagos.',
+  body: `
+      <h1>Page not found</h1>
+      <p>
+        The page you are looking for does not exist or has moved. It may be an old link from a
+        previous version of this site.
+      </p>
+
+      <h2>Where to go instead</h2>
+      <ul>
+        <li><a href="/">Home</a> — what The Social Atelier is and where we are</li>
+        <li><a href="/spaces">Our spaces</a> — all ${spaces.length} spaces, with rates</li>
+        <li><a href="/blog">Journal</a> — notes, stories and guides</li>
+        <li><a href="/booking">Book a space</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>`,
+};
+
 // ── Rendering ───────────────────────────────────────────────────────────────
 
 /** Replace a meta tag's content in the built template, by attribute. */
@@ -531,10 +567,19 @@ const render = (page) => {
   html = setMeta(html, 'name', 'twitter:description', page.description);
   html = setMeta(html, 'name', 'twitter:url', url);
   html = setMeta(html, 'name', 'twitter:image', image);
-  html = html.replace(
-    /<link rel="canonical" href="[^"]*"\s*\/?>/i,
-    `<link rel="canonical" href="${esc(url)}">`,
-  );
+  // The 404 body is served at every unmatched path, so there is no one URL it
+  // could honestly call canonical — pointing it at the homepage would invite
+  // exactly the "this dead URL is really the homepage" reading we are fixing.
+  // Drop the tag entirely and mark the page noindex instead.
+  if (page.noindex) {
+    html = html.replace(/\s*<link rel="canonical" href="[^"]*"\s*\/?>/i, '');
+    html = setMeta(html, 'name', 'robots', 'noindex, follow');
+  } else {
+    html = html.replace(
+      /<link rel="canonical" href="[^"]*"\s*\/?>/i,
+      `<link rel="canonical" href="${esc(url)}">`,
+    );
+  }
 
   // Per-route JSON-LD, added alongside the Organization block in index.html.
   if (page.jsonld) {
@@ -569,6 +614,11 @@ for (const page of pages) {
   written++;
 }
 
+// dist/404.html, not dist/404/index.html: Cloudflare looks for the nearest
+// 404.html by that exact name when a request matches no asset.
+writeFileSync(resolve(DIST, '404.html'), render(notFoundPage));
+written++;
+
 console.log(
-  `prerender: ${written} pages (${spaces.length} spaces, ${posts.length} posts) -> dist/`,
+  `prerender: ${written} pages (${spaces.length} spaces, ${posts.length} posts, 1 404) -> dist/`,
 );
