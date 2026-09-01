@@ -542,7 +542,7 @@ const notFoundPage = {
   noindex: true,
   title: 'Page Not Found | The Social Atelier',
   description:
-    'This page does not exist. Browse our spaces, the Journal, or book a studio at The Social Atelier in Lekki, Lagos.',
+    'This page does not exist. Browse our spaces, the Blog, or book a studio at The Social Atelier in Lekki, Lagos.',
   body: `
       <h1>Page not found</h1>
       <p>
@@ -554,7 +554,7 @@ const notFoundPage = {
       <ul>
         <li><a href="/">Home</a> — what The Social Atelier is and where we are</li>
         <li><a href="/spaces">Our spaces</a> — all ${spaces.length} spaces, with rates</li>
-        <li><a href="/blog">Journal</a> — notes, stories and guides</li>
+        <li><a href="/blog">Blog</a> — notes, stories and guides</li>
         <li><a href="/booking">Book a space</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>`,
