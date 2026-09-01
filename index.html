@@ -38,28 +38,35 @@
     
     <!-- Additional SEO Meta Tags -->
     <meta name="geo.region" content="NG-LA">
-    <meta name="geo.placename" content="Lagos">
-    <meta name="geo.position" content="6.5244;3.3792">
-    <meta name="ICBM" content="6.5244, 3.3792">
-    
+    <meta name="geo.placename" content="Lekki Phase 1, Lagos">
+    <!-- geo.position/ICBM are deliberately absent. They previously held the
+         Lagos mainland centroid rather than this address in Lekki, so they
+         pointed several kilometres off. Location is left to the streetAddress
+         in the LocalBusiness schema, which is what search engines geocode
+         from. To restore a precise pin, take the exact lat/long from the
+         Google Business Profile rather than deriving it by hand. -->
+
     <!-- Structured Data JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
+      "@id": "https://thesocialatelierng.com/#business",
       "name": "The Social Atelier",
       "url": "https://thesocialatelierng.com",
       "logo": "https://thesocialatelierng.com/logo.png",
-      "description": "Premium creative spaces in Lagos for events, photoshoots, podcasts, and content creation",
+      "description": "Premium content studio and event space in Lekki, Lagos, offering hourly rental of designed spaces for photoshoots, video, podcasts and events.",
+      "email": "hello@thesocialatelierng.com",
+      "telephone": "+2349031189697",
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "Plot 59 Chuks Onyebuchi Drive, Lekki Phase 1",
         "addressLocality": "Lekki",
         "addressRegion": "Lagos",
-        "addressCountry": "Nigeria"
+        "addressCountry": "NG"
       },
       "sameAs": [
-        "https://instagram.com/thesocialatelier",
-        "https://twitter.com/thesocialatelier"
+        "https://instagram.com/thesocialatelierng"
       ],
       "areaServed": {
         "@type": "City",

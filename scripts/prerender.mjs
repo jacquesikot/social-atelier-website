@@ -157,7 +157,7 @@ const NAV = [
   ['/spaces', 'Our Spaces'],
   ['/booking', 'Book a Space'],
   ['/about', 'About Us'],
-  ['/blog', 'Journal'],
+  ['/blog', 'Blog'],
   ['/contact', 'Contact'],
 ];
 
@@ -176,7 +176,7 @@ ${NAV.map(([href, label]) => `          <li><a href="${href}">${esc(label)}</a><
 const footer = () => `
       <footer>
         <p>The Social Atelier — premium content studio and event space in Lekki, Lagos, Nigeria.</p>
-        <p>Enquiries: <a href="mailto:hello@socialatelierng.com">hello@socialatelierng.com</a> ·
+        <p>Enquiries: <a href="mailto:hello@thesocialatelierng.com">hello@thesocialatelierng.com</a> ·
            <a href="tel:+2349031189697">+234 903 118 9697</a> ·
            Instagram <a href="https://instagram.com/thesocialatelierng" rel="noopener">@thesocialatelierng</a></p>
       </footer>`;
@@ -266,7 +266,7 @@ const postPage = (p) => ({
         <p>${p.author ? `By ${esc(p.author)}` : ''}${p.publishedDate ? ` · ${esc(String(p.publishedDate).split('T')[0])}` : ''}</p>
         ${p.excerpt ? `<p>${esc(p.excerpt)}</p>` : ''}
         ${p.body ?? ''}
-        <p><a href="/blog">More from the Journal</a></p>
+        <p><a href="/blog">More from the Blog</a></p>
       </article>`,
   jsonld: {
     '@context': 'https://schema.org',
@@ -318,7 +318,7 @@ ${spaceListItems()}
       <h2>Booking</h2>
       <p>
         Book a space at <a href="/booking">/booking</a>, or reach us on WhatsApp at
-        +234 903 118 9697 or by email at hello@socialatelierng.com.
+        +234 903 118 9697 or by email at hello@thesocialatelierng.com.
       </p>`,
     jsonld: {
       '@context': 'https://schema.org',
@@ -330,14 +330,32 @@ ${spaceListItems()}
       url: SITE,
       image: OG_FALLBACK,
       telephone: '+2349031189697',
-      email: 'hello@socialatelierng.com',
+      email: 'hello@thesocialatelierng.com',
       priceRange: '₦₦₦',
       address: {
         '@type': 'PostalAddress',
+        streetAddress: 'Plot 59 Chuks Onyebuchi Drive, Lekki Phase 1',
         addressLocality: 'Lekki',
         addressRegion: 'Lagos',
         addressCountry: 'NG',
       },
+      // Tuesday–Saturday 10:00–18:00 and Sunday 13:00–18:00, matching the
+      // hours published on the contact page. Monday is omitted rather than
+      // listed as closed, which is how Google reads an absent day.
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          opens: '10:00',
+          closes: '18:00',
+        },
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: 'Sunday',
+          opens: '13:00',
+          closes: '18:00',
+        },
+      ],
       areaServed: { '@type': 'City', name: 'Lagos' },
       sameAs: ['https://instagram.com/thesocialatelierng'],
       makesOffer: spaces.map((s) => ({
@@ -385,7 +403,8 @@ ${spaceListItems()}
       <h1>Book a space</h1>
       <p>
         Choose a space, a date and a duration, and we confirm over WhatsApp. Bookings are available
-        Tuesday to Sunday, 10:00 AM – 6:00 PM, in 2-hour, 4-hour and full-day (8 hour) blocks.
+        Tuesday to Saturday, 10:00 AM – 6:00 PM, and Sunday, 1:00 PM – 6:00 PM, in 2-hour,
+        4-hour and full-day (8 hour) blocks.
       </p>
 
       <h2>Spaces and hourly rates</h2>
@@ -399,7 +418,7 @@ ${spaces
       </ul>
 
       <h2>Reach us</h2>
-      <p>WhatsApp or call +234 903 118 9697, or email hello@socialatelierng.com.</p>`,
+      <p>WhatsApp or call +234 903 118 9697, or email hello@thesocialatelierng.com.</p>`,
   },
   {
     path: '/about',
@@ -448,15 +467,15 @@ ${spaces
     path: '/contact',
     title: 'Contact — The Social Atelier, Lekki, Lagos',
     description:
-      'Get in touch with The Social Atelier in Lekki, Lagos — WhatsApp +234 903 118 9697, email hello@socialatelierng.com, or Instagram @thesocialatelierng.',
+      'Get in touch with The Social Atelier in Lekki, Lagos — WhatsApp +234 903 118 9697, email hello@thesocialatelierng.com, or Instagram @thesocialatelierng.',
     body: `
       <h1>Contact us</h1>
       <p>We are a content studio and event space in Lekki, Lagos, Nigeria.</p>
       <ul>
         <li>WhatsApp / phone: <a href="tel:+2349031189697">+234 903 118 9697</a></li>
-        <li>Email: <a href="mailto:hello@socialatelierng.com">hello@socialatelierng.com</a></li>
+        <li>Email: <a href="mailto:hello@thesocialatelierng.com">hello@thesocialatelierng.com</a></li>
         <li>Instagram: <a href="https://instagram.com/thesocialatelierng" rel="noopener">@thesocialatelierng</a></li>
-        <li>Open Tuesday – Sunday, 10:00 AM – 6:00 PM</li>
+        <li>Open Tuesday – Saturday, 10:00 AM – 6:00 PM; Sunday, 1:00 PM – 6:00 PM</li>
       </ul>
       <p>To reserve a space, see <a href="/booking">booking</a>.</p>`,
     jsonld: {
@@ -469,11 +488,11 @@ ${spaces
   },
   {
     path: '/blog',
-    title: 'Journal — The Social Atelier',
+    title: 'Blog — The Social Atelier',
     description:
       'Notes, stories and guides from The Social Atelier on shooting, creating and hosting in Lagos.',
     body: `
-      <h1>Journal</h1>
+      <h1>Blog</h1>
       <p>Notes, stories and guides from The Social Atelier.</p>
       ${
         posts.length
@@ -492,7 +511,7 @@ ${posts
     jsonld: {
       '@context': 'https://schema.org',
       '@type': 'Blog',
-      name: 'The Social Atelier Journal',
+      name: 'The Social Atelier Blog',
       url: `${SITE}/blog`,
       blogPost: posts.map((p) => ({
         '@type': 'BlogPosting',
@@ -523,7 +542,7 @@ const notFoundPage = {
   noindex: true,
   title: 'Page Not Found | The Social Atelier',
   description:
-    'This page does not exist. Browse our spaces, the Journal, or book a studio at The Social Atelier in Lekki, Lagos.',
+    'This page does not exist. Browse our spaces, the Blog, or book a studio at The Social Atelier in Lekki, Lagos.',
   body: `
       <h1>Page not found</h1>
       <p>
@@ -535,7 +554,7 @@ const notFoundPage = {
       <ul>
         <li><a href="/">Home</a> — what The Social Atelier is and where we are</li>
         <li><a href="/spaces">Our spaces</a> — all ${spaces.length} spaces, with rates</li>
-        <li><a href="/blog">Journal</a> — notes, stories and guides</li>
+        <li><a href="/blog">Blog</a> — notes, stories and guides</li>
         <li><a href="/booking">Book a space</a></li>
         <li><a href="/contact">Contact</a></li>
       </ul>`,
