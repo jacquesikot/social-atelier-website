@@ -1,11 +1,13 @@
 # Services — Webflow CMS collection spec
 
-What to create in Webflow so `/services/<slug>` pages can be authored by editors
-instead of living in `src/data/services.ts`.
+The Webflow CMS structure behind `/services/<slug>` pages, so they can be
+authored by editors instead of living in `src/data/services.ts`.
 
-Everything here is entered by hand in the Webflow Designer (CMS → Collections →
-New Collection). Field **types are immutable once created** and deleting a field
-breaks the API integration, so settle this before loading content.
+**These collections already exist** — see [Wiring it up](#wiring-it-up) for
+their IDs. This document records what is there and why it is shaped that way.
+
+If you ever change it: field **types are immutable once created**, and deleting
+a field breaks the API integration. Add fields rather than repurposing them.
 
 ---
 
@@ -81,9 +83,10 @@ Webflow creates `Name` and `Slug` automatically; do not re-add them.
 
 ### Rooms
 
-`Room Slugs` is plain text, not a reference, because **the spaces are not in
-Webflow.** They are hardcoded in `src/data/spaces.ts`, so there is no Spaces
-collection to point a reference field at.
+`Room Slugs` is plain text, not a reference, because **the site's spaces do not
+come from Webflow.** A `Spaces` collection does exist there, but it holds zero
+items — the eight spaces the site renders live in `src/data/spaces.ts`. A
+reference field pointing at an empty collection would render no rooms at all.
 
 The slugs must match `slug` in that file exactly. As of writing:
 
@@ -147,14 +150,30 @@ Reference fields need their target to exist first:
 
 ## Wiring it up
 
-Add the collection IDs to `.env` (Webflow shows one under CMS → Collection →
-Settings, or via `GET /sites/{site_id}/collections`):
+The three collections exist on the site already — they were created via the
+Data API against site `6a8f1f3bd0be0497de073761`, so the spec above is a record
+of what is there rather than a to-do list. Their IDs:
 
 ```
-WEBFLOW_SERVICES_COLLECTION_ID=
-WEBFLOW_SERVICE_CASE_STUDIES_COLLECTION_ID=
-WEBFLOW_SERVICE_FAQS_COLLECTION_ID=
+WEBFLOW_SERVICES_COLLECTION_ID=6a989608f4affd8bfd0d72d2
+WEBFLOW_SERVICE_CASE_STUDIES_COLLECTION_ID=6a9895edf4affd8bfd0d6a75
+WEBFLOW_SERVICE_FAQS_COLLECTION_ID=6a9895f2e4611a1c575b848a
 ```
+
+Collection IDs are not secrets — they identify a collection but grant no access
+without the API token — so they are recorded here rather than only in `.env`.
+The token is the credential and must stay out of the repo.
+
+### A note on the existing `Spaces` collection
+
+The site also has a `Spaces` collection (`6a92843d51d97c29d29fe1c8`) with a
+full schema and **zero items** — it was set up and never populated. The eight
+spaces the site actually renders still live in `src/data/spaces.ts`.
+
+That is why `Room Slugs` is plain text rather than a multi-reference: pointing
+a reference field at an empty collection would render no rooms at all. If the
+spaces are ever migrated into the CMS, `Room Slugs` becomes a multi-reference
+and the fetch script resolves it like the other two.
 
 `scripts/fetch-services.mjs` then reads them into `src/data/services.json`,
 mirroring how `fetch-blog.mjs` works.
