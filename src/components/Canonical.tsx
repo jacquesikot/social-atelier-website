@@ -14,6 +14,15 @@ const Canonical = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    /*
+     * Service pages are an unreleased design demo (see src/pages/ServicePage.tsx),
+     * which marks itself noindex. Claiming a canonical URL for one would work
+     * against that by advertising the page as the indexable original, so these
+     * routes keep whatever the last route set and are skipped here. Delete this
+     * guard when service pages go live.
+     */
+    if (pathname.startsWith('/services')) return;
+
     // Trailing slash only on the root, matching the sitemap.
     const url = SITE + (pathname === '/' ? '/' : pathname.replace(/\/$/, ''));
 

@@ -13,6 +13,7 @@ import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import BlogPage from './pages/BlogPage';
 import BlogPostPage from './pages/BlogPostPage';
+import ServicePage from './pages/ServicePage';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
+            <Route path="/services/:slug" element={<ServicePage />} />
           </Routes>
         </main>
         <Footer />

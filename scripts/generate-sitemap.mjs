@@ -70,8 +70,20 @@ ${urls
 </urlset>
 `;
 
+/*
+ * /services/* is disallowed while those pages are an unreleased design demo
+ * built on invented sample copy (see src/pages/ServicePage.tsx). The pages
+ * also send `noindex` themselves; this covers the crawlers that never execute
+ * the bundle and so never see that tag.
+ *
+ * Note the division of labour: Disallow stops crawling, noindex stops
+ * indexing. A URL that is only disallowed can still be listed from a
+ * third-party link, which is why both are in place. Remove this rule and the
+ * page-level noindex together when service pages go live.
+ */
 const robots = `User-agent: *
 Allow: /
+Disallow: /services
 
 Sitemap: ${SITE}/sitemap.xml
 `;
