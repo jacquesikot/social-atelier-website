@@ -108,14 +108,39 @@ const readSpaces = () => {
   let depth = 0;
   let end = -1;
   let quote = null;
+  // Comments have to be skipped, not just quotes: an apostrophe in a prose
+  // comment ("the form's estimate") would otherwise read as the start of a
+  // string literal and swallow the rest of the file, failing the build with a
+  // misleading "could not find end of array".
+  let comment = null; // 'line' | 'block'
   for (let i = from; i < src.length; i++) {
     const ch = src[i];
+    const next = src[i + 1];
+
+    if (comment === 'line') {
+      if (ch === '\n') comment = null;
+      continue;
+    }
+    if (comment === 'block') {
+      if (ch === '*' && next === '/') {
+        comment = null;
+        i++;
+      }
+      continue;
+    }
     if (quote) {
       if (ch === '\\') i++;
       else if (ch === quote) quote = null;
       continue;
     }
-    if (ch === "'" || ch === '"' || ch === '`') quote = ch;
+
+    if (ch === '/' && next === '/') {
+      comment = 'line';
+      i++;
+    } else if (ch === '/' && next === '*') {
+      comment = 'block';
+      i++;
+    } else if (ch === "'" || ch === '"' || ch === '`') quote = ch;
     else if (ch === '[') depth++;
     else if (ch === ']' && --depth === 0) {
       end = i + 1;
@@ -149,6 +174,19 @@ const posts = readPosts();
 const typeLabel = (type) =>
   ({ photo: 'Photo & content studio', event: 'Event space', podcast: 'Podcast studio' }[type] ??
   'Creative space');
+
+/**
+ * How a space's price should be stated in prose.
+ *
+ * Most spaces are rented by the hour. A space with a `session` block is sold
+ * as a fixed block instead, so quoting its derived hourly rate would put a
+ * figure in front of searchers (and the assistants reading this markup) that
+ * nobody is ever charged.
+ */
+const pricePhrase = (s) =>
+  s.session
+    ? `${naira(s.session.price)} per ${s.session.hours}-hour session`
+    : `from ${naira(s.hourlyRate)} per hour`;
 
 // ── Shared page furniture ───────────────────────────────────────────────────
 
@@ -189,7 +227,7 @@ const spaceListItems = () =>
       (s) => `          <li>
             <h3><a href="/spaces/${esc(s.slug)}">${esc(s.name)}</a></h3>
             <p>${esc(s.shortDescription)}</p>
-            <p>${esc(typeLabel(s.type))} · from ${esc(naira(s.hourlyRate))} per hour · ${esc(s.openingDays)}, ${esc(s.openingHours)}</p>
+            <p>${esc(typeLabel(s.type))} · ${esc(pricePhrase(s))} · ${esc(s.openingDays)}, ${esc(s.openingHours)}</p>
           </li>`,
     )
     .join('\n');
@@ -200,7 +238,7 @@ const spacePage = (s) => ({
   // Lead with the facts a searcher (or an assistant answering for one) needs:
   // what it is, where, and what it costs. The prose is clamped around them so
   // truncation never eats the price.
-  description: `${typeLabel(s.type)} in Lekki, Lagos, from ${naira(s.hourlyRate)}/hour. ${clamp(
+  description: `${typeLabel(s.type)} in Lekki, Lagos, ${pricePhrase(s)}. ${clamp(
     s.shortDescription,
     100,
   )}`,
@@ -213,7 +251,11 @@ const spacePage = (s) => ({
         <h2>Details</h2>
         <ul>
           <li>Type: ${esc(typeLabel(s.type))}</li>
-          <li>Rate: from ${esc(naira(s.hourlyRate))} per hour</li>
+          <li>Rate: ${esc(pricePhrase(s))}</li>${
+            s.session?.addOn
+              ? `\n          <li>${esc(s.session.addOn.label)}: ${esc(naira(s.session.addOn.price))} per ${esc(String(s.session.hours))}-hour session — ${esc(s.session.addOn.description)}</li>`
+              : ''
+          }
           <li>Open: ${esc(s.openingDays)}, ${esc(s.openingHours)}</li>
           <li>Location: The Social Atelier, Lekki, Lagos, Nigeria</li>
           <li>Booking durations: ${esc((s.durationOptions ?? []).map((d) => d.label).join(', '))}</li>
@@ -242,15 +284,43 @@ ${(s.useCases ?? []).map((u) => `          <li>${esc(u)}</li>`).join('\n')}
     url: `${SITE}/spaces/${s.slug}`,
     brand: { '@type': 'Brand', name: 'The Social Atelier' },
     category: typeLabel(s.type),
-    offers: {
-      '@type': 'Offer',
-      price: String(s.hourlyRate),
-      priceCurrency: 'NGN',
-      unitText: 'per hour',
-      availability: 'https://schema.org/InStock',
-      url: `${SITE}/booking`,
-      areaServed: { '@type': 'City', name: 'Lagos' },
-    },
+    offers: s.session
+      ? [
+          {
+            '@type': 'Offer',
+            name: `${s.name} — ${s.session.hours}-hour session`,
+            price: String(s.session.price),
+            priceCurrency: 'NGN',
+            unitText: `per ${s.session.hours}-hour session`,
+            availability: 'https://schema.org/InStock',
+            url: `${SITE}/booking`,
+            areaServed: { '@type': 'City', name: 'Lagos' },
+          },
+          ...(s.session.addOn
+            ? [
+                {
+                  '@type': 'Offer',
+                  name: `${s.name} — ${s.session.addOn.label}`,
+                  description: s.session.addOn.description,
+                  price: String(s.session.addOn.price),
+                  priceCurrency: 'NGN',
+                  unitText: `per ${s.session.hours}-hour session`,
+                  availability: 'https://schema.org/InStock',
+                  url: `${SITE}/booking`,
+                  areaServed: { '@type': 'City', name: 'Lagos' },
+                },
+              ]
+            : []),
+        ]
+      : {
+          '@type': 'Offer',
+          price: String(s.hourlyRate),
+          priceCurrency: 'NGN',
+          unitText: 'per hour',
+          availability: 'https://schema.org/InStock',
+          url: `${SITE}/booking`,
+          areaServed: { '@type': 'City', name: 'Lagos' },
+        },
   },
 });
 
@@ -407,12 +477,12 @@ ${spaceListItems()}
         4-hour and full-day (8 hour) blocks.
       </p>
 
-      <h2>Spaces and hourly rates</h2>
+      <h2>Spaces and rates</h2>
       <ul>
 ${spaces
   .map(
     (s) =>
-      `        <li><a href="/spaces/${esc(s.slug)}">${esc(s.name)}</a> — ${esc(naira(s.hourlyRate))} per hour</li>`,
+      `        <li><a href="/spaces/${esc(s.slug)}">${esc(s.name)}</a> — ${esc(pricePhrase(s))}</li>`,
   )
   .join('\n')}
       </ul>

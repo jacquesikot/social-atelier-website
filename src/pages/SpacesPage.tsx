@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { getSpaces, spaces as fallbackSpaces } from '../data/spaces';
+import { getSpaces, spaceTypeLabel, spaces as fallbackSpaces } from '../data/spaces';
 import { Space } from '../types';
 
 const fadeUp = {
@@ -21,6 +21,7 @@ const categories = [
   { id: 'all', label: 'All Spaces' },
   { id: 'photo', label: 'Photography' },
   { id: 'event', label: 'Events' },
+  { id: 'podcast', label: 'Podcast' },
 ];
 
 const SpacesPage = () => {
@@ -36,8 +37,15 @@ const SpacesPage = () => {
     const loadSpaces = async () => {
       try {
         const spacesData = await getSpaces();
+        /*
+         * Only `allSpaces` is set here. Setting `filteredSpaces` too would
+         * discard the visitor's filter: getSpaces() is polled every 10s and
+         * returns a fresh array each time, so a filtered view was being reset
+         * to the full list within seconds of being chosen. The effect below
+         * derives the filtered list from `allSpaces` and the current filter,
+         * which is the single place that decision belongs.
+         */
         setAllSpaces(spacesData);
-        setFilteredSpaces(spacesData);
       } catch (error) {
         console.error('Error loading spaces:', error);
       } finally {
@@ -213,7 +221,7 @@ const SpacesPage = () => {
                         {/* Type badge */}
                         <div className="absolute top-4 left-4">
                           <span className="px-3 py-1 bg-black/40 backdrop-blur-sm text-white text-[10px] tracking-[0.15em] uppercase">
-                            {space.type === 'event' ? 'Events' : 'Photography'}
+                            {spaceTypeLabel(space.type)}
                           </span>
                         </div>
                       </div>
@@ -232,8 +240,13 @@ const SpacesPage = () => {
                           >
                             {space.name}
                           </h3>
-                          <span className="text-primary-600 text-xs font-medium tracking-wide">
-                            {formatCurrency(space.hourlyRate)}<span className="text-neutral-400 font-light">/hr</span>
+                          {/* Session-priced spaces quote the session, not a
+                              per-hour rate they are not sold by. */}
+                          <span className="text-primary-600 text-xs font-medium tracking-wide shrink-0">
+                            {formatCurrency(space.session ? space.session.price : space.hourlyRate)}
+                            <span className="text-neutral-400 font-light">
+                              {space.session ? `/${space.session.hours}hr` : '/hr'}
+                            </span>
                           </span>
                         </div>
                         <p className="text-neutral-500 text-sm font-light leading-relaxed line-clamp-2">

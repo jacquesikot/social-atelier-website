@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Calendar, ChevronLeft, ChevronRight, Clock, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
-import { getSpaceBySlug } from '../data/spaces';
+import { getSpaceBySlug, spaceTypeLabel } from '../data/spaces';
 import { Space } from '../types';
 import { spaceEnquiryMessage, whatsappLink } from '../config/contact';
 
@@ -142,7 +142,7 @@ const SpaceDetailPage = () => {
               animate="visible"
             >
               <span className="text-white/60 text-xs tracking-[0.2em] uppercase font-light">
-                {space.type === 'event' ? 'Event Space' : 'Photography Studio'}
+                {spaceTypeLabel(space.type, 'long')}
               </span>
               <h1
                 className="text-white mt-2"
@@ -280,9 +280,18 @@ const SpaceDetailPage = () => {
             className="lg:col-span-1"
           >
             <div className="sticky top-24 border border-neutral-200 bg-white p-8">
-              {/* Pricing */}
+              {/*
+                Pricing.
+
+                A space sold as a fixed session is quoted as the session, not as
+                a per-hour rate — showing "₦75,000/hr" for The Podloft would be
+                a number nobody is ever charged. Hourly spaces keep the original
+                treatment.
+              */}
               <div className="mb-8 pb-8 border-b border-neutral-100">
-                <p className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase mb-2">Starting from</p>
+                <p className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase mb-2">
+                  {space.session ? 'Session rate' : 'Starting from'}
+                </p>
                 <div className="flex items-baseline gap-2">
                   <span
                     className="text-primary-950"
@@ -293,10 +302,28 @@ const SpaceDetailPage = () => {
                       letterSpacing: '-0.02em',
                     }}
                   >
-                    {formatCurrency(space.hourlyRate)}
+                    {formatCurrency(space.session ? space.session.price : space.hourlyRate)}
                   </span>
-                  <span className="text-neutral-400 font-light text-sm">/hr</span>
+                  <span className="text-neutral-400 font-light text-sm">
+                    {space.session ? `/ ${space.session.hours}hr session` : '/hr'}
+                  </span>
                 </div>
+
+                {space.session?.addOn && (
+                  <div className="mt-5 pt-5 border-t border-neutral-100">
+                    <div className="flex items-baseline justify-between gap-3 mb-1.5">
+                      <span className="text-primary-950 font-light text-sm">
+                        {space.session.addOn.label}
+                      </span>
+                      <span className="text-primary-950 font-medium text-sm shrink-0">
+                        {formatCurrency(space.session.addOn.price)}
+                      </span>
+                    </div>
+                    <p className="text-neutral-500 font-light text-xs leading-relaxed">
+                      {space.session.addOn.description}
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Hours info */}

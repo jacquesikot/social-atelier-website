@@ -300,6 +300,59 @@ const fallbackSpaces: Space[] = [
     openingDays: 'Available by appointment',
     openingHours: 'Available by appointment',
   },
+  {
+    id: '6a996c0fpodloft0000001',
+    name: 'The Podloft',
+    slug: 'the-podloft',
+    type: 'podcast',
+    shortDescription:
+      'An acoustically treated podcast room with upholstered walls, boucle seating and mics on stands.',
+    description:
+      'The Podloft is our podcast and interview room — upholstered wall panels for clean sound, soft boucle seating for two, and microphones on boom stands ready to go. Book it on its own, or with our mics, mixer and an engineer on hand.',
+    mainImage:
+      'https://cdn.prod.website-files.com/6a8f1f3bd0be0497de073761/6a996c046c0812343dfbdb5e_the-podloft-2.jpeg',
+    images: [
+      'https://cdn.prod.website-files.com/6a8f1f3bd0be0497de073761/6a996c046c0812343dfbdb5e_the-podloft-2.jpeg',
+      'https://cdn.prod.website-files.com/6a8f1f3bd0be0497de073761/6a996c03a89d7e3d7389a5c3_the-podloft-1.jpeg',
+      'https://cdn.prod.website-files.com/6a8f1f3bd0be0497de073761/6a996c0577ed60ce8eabf920_the-podloft-3.jpeg',
+    ],
+    features: [
+      'Upholstered wall panels for clean, dry sound',
+      'Seating for two hosts or a host and guest',
+      'Microphones on adjustable boom stands',
+      'Mixer and technical assistance available',
+      'Carpeted floor to keep room reflections down',
+      'Climate controlled and fully enclosed',
+    ],
+    useCases: [
+      'Podcast recording',
+      'Long-form interviews',
+      'Voiceover and narration',
+      'Audio-first shows',
+      'Panel and two-guest conversations',
+    ],
+    // Sold as a 2-hour session at ₦150,000; the hourly figure is that rate
+    // divided by the session length, so the booking form's estimate lines up
+    // with what a session actually costs. The `session` block below carries the
+    // real pricing that every page displays.
+    hourlyRate: 75000, // ₦75,000/hr → ₦150,000 per 2-hour session
+    session: {
+      hours: 2,
+      price: 150000,
+      addOn: {
+        label: 'With microphones and recording support',
+        price: 170000,
+        description: 'Microphones, a mixer, and technical assistance for the session.',
+      },
+    },
+    durationOptions: [
+      { hours: 2, label: '2 hours' },
+      { hours: 4, label: '4 hours' },
+      { hours: 8, label: 'Full day (8 hours)' },
+    ],
+    openingDays: 'Tuesday - Sunday',
+    openingHours: '10:00 AM - 6:00 PM',
+  },
 ];
 
 // Cache for API data
@@ -390,4 +443,22 @@ export const getSpaceBySlugSync = (slug: string): Space | undefined => {
 
 export const getSpaceByIdSync = (id: string): Space | undefined => {
   return spaces.find((space) => space.id === id);
+};
+
+/**
+ * Human label for a space's `type`.
+ *
+ * Kept here rather than inline at each call site: the label was previously a
+ * ternary in both SpacesPage and SpaceDetailPage, so adding the podcast type
+ * would have read as "Photography" in both places until each was found and
+ * changed separately. `variant` picks between the short filter-chip wording
+ * and the longer label used on a space's own page.
+ */
+export const spaceTypeLabel = (type: string, variant: 'short' | 'long' = 'short'): string => {
+  const labels: Record<string, { short: string; long: string }> = {
+    photo: { short: 'Photography', long: 'Photography Studio' },
+    event: { short: 'Events', long: 'Event Space' },
+    podcast: { short: 'Podcast', long: 'Podcast Studio' },
+  };
+  return labels[type]?.[variant] ?? (variant === 'long' ? 'Creative Space' : 'Spaces');
 };

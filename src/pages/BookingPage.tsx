@@ -82,6 +82,18 @@ const BookingPage = () => {
 
   const estimatedTotal = selectedSpace ? selectedSpace.hourlyRate * formData.duration : 0;
 
+  /*
+   * For a session-priced space, the same booking has a second price with the
+   * add-on (mics and an engineer for The Podloft). Quoting only the base would
+   * understate the booking most people actually want, so the estimate carries
+   * both and the WhatsApp message asks which they need.
+   */
+  const addOn = selectedSpace?.session?.addOn;
+  const estimatedTotalWithAddOn =
+    selectedSpace?.session && addOn
+      ? addOn.price * (formData.duration / selectedSpace.session.hours)
+      : 0;
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -103,7 +115,19 @@ const BookingPage = () => {
         date: formatDate(formData.date),
         startTime: formData.startTime,
         durationLabel,
-        total: estimatedTotal ? formatCurrency(estimatedTotal) : undefined,
+        /*
+         * A session space has two prices for the same booking, and which one
+         * the client wants is the thing we most need to know. Send both rather
+         * than the base alone, so the reply is a confirmation instead of
+         * another round trip asking whether they need microphones.
+         */
+        total: estimatedTotal
+          ? estimatedTotalWithAddOn > 0
+            ? `${formatCurrency(estimatedTotal)} (room only) or ${formatCurrency(
+                estimatedTotalWithAddOn,
+              )} with microphones and recording support`
+            : formatCurrency(estimatedTotal)
+          : undefined,
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
@@ -257,7 +281,9 @@ const BookingPage = () => {
                             {space.name}
                           </p>
                           <p className="text-primary-600 text-xs font-light">
-                            {formatCurrency(space.hourlyRate)}/hr
+                            {space.session
+                              ? `${formatCurrency(space.session.price)}/${space.session.hours}hr session`
+                              : `${formatCurrency(space.hourlyRate)}/hr`}
                           </p>
                         </div>
                         {formData.spaceId === space.id && (
@@ -446,7 +472,9 @@ const BookingPage = () => {
                       {selectedSpace.name}
                     </h3>
                     <p className="text-primary-600 text-sm font-light mb-2">
-                      {formatCurrency(selectedSpace.hourlyRate)}/hr
+                      {selectedSpace.session
+                        ? `${formatCurrency(selectedSpace.session.price)} / ${selectedSpace.session.hours}hr session`
+                        : `${formatCurrency(selectedSpace.hourlyRate)}/hr`}
                     </p>
                     <p className="text-neutral-500 text-sm font-light leading-relaxed">
                       {selectedSpace.shortDescription}
@@ -456,20 +484,40 @@ const BookingPage = () => {
                       <p className="text-neutral-500 text-sm font-light">{selectedSpace.openingHours}</p>
                     </div>
                     {estimatedTotal > 0 && (
-                      <div className="mt-4 pt-4 border-t border-neutral-200 flex items-baseline justify-between">
-                        <span className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase">
-                          Estimated total
-                        </span>
-                        <span
-                          className="text-primary-950"
-                          style={{
-                            fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
-                            fontWeight: 300,
-                            fontSize: '1.05rem',
-                          }}
-                        >
-                          {formatCurrency(estimatedTotal)}
-                        </span>
+                      <div className="mt-4 pt-4 border-t border-neutral-200">
+                        <div className="flex items-baseline justify-between">
+                          <span className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase">
+                            {estimatedTotalWithAddOn > 0 ? 'Estimated total (room only)' : 'Estimated total'}
+                          </span>
+                          <span
+                            className="text-primary-950"
+                            style={{
+                              fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+                              fontWeight: 300,
+                              fontSize: '1.05rem',
+                            }}
+                          >
+                            {formatCurrency(estimatedTotal)}
+                          </span>
+                        </div>
+
+                        {estimatedTotalWithAddOn > 0 && addOn && (
+                          <div className="flex items-baseline justify-between mt-2">
+                            <span className="text-neutral-400 text-[10px] tracking-[0.15em] uppercase pr-3">
+                              With recording support
+                            </span>
+                            <span
+                              className="text-primary-950"
+                              style={{
+                                fontFamily: "'Maison Neue Extended', 'Maison Neue', Arial, sans-serif",
+                                fontWeight: 300,
+                                fontSize: '1.05rem',
+                              }}
+                            >
+                              {formatCurrency(estimatedTotalWithAddOn)}
+                            </span>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>

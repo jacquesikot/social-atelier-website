@@ -17,6 +17,33 @@ export interface Space {
   }[];
   openingDays: string;
   openingHours: string;
+  /**
+   * Session pricing, for spaces sold as a fixed block rather than by the hour.
+   *
+   * The Podloft is quoted as "₦150,000 for a 2-hour session", not as an hourly
+   * rate — and its recording-support option adds a flat amount to that session
+   * rather than to each hour. `hourlyRate` is still set (session price ÷
+   * hours), because the booking form multiplies it to estimate a total and
+   * every other surface reads it; this block is what lets the UI *say* the
+   * honest thing instead of deriving a per-hour figure the space is not
+   * actually sold by.
+   *
+   * Absent on hourly spaces, which is all of them but this one.
+   */
+  session?: {
+    /** Length of one session, in hours. */
+    hours: number;
+    /** Price of one session, in naira. */
+    price: number;
+    /** Optional paid extra, e.g. microphones and an engineer. */
+    addOn?: {
+      label: string;
+      /** Total session price *with* the add-on, not the increment. */
+      price: number;
+      /** What the add-on actually includes. */
+      description: string;
+    };
+  };
 }
 
 export interface Testimonial {
